@@ -1,0 +1,47 @@
+{
+  "name": "oxlint-fi",
+  "type": "module",
+  "version": "0.1.6",
+  "description": "An interactive tool for inspecting ESLint formatter in the browser.",
+  "author": "Leo <https://github.com/yuyinws>",
+  "license": "MIT",
+  "homepage": "https://github.com/yuyinws/eslint-formatter-i#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuyinws/eslint-formatter-i.git"
+  },
+  "bugs": "https://github.com/yuyinws/eslint-formatter-i/issues",
+  "keywords": [
+    "eslintformatter",
+    "eslint",
+    "eslint-formatter"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "bin": {
+    "oxlint-fi": "./bin/oxlint-fi.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "prepublishOnly": "nr build",
+    "start": "tsx src/test.ts"
+  },
+  "dependencies": {
+    "ansis": "^4.0.0",
+    "citty": "^0.1.6",
+    "consola": "^3.4.2",
+    "get-port-please": "^3.1.2",
+    "h3": "npm:h3-nightly@2x",
+    "launch-editor": "^2.10.0",
+    "mrmime": "^2.0.1",
+    "open": "^10.1.2",
+    "pathe": "^2.0.3"
+  }
+}

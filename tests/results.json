@@ -1,0 +1,198 @@
+[
+  {
+    "filePath": "/Users/yuyin/Projects/github/yuyinws/eslint-formatter-inspector/fixtures/bar.ts",
+    "messages": [
+      {
+        "ruleId": "unused-imports/no-unused-vars",
+        "severity": 2,
+        "message": "'bar' is defined but never used. Allowed unused vars must match /^_/u.",
+        "line": 1,
+        "column": 10,
+        "nodeType": null,
+        "messageId": "unusedVar",
+        "endLine": 1,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement. Only these console methods are allowed: warn, error.",
+        "line": 2,
+        "column": 3,
+        "nodeType": "MemberExpression",
+        "messageId": "limited",
+        "endLine": 2,
+        "endColumn": 14,
+        "suggestions": [
+          {
+            "fix": {
+              "range": [
+                19,
+                38
+              ],
+              "text": ""
+            },
+            "messageId": "removeConsole",
+            "data": {
+              "propertyName": "log"
+            },
+            "desc": "Remove the console.log()."
+          }
+        ]
+      },
+      {
+        "ruleId": "style/semi",
+        "severity": 2,
+        "message": "Extra semicolon.",
+        "line": 2,
+        "column": 21,
+        "nodeType": "ExpressionStatement",
+        "messageId": "extraSemi",
+        "endLine": 2,
+        "endColumn": 22,
+        "fix": {
+          "range": [
+            36,
+            40
+          ],
+          "text": ")\n}"
+        }
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 3,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 1,
+    "fixableWarningCount": 0,
+    "source": "function bar() {\n  console.log('xxx');\n}\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "/Users/yuyin/Projects/github/yuyinws/eslint-formatter-inspector/fixtures/foo.ts",
+    "messages": [
+      {
+        "ruleId": "unused-imports/no-unused-vars",
+        "severity": 2,
+        "message": "'d' is assigned a value but never used. Allowed unused vars must match /^_/u.",
+        "line": 5,
+        "column": 7,
+        "nodeType": null,
+        "messageId": "unusedVar",
+        "endLine": 5,
+        "endColumn": 8
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement. Only these console methods are allowed: warn, error.",
+        "line": 7,
+        "column": 1,
+        "nodeType": "MemberExpression",
+        "messageId": "limited",
+        "endLine": 7,
+        "endColumn": 12,
+        "suggestions": [
+          {
+            "fix": {
+              "range": [
+                58,
+                74
+              ],
+              "text": ""
+            },
+            "messageId": "removeConsole",
+            "data": {
+              "propertyName": "log"
+            },
+            "desc": "Remove the console.log()."
+          }
+        ]
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 2,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "const a = 1\nconst b = 2\nconst c = 3\n\nconst d = a + b + c\n\nconsole.log('a')\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "/Users/yuyin/Projects/github/yuyinws/eslint-formatter-inspector/fixtures/foo.vue",
+    "messages": [
+      {
+        "ruleId": "vue/require-v-for-key",
+        "severity": 2,
+        "message": "Elements in iteration expect to have 'v-bind:key' directives.",
+        "line": 6,
+        "column": 3,
+        "nodeType": "VStartTag",
+        "messageId": "requireKey",
+        "endLine": 9,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "vue/first-attribute-linebreak",
+        "severity": 1,
+        "message": "Expected a linebreak before this attribute.",
+        "line": 6,
+        "column": 8,
+        "nodeType": "VAttribute",
+        "messageId": "expected",
+        "endLine": 9,
+        "endColumn": 12,
+        "fix": {
+          "range": [
+            54,
+            55
+          ],
+          "text": "\n"
+        }
+      },
+      {
+        "ruleId": "vue/no-parsing-error",
+        "severity": 2,
+        "message": "Parsing error: Property assignment expected.",
+        "line": 7,
+        "column": 4,
+        "nodeType": "VElement",
+        "messageId": "parsingError"
+      },
+      {
+        "ruleId": "style/eol-last",
+        "severity": 2,
+        "message": "Newline required at end of file but not found.",
+        "line": 9,
+        "column": 12,
+        "nodeType": "Program",
+        "messageId": "missing",
+        "fix": {
+          "range": [
+            101,
+            101
+          ],
+          "text": "\n"
+        }
+      },
+      {
+        "ruleId": "vue/no-parsing-error",
+        "severity": 2,
+        "message": "Parsing error: eof-in-tag.",
+        "line": 9,
+        "column": 12,
+        "nodeType": "VElement",
+        "messageId": "parsingError"
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 4,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 1,
+    "fixableWarningCount": 1,
+    "source": "<script setup lang=\"ts\">\n\n</script>\n\n<template>\n  <div v-for=\"i in 10>\n  {{ i }}\n  </div>\n</template>",
+    "usedDeprecatedRules": []
+  }
+]

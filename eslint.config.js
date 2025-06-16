@@ -1,0 +1,16 @@
+// @ts-check
+import antfu from '@antfu/eslint-config'
+import oxlint from 'eslint-plugin-oxlint'
+
+export default antfu(
+  {
+    vue: true,
+    ignores: ['**/fixtures/**'],
+  },
+  {
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  oxlint.configs['flat/recommended'],
+)
