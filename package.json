@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "0.1.6",
+  "version": "0.0.1",
   "private": true,
   "packageManager": "pnpm@10.11.0",
   "scripts": {
