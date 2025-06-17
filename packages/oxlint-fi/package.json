@@ -1,7 +1,7 @@
 {
   "name": "oxlint-fi",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An interactive tool for inspecting ESLint formatter in the browser.",
   "author": "Leo <https://github.com/yuyinws>",
   "license": "MIT",
