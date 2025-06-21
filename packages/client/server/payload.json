@@ -1,0 +1,179 @@
+{
+  "files": [
+    {
+      "filename": "tests/fixtures/foo.ts",
+      "source": "const a = 1\nconst b = 2\nconst c = 3\n\nconst d = a + b + c\n\nconst e = 1\n\nconsole.log('a')\n",
+      "lines": [
+        {
+          "line": 5,
+          "messages": [
+            {
+              "message": "Variable 'd' is declared but never used. Unused variables should start with a '_'.",
+              "code": "eslint(no-unused-vars)",
+              "severity": "warning",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
+              "help": "Consider removing this declaration.",
+              "filename": "tests/fixtures/foo.ts",
+              "labels": [
+                {
+                  "label": "'d' is declared here",
+                  "span": {
+                    "offset": 43,
+                    "length": 1,
+                    "line": 5,
+                    "column": 7
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        },
+        {
+          "line": 7,
+          "messages": [
+            {
+              "message": "Variable 'e' is declared but never used. Unused variables should start with a '_'.",
+              "code": "eslint(no-unused-vars)",
+              "severity": "warning",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
+              "help": "Consider removing this declaration.",
+              "filename": "tests/fixtures/foo.ts",
+              "labels": [
+                {
+                  "label": "'e' is declared here",
+                  "span": {
+                    "offset": 64,
+                    "length": 1,
+                    "line": 7,
+                    "column": 7
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "tests/fixtures/bar.ts",
+      "source": "function bar() { console.log('xxx'); function baz() { console.log('xxx') } }\n\n\nfunction foo() { console.log('xxx') }\n",
+      "lines": [
+        {
+          "line": 1,
+          "messages": [
+            {
+              "message": "Function 'bar' is declared but never used.",
+              "code": "eslint(no-unused-vars)",
+              "severity": "warning",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
+              "help": "Consider removing this declaration.",
+              "filename": "tests/fixtures/bar.ts",
+              "labels": [
+                {
+                  "label": "'bar' is declared here",
+                  "span": {
+                    "offset": 9,
+                    "length": 3,
+                    "line": 1,
+                    "column": 10
+                  }
+                }
+              ],
+              "related": []
+            },
+            {
+              "message": "Function 'baz' is declared but never used.",
+              "code": "eslint(no-unused-vars)",
+              "severity": "warning",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
+              "help": "Consider removing this declaration.",
+              "filename": "tests/fixtures/bar.ts",
+              "labels": [
+                {
+                  "label": "'baz' is declared here",
+                  "span": {
+                    "offset": 46,
+                    "length": 3,
+                    "line": 1,
+                    "column": 47
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        },
+        {
+          "line": 4,
+          "messages": [
+            {
+              "message": "Function 'foo' is declared but never used.",
+              "code": "eslint(no-unused-vars)",
+              "severity": "warning",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
+              "help": "Consider removing this declaration.",
+              "filename": "tests/fixtures/bar.ts",
+              "labels": [
+                {
+                  "label": "'foo' is declared here",
+                  "span": {
+                    "offset": 88,
+                    "length": 3,
+                    "line": 4,
+                    "column": 10
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "packages/oxlint-fi/src/index.ts",
+      "source": "import { readFile, stat } from 'node:fs/promises'\nimport { argv } from 'node:process'\nimport c from 'ansis'\nimport consola from 'consola'\nimport { getPort } from 'get-port-please'\nimport { cli, define } from 'gunshi'\nimport { getQuery, H3, serve, serveStatic } from 'h3'\nimport { lookup } from 'mrmime'\nimport { join } from 'pathe'\nimport { clientDir, execOxlintCommand, groupByFilename } from './utils'\n\nconst mainCommand = define({\n  name: 'main',\n  run: async ({ _ }) => {\n    const rawOutput = execOxlintCommand(_, false)\n    const groupedOutput = await groupByFilename(rawOutput)\n    const app = new H3()\n\n    app.use('/api/payload.json', () => {\n      return groupedOutput\n    })\n\n    app.use('/**', (event) => {\n      return serveStatic(event, {\n        indexNames: ['/index.html'],\n        getContents: id => readFile(join(clientDir, id)),\n        getMeta: async (id) => {\n          const stats = await stat(join(clientDir, id)).catch(() => { })\n          if (stats?.isFile()) {\n            return {\n              size: stats.size,\n              mtime: stats.mtimeMs,\n              type: lookup(id),\n            }\n          }\n        },\n        fallthrough: true,\n      })\n    })\n\n    const port = await getPort({ port: 3778, portRange: [3778, 4000] })\n\n    serve(app, { port, silent: true })\n\n    consola.info(`Starting Oxlint formatter inspector at`, c.green`http://localhost:${port}`, '\\n')\n  },\n})\n\nconst buildCommand = define({\n  name: 'build',\n  run: async ({ _ }) => {\n    const rawOutput = execOxlintCommand(_, true)\n    const groupedOutput = await groupByFilename(rawOutput)\n    console.log(JSON.stringify(groupedOutput, null, 2))\n  },\n})\n\ncli(argv.slice(2), mainCommand, {\n  name: 'oxlint-formatter-inspector',\n  description: 'hello world',\n  version: '1.0.0',\n  subCommands: new Map([\n    ['build', buildCommand],\n  ]),\n})\n",
+      "lines": [
+        {
+          "line": 7,
+          "messages": [
+            {
+              "message": "Identifier 'getQuery' is imported but never used.",
+              "code": "eslint(no-unused-vars)",
+              "severity": "warning",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
+              "help": "Consider removing this import.",
+              "filename": "packages/oxlint-fi/src/index.ts",
+              "labels": [
+                {
+                  "label": "'getQuery' is imported here",
+                  "span": {
+                    "offset": 226,
+                    "length": 8,
+                    "line": 7,
+                    "column": 10
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "number_of_files": 15,
+    "number_of_rules": null,
+    "threads_count": 8,
+    "start_time": 0.017999916
+  }
+}

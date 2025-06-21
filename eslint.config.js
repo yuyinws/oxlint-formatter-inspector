@@ -10,6 +10,7 @@ export default antfu(
   {
     rules: {
       'no-console': 'off',
+      'vue/html-indent': 'off',
     },
   },
   oxlint.configs['flat/recommended'],

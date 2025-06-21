@@ -9,12 +9,12 @@ import svelte from '@shikijs/langs/svelte'
 import ts from '@shikijs/langs/ts'
 import tsx from '@shikijs/langs/tsx'
 import vue from '@shikijs/langs/vue'
-import ThemeLight from '@shikijs/themes/catppuccin-latte'
-import ThemeDark from '@shikijs/themes/catppuccin-mocha'
+import ThemeDark from '@shikijs/themes/vitesse-dark'
+import ThemeLight from '@shikijs/themes/vitesse-light'
 import { createHighlighterCoreSync } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 
-export const shiki = createHighlighterCoreSync({
+export const createShiki = createHighlighterCoreSync({
   themes: [
     ThemeLight,
     ThemeDark,

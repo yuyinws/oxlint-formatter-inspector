@@ -1,3 +1,5 @@
-export default defineEventHandler(() => {
-  return { diagnostics: [{ message: 'Function \'bar\' is declared but never used.', code: 'eslint(no-unused-vars)', severity: 'warning', causes: [], url: 'https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html', help: 'Consider removing this declaration.', filename: 'tests/fixtures/bar.ts', labels: [{ label: '\'bar\' is declared here', span: { offset: 9, length: 3, line: 1, column: 10 } }], related: [] }, { message: 'Variable \'d\' is declared but never used. Unused variables should start with a \'_\'.', code: 'eslint(no-unused-vars)', severity: 'warning', causes: [], url: 'https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html', help: 'Consider removing this declaration.', filename: 'tests/fixtures/foo.ts', labels: [{ label: '\'d\' is declared here', span: { offset: 43, length: 1, line: 5, column: 7 } }], related: [] }], number_of_files: 14, number_of_rules: 87, threads_count: 8, start_time: 0.018553834 }
+import payload from '../payload.json'
+
+export default defineEventHandler(async () => {
+  return payload
 })

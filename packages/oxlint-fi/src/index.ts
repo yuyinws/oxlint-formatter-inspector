@@ -4,19 +4,20 @@ import c from 'ansis'
 import consola from 'consola'
 import { getPort } from 'get-port-please'
 import { cli, define } from 'gunshi'
-import { getQuery, H3, serve, serveStatic } from 'h3'
+import { H3, serve, serveStatic } from 'h3'
 import { lookup } from 'mrmime'
 import { join } from 'pathe'
-import { clientDir, execOxlintCommand } from './utils'
+import { clientDir, execOxlintCommand, groupByFilename } from './utils'
 
 const mainCommand = define({
   name: 'main',
   run: async ({ _ }) => {
-    const output = execOxlintCommand(_, false)
+    const rawOutput = execOxlintCommand(_, false)
+    const groupedOutput = await groupByFilename(rawOutput)
     const app = new H3()
 
     app.use('/api/payload.json', () => {
-      return output
+      return groupedOutput
     })
 
     app.use('/**', (event) => {
@@ -24,7 +25,7 @@ const mainCommand = define({
         indexNames: ['/index.html'],
         getContents: id => readFile(join(clientDir, id)),
         getMeta: async (id) => {
-          const stats = await stat(join(clientDir, id)).catch(() => {})
+          const stats = await stat(join(clientDir, id)).catch(() => { })
           if (stats?.isFile()) {
             return {
               size: stats.size,
@@ -47,9 +48,10 @@ const mainCommand = define({
 
 const buildCommand = define({
   name: 'build',
-  run: ({ _ }) => {
-    const output = execOxlintCommand(_, true)
-    console.log(output)
+  run: async ({ _ }) => {
+    const rawOutput = execOxlintCommand(_, true)
+    const groupedOutput = await groupByFilename(rawOutput)
+    console.log(JSON.stringify(groupedOutput, null, 2))
   },
 })
 
