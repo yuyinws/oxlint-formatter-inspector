@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { Label, LineData } from '~~/types'
-import ErrorTooltip from '~~/components/ErrorTooltip.vue'
-import Shiki from '~~/components/Shiki.vue'
-import { calculateErrorHeight, getFileExt, processLabelHtml } from '~~/composables/useFileUtils'
+import { calculateErrorHeight, getFileExt, processLabelHtml } from '~/composables/useFileUtils'
 
 interface Props {
   lineData: LineData
@@ -80,27 +78,20 @@ function generateLabelIndicator(label: Label) {
           <Shiki :code="currentLineCode" :ext="fileExt" />
 
           <div class="flex relative text-neutral-400" :style="{ minHeight: `${errorHeight}px`, top: '-10px' }">
-            <a
-v-for="(label, labelIndex) in sortedLabels" :key="labelIndex" target="_blank"
+            <a v-for="(label, labelIndex) in sortedLabels" :key="labelIndex" target="_blank"
               :href="getMessageForLabel(labelIndex)?.url"
               class="absolute whitespace-pre text-neutral-500/50 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer"
-              :style="{ left: `calc(${label.span.column - 1}ch)` }"
->
-              <UTooltip
-:delay-duration="100" :content="{ side: 'top' }" :disable-hoverable-content="false"
-                :ui="{ content: 'py-4 px-5 h-auto max-w-sm' }"
->
+              :style="{ left: `calc(${label.span.column - 1}ch)` }">
+              <UTooltip :delay-duration="100" :content="{ side: 'top' }" :disable-hoverable-content="false"
+                :ui="{ content: 'py-4 px-5 h-auto max-w-sm' }">
                 <template #content>
-                  <ErrorTooltip
-v-if="getMessageForLabel(labelIndex)" :message="getMessageForLabel(labelIndex)!"
-                    :filename="filename" :line="lineData.line" :column="label.span.column"
-/>
+                  <ErrorTooltip v-if="getMessageForLabel(labelIndex)" :message="getMessageForLabel(labelIndex)!"
+                    :filename="filename" :line="lineData.line" :column="label.span.column" />
                 </template>
                 <div>
                   <div>
                     <span v-for="i in generateLabelIndicator(label).preDashes" :key="`pre-${i}`">─</span>┬<span
-                      v-for="i in generateLabelIndicator(label).postDashes" :key="`post-${i}`"
->─</span>
+                      v-for="i in generateLabelIndicator(label).postDashes" :key="`post-${i}`">─</span>
                   </div>
                   <div v-for="i in (sortedLabels.length - 1 - labelIndex)" :key="`bar-${i}`" class="relative">
                     │
@@ -108,8 +99,7 @@ v-if="getMessageForLabel(labelIndex)" :message="getMessageForLabel(labelIndex)!"
                   <div class="relative flex" :style="getLabelVerticalStyle(labelIndex)">
                     <div>╰─</div>
                     <div
-                      v-html="processLabelHtml((label as any).label || getMessageForLabel(labelIndex)?.code || '')"
-/>
+                      v-html="processLabelHtml((label as any).label || getMessageForLabel(labelIndex)?.code || '')" />
                   </div>
                 </div>
               </UTooltip>

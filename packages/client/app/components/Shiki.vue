@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createShiki } from '~~/composables/createShiki'
+import { createShiki } from '~/composables/createShiki'
 
 const props = defineProps<{
   code: string

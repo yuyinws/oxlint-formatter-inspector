@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { FileData } from '~~/types'
-import LineError from '~~/components/LineError.vue'
-import { getFileIcon } from '~~/composables/useFileUtils'
+import { getFileIcon } from '~/composables/useFileUtils'
 
 interface Props {
   file: FileData
@@ -27,10 +26,8 @@ const fileIcon = computed(() => getFileIcon(props.file.filename))
     <div class="relative font-mono">
       <!-- 问题列表 -->
       <div v-if="file.lines.length > 0" class="space-y-4">
-        <LineError
-v-for="lineData in file.lines" :key="`${file.filename}-${lineData.line}`" :line-data="lineData"
-          :filename="file.filename" :source="file.source"
-/>
+        <LineError v-for="lineData in file.lines" :key="`${file.filename}-${lineData.line}`" :line-data="lineData"
+          :filename="file.filename" :source="file.source" />
       </div>
     </div>
   </UCard>

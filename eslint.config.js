@@ -4,13 +4,10 @@ import oxlint from 'eslint-plugin-oxlint'
 
 export default antfu(
   {
-    vue: true,
     ignores: ['**/fixtures/**'],
-  },
-  {
     rules: {
       'no-console': 'off',
-      'vue/html-indent': 'off',
+      // 'vue/html-indent': 'off',
     },
   },
   oxlint.configs['flat/recommended'],

@@ -1,9 +1,5 @@
 <script setup lang="ts">
 import type { PayloadData } from '~~/types'
-import EmptyState from '~~/components/EmptyState.vue'
-import FileCard from '~~/components/FileCard.vue'
-import LoadingState from '~~/components/LoadingState.vue'
-import SummaryCard from '~~/components/SummaryCard.vue'
 
 const { data } = await useFetch<PayloadData>('/api/payload.json', {})
 
