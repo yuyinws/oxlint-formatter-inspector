@@ -1,5 +1,220 @@
 {
+  "version": "1.2.0",
+  "config": {
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "plugins": [
+      "unicorn",
+      "typescript",
+      "oxc"
+    ],
+    "categories": {},
+    "rules": {
+      "for-direction": "warn",
+      "no-async-promise-executor": "warn",
+      "no-caller": "warn",
+      "no-class-assign": "warn",
+      "no-compare-neg-zero": "warn",
+      "no-cond-assign": "warn",
+      "no-const-assign": "warn",
+      "no-constant-binary-expression": "warn",
+      "no-constant-condition": "warn",
+      "no-control-regex": "warn",
+      "no-debugger": "error",
+      "no-delete-var": "warn",
+      "no-dupe-class-members": "warn",
+      "no-dupe-else-if": "warn",
+      "no-dupe-keys": "warn",
+      "no-duplicate-case": "warn",
+      "no-empty-character-class": "warn",
+      "no-empty-pattern": "warn",
+      "no-empty-static-block": "warn",
+      "no-eval": "warn",
+      "no-ex-assign": "warn",
+      "no-extra-boolean-cast": "warn",
+      "no-func-assign": "warn",
+      "no-global-assign": "warn",
+      "no-import-assign": "warn",
+      "no-invalid-regexp": "warn",
+      "no-irregular-whitespace": "warn",
+      "no-loss-of-precision": "warn",
+      "no-new-native-nonconstructor": "warn",
+      "no-nonoctal-decimal-escape": "warn",
+      "no-obj-calls": "warn",
+      "no-self-assign": "warn",
+      "no-setter-return": "warn",
+      "no-shadow-restricted-names": "warn",
+      "no-sparse-arrays": "warn",
+      "no-this-before-super": "warn",
+      "no-unsafe-finally": "warn",
+      "no-unsafe-negation": "warn",
+      "no-unsafe-optional-chaining": "warn",
+      "no-unused-labels": "warn",
+      "no-unused-private-class-members": "warn",
+      "no-unused-vars": "warn",
+      "no-useless-backreference": "warn",
+      "no-useless-catch": "warn",
+      "no-useless-escape": "warn",
+      "no-useless-rename": "warn",
+      "no-with": "warn",
+      "require-yield": "warn",
+      "use-isnan": "warn",
+      "valid-typeof": "warn",
+      "oxc/bad-array-method-on-arguments": "warn",
+      "oxc/bad-char-at-comparison": "warn",
+      "oxc/bad-comparison-sequence": "warn",
+      "oxc/bad-min-max-func": "warn",
+      "oxc/bad-object-literal-comparison": "warn",
+      "oxc/bad-replace-all-arg": "warn",
+      "oxc/const-comparisons": "warn",
+      "oxc/double-comparisons": "warn",
+      "oxc/erasing-op": "warn",
+      "oxc/missing-throw": "warn",
+      "oxc/number-arg-out-of-range": "warn",
+      "oxc/only-used-in-recursion": "warn",
+      "oxc/uninvoked-array-callback": "warn",
+      "typescript/no-duplicate-enum-values": "warn",
+      "typescript/no-extra-non-null-assertion": "warn",
+      "typescript/no-misused-new": "warn",
+      "typescript/no-non-null-asserted-optional-chain": "warn",
+      "typescript/no-this-alias": "warn",
+      "typescript/no-unnecessary-parameter-property-assignment": "warn",
+      "typescript/no-unsafe-declaration-merging": "warn",
+      "typescript/no-useless-empty-export": "warn",
+      "typescript/no-wrapper-object-types": "warn",
+      "typescript/prefer-as-const": "warn",
+      "typescript/triple-slash-reference": "warn",
+      "unicorn/no-await-in-promise-methods": "warn",
+      "unicorn/no-empty-file": "warn",
+      "unicorn/no-invalid-fetch-options": "warn",
+      "unicorn/no-invalid-remove-event-listener": "warn",
+      "unicorn/no-new-array": "warn",
+      "unicorn/no-single-promise-in-promise-methods": "warn",
+      "unicorn/no-thenable": "warn",
+      "unicorn/no-unnecessary-await": "warn",
+      "unicorn/no-useless-fallback-in-spread": "warn",
+      "unicorn/no-useless-length-check": "warn",
+      "unicorn/no-useless-spread": "warn",
+      "unicorn/prefer-set-size": "warn",
+      "unicorn/prefer-string-starts-ends-with": "warn",
+      "curly": "error"
+    },
+    "settings": {
+      "jsx-a11y": {
+        "polymorphicPropName": null,
+        "components": {}
+      },
+      "next": {
+        "rootDir": []
+      },
+      "react": {
+        "formComponents": [],
+        "linkComponents": []
+      },
+      "jsdoc": {
+        "ignorePrivate": false,
+        "ignoreInternal": false,
+        "ignoreReplacesDocs": true,
+        "overrideReplacesDocs": true,
+        "augmentsExtendsReplacesDocs": false,
+        "implementsReplacesDocs": false,
+        "exemptDestructuredRootsFromChecks": false,
+        "tagNamePreference": {}
+      }
+    },
+    "env": {
+      "builtin": true
+    },
+    "globals": {},
+    "ignorePatterns": []
+  },
   "files": [
+    {
+      "filename": "packages/client/app/composables/useFileUtils.ts",
+      "source": "// 获取文件扩展名\nexport function getFileExt(filename: string) {\n  const ext = filename.split('.').pop()\n  return ext ? `.${ext}` : ''\n}\n\n// 获取文件图标\nexport function getFileIcon(filename: string) {\n  const ext = getFileExt(filename)\n  switch (ext) {\n    case '.ts':\n    case '.tsx':\n      return 'vscode-icons:file-type-typescript'\n    case '.js':\n    case '.jsx':\n      return 'vscode-icons:file-type-js'\n    case '.vue':\n      return 'vscode-icons:file-type-vue'\n    case '.css':\n      return 'vscode-icons:file-type-css'\n    case '.json':\n      return 'vscode-icons:file-type-json'\n    case '.md':\n      return 'vscode-icons:file-type-markdown'\n    default:\n      return 'vscode-icons:file-type-text'\n  }\n}\n\n// 计算错误标记的高度\nexport function calculateErrorHeight(messages: any[]) {\n  if (!messages || messages.length === 0)\n    return 0\n\n  // 计算所有 labels 的最大数量\n  const maxLabels = Math.max(...messages.map(msg => msg.labels?.length || 0))\n\n  // 每个 label 大约需要 2 行的高度（一行给指示器，一行给消息）\n  // 每行约 20px 高度，加上一些间距\n  return maxLabels > 0 ? maxLabels * 2 * 20 + 15 : 0\n}\n\n// 跳转到编辑器\nexport function openInEditor(filename: string, line: number, column: number) {\n  // 尝试使用 vscode:// 协议打开\n  const vscodeUrl = `vscode://file/${encodeURIComponent(filename)}:${line}:${column}`\n  window.open(vscodeUrl, '_blank')\n}\n\n// 处理 v-html 输入，将单引号中间的内容替换为带背景色\nexport function processLabelHtml(text: string) {\n  if (!text)\n    return ''\n\n  // 匹配单引号和反引号中间的内容，并替换为带背景色的 span\n  return text.replace(/['`]([^'`]+)['`]/g, '<span class=\"bg-neutral-100 dark:bg-neutral-800 px-1 py-0.5 rounded font-semibold\">$1</span>')\n}\n",
+      "lines": [
+        {
+          "line": 33,
+          "messages": [
+            {
+              "message": "Expected { after 'if' condition.",
+              "code": "eslint(curly)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/curly.html",
+              "help": "Replace `return 0` with `{return 0}`.",
+              "filename": "packages/client/app/composables/useFileUtils.ts",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 861,
+                    "length": 8,
+                    "line": 33,
+                    "column": 5
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        },
+        {
+          "line": 53,
+          "messages": [
+            {
+              "message": "Expected { after 'if' condition.",
+              "code": "eslint(curly)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/curly.html",
+              "help": "Replace `return ''` with `{return ''}`.",
+              "filename": "packages/client/app/composables/useFileUtils.ts",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 1590,
+                    "length": 9,
+                    "line": 53,
+                    "column": 5
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "packages/client/app/components/LineError.vue",
+      "source": "<script setup lang=\"ts\">\nimport type { Label, LineData } from '~~/types'\nimport { calculateErrorHeight, getFileExt, processLabelHtml } from '~/composables/useFileUtils'\n\ninterface Props {\n  lineData: LineData\n  filename: string\n  source: string\n}\n\nconst props = defineProps<Props>()\n\n// 计算当前行的代码\nconst currentLineCode = computed(() => {\n  const lines = props.source.split('\\n')\n  return lines[props.lineData.line - 1] || ''\n})\n\n// 获取文件扩展名\nconst fileExt = computed(() => getFileExt(props.filename))\n\n// 计算错误标记高度\nconst errorHeight = computed(() => calculateErrorHeight(props.lineData.messages))\n\n// 获取排序后的标签\nconst sortedLabels = computed(() => {\n  return props.lineData.messages\n    .flatMap(m => m.labels || [])\n    .sort((a, b) => a.span.column - b.span.column)\n})\n\n// 获取标签对应的消息\nfunction getMessageForLabel(labelIndex: number) {\n  let currentIndex = 0\n  for (const message of props.lineData.messages) {\n    if (message.labels) {\n      for (const _ of message.labels) {\n        if (currentIndex === labelIndex) {\n          return message\n        }\n        currentIndex++\n      }\n    }\n  }\n  return null\n}\n\n// 计算标签的垂直位置样式\nfunction getLabelVerticalStyle(labelIndex: number) {\n  const label = sortedLabels.value[labelIndex]\n  if (!label)\n    return { left: '0ch' }\n\n  return {\n    left: `calc(${Math.floor((label.span.length - 1) / 2)}ch)`,\n  }\n}\n\n// 生成标签指示器\nfunction generateLabelIndicator(label: Label) {\n  const preDashes = Math.floor((label.span.length - 1) / 2)\n  const postDashes = Math.ceil((label.span.length - 1) / 2)\n\n  return {\n    preDashes: Array.from({ length: preDashes }, (_, i) => i),\n    postDashes: Array.from({ length: postDashes }, (_, i) => i),\n  }\n}\n</script>\n\n<template>\n  <div class=\"overflow-auto\">\n    <div class=\"p-4\">\n      <!-- 当前行代码 -->\n      <div class=\"flex gap-4 items-start\">\n        <span class=\"text-neutral-500 font-mono text-sm relative top-[3px]\">{{ lineData.line }}</span>\n        <div class=\"flex-1\">\n          <Shiki :code=\"currentLineCode\" :ext=\"fileExt\" />\n\n          <div class=\"flex relative text-neutral-400\" :style=\"{ minHeight: `${errorHeight}px`, top: '-10px' }\">\n            <a v-for=\"(label, labelIndex) in sortedLabels\" :key=\"labelIndex\" target=\"_blank\"\n              :href=\"getMessageForLabel(labelIndex)?.url\"\n              class=\"absolute whitespace-pre text-neutral-500/50 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer\"\n              :style=\"{ left: `calc(${label.span.column - 1}ch)` }\">\n              <UTooltip :delay-duration=\"100\" :content=\"{ side: 'top' }\" :disable-hoverable-content=\"false\"\n                :ui=\"{ content: 'py-4 px-5 h-auto max-w-sm' }\">\n                <template #content>\n                  <ErrorTooltip v-if=\"getMessageForLabel(labelIndex)\" :message=\"getMessageForLabel(labelIndex)!\"\n                    :filename=\"filename\" :line=\"lineData.line\" :column=\"label.span.column\" />\n                </template>\n                <div>\n                  <div>\n                    <span v-for=\"i in generateLabelIndicator(label).preDashes\" :key=\"`pre-${i}`\">─</span>┬<span\n                      v-for=\"i in generateLabelIndicator(label).postDashes\" :key=\"`post-${i}`\">─</span>\n                  </div>\n                  <div v-for=\"i in (sortedLabels.length - 1 - labelIndex)\" :key=\"`bar-${i}`\" class=\"relative\">\n                    │\n                  </div>\n                  <div class=\"relative flex\" :style=\"getLabelVerticalStyle(labelIndex)\">\n                    <div>╰─</div>\n                    <div\n                      v-html=\"processLabelHtml((label as any).label || getMessageForLabel(labelIndex)?.code || '')\" />\n                  </div>\n                </div>\n              </UTooltip>\n            </a>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</template>\n",
+      "lines": [
+        {
+          "line": 52,
+          "messages": [
+            {
+              "message": "Expected { after 'if' condition.",
+              "code": "eslint(curly)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/curly.html",
+              "help": "Replace `return { left: '0ch' }` with `{return { left: '0ch' }}`.",
+              "filename": "packages/client/app/components/LineError.vue",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 1340,
+                    "length": 22,
+                    "line": 52,
+                    "column": 5
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        }
+      ]
+    },
     {
       "filename": "tests/fixtures/foo.ts",
       "source": "const a = 1\nconst b = 2\nconst c = 3\n\nconst d = a + b + c\n\nconst e = 1\n\nconsole.log('a')\n",
@@ -164,10 +379,10 @@
     },
     {
       "filename": "packages/client/app/app.vue",
-      "source": "<script setup lang=\"ts\">\nimport Shiki from '~~/components/Shiki.vue'\n\nconst { data } = await useFetch('/api/payload.json', {})\n\n// 获取文件扩展名\nfunction getFileExt(filename: string) {\n  const ext = filename.split('.').pop()\n  return ext ? `.${ext}` : ''\n}\n\n// 获取文件图标\nfunction getFileIcon(filename: string) {\n  const ext = getFileExt(filename)\n  switch (ext) {\n    case '.ts':\n    case '.tsx':\n      return 'vscode-icons:file-type-typescript'\n    case '.js':\n    case '.jsx':\n      return 'vscode-icons:file-type-javascript'\n    case '.vue':\n      return 'vscode-icons:file-type-vue'\n    case '.css':\n      return 'vscode-icons:file-type-css'\n    case '.json':\n      return 'vscode-icons:file-type-json'\n    case '.md':\n      return 'vscode-icons:file-type-markdown'\n    default:\n      return 'vscode-icons:file-type-text'\n  }\n}\n\n// 计算错误标记的高度\nfunction calculateErrorHeight(messages: any[]) {\n  if (!messages || messages.length === 0)\n    return 0\n\n  // 计算所有 labels 的最大数量\n  const maxLabels = Math.max(...messages.map(msg => msg.labels?.length || 0))\n\n  // 每个 label 大约需要 2 行的高度（一行给指示器，一行给消息）\n  // 每行约 20px 高度，加上一些间距\n  return maxLabels > 0 ? maxLabels * 2 * 20 + 15 : 0\n}\n\n// 跳转到编辑器\nfunction openInEditor(filename: string, line: number, column: number) {\n  // 尝试使用 vscode:// 协议打开\n  const vscodeUrl = `vscode://file/${encodeURIComponent(filename)}:${line}:${column}`\n  window.open(vscodeUrl, '_blank')\n}\n\n// 处理 v-html 输入，将单引号中间的内容替换为带背景色\nfunction processLabelHtml(text: string) {\n  if (!text)\n    return ''\n\n  // 匹配单引号中间的内容，并替换为带背景色的 span\n  return text.replace(/'([^']+)'/g, '<span class=\"bg-neutral-100 px-1 py-0.5 rounded font-semibold\">$1</span>')\n}\n</script>\n\n<template>\n  <UApp>\n    <main class=\"container mx-auto p-4\">\n      <!-- 摘要信息 -->\n      <UCard v-if=\"data?.summary\" class=\"mb-4\">\n        <template #header>\n          <div class=\"flex items-center gap-2\">\n            <u-icon name=\"heroicons:information-circle\" />\n            <span>检查摘要</span>\n          </div>\n        </template>\n        <div class=\"grid grid-cols-2 md:grid-cols-4 gap-4 text-sm\">\n          <div>\n            <div class=\"text-neutral-500\">\n              检查文件数\n            </div>\n            <div class=\"font-mono\">\n              {{ data.summary.number_of_files }}\n            </div>\n          </div>\n          <div>\n            <div class=\"text-neutral-500\">\n              线程数\n            </div>\n            <div class=\"font-mono\">\n              {{ data.summary.threads_count }}\n            </div>\n          </div>\n          <div>\n            <div class=\"text-neutral-500\">\n              耗时\n            </div>\n            <div class=\"font-mono\">\n              {{ (data.summary.start_time * 1000).toFixed(2) }}ms\n            </div>\n          </div>\n          <div>\n            <div class=\"text-neutral-500\">\n              问题总数\n            </div>\n            <div class=\"font-mono\">\n              {{data.files?.reduce((sum, file) => sum + file.lines.reduce((s, line) => s + line.messages.length, 0), 0)\n                || 0}}\n            </div>\n          </div>\n        </div>\n      </UCard>\n\n      <!-- 文件列表 -->\n      <div v-if=\"data?.files\" class=\"space-y-6\">\n        <UCard v-for=\"file in data.files\" :key=\"file.filename\">\n          <template #header>\n            <div class=\"flex items-center gap-2\">\n              <u-icon :name=\"getFileIcon(file.filename)\" />\n              <span class=\"text-neutral-700 cursor-pointer hover:underline font-mono\">{{ file.filename }}</span>\n            </div>\n          </template>\n\n          <div class=\"relative font-mono\">\n            <!-- 问题列表 -->\n            <div v-if=\"file.lines.length > 0\" class=\"space-y-4\">\n              <div v-for=\"lineData in file.lines\" :key=\"`${file.filename}-${lineData.line}`\" class=\"overflow-hidden\">\n                <div class=\"p-4\">\n                  <!-- 当前行代码 -->\n                  <div class=\"flex gap-4 items-start\">\n                    <span class=\"text-neutral-500 font-mono text-sm relative top-[3px]\">{{ lineData.line }}</span>\n                    <div class=\"flex-1\">\n                      <Shiki :code=\"file.source.split('\\n')[lineData.line - 1] || ''\"\n                        :ext=\"getFileExt(file.filename)\" />\n\n                      <div class=\"flex relative text-neutral-400\"\n                        :style=\"{ minHeight: `${calculateErrorHeight(lineData.messages)}px` }\">\n                        <a v-for=\"(label, totalLabelIndex) in lineData.messages\n                          .flatMap(m => m.labels)\n                          .sort((a, b) => a.span.column - b.span.column)\" :key=\"totalLabelIndex\" target=\"_blank\"\n                          :href=\"lineData.messages[totalLabelIndex]?.url\"\n                          class=\"absolute whitespace-pre hover:text-neutral-800 cursor-pointer\"\n                          :style=\"{ left: `calc(${label.span.column - 1}ch)` }\">\n                          <div>\n                            <span v-for=\"i in Math.floor((label.span.length - 1) / 2)\" :key=\"`pre-${i}`\">─</span>┬<span\n                              v-for=\"i in Math.ceil((label.span.length - 1) / 2)\" :key=\"`post-${i}`\">─</span>\n                          </div>\n                          <div v-for=\"i in (lineData.messages.flatMap(m => m.labels).length - 1 - totalLabelIndex)\"\n                            :key=\"`bar-${i}`\" class=\"relative\"\n                            :style=\"{ left: `calc(${Math.floor((label.span.length - 1) / 2) - 1}ch)` }\">\n                            │\n                          </div>\n                          <div v-if=\"label.label\" class=\"relative flex\"\n                            :style=\"{ left: `calc(${Math.floor((label.span.length - 1) / 2) - 1}ch)` }\">\n                            <div>\n                              ╰─\n                            </div>\n                            <UTooltip :delay-duration=\"100\" :content=\"{ side: 'top' }\"\n                              :disable-hoverable-content=\"false\" :ui=\"{ content: 'py-4 px-5 h-auto max-w-sm' }\">\n                              <template #content>\n                                <div class=\"space-y-3\">\n                                  <!-- 标题区域 -->\n                                  <div class=\"flex items-center gap-2 pb-2 border-b border-neutral-200\">\n                                    <div class=\"flex items-center gap-2 px-2 py-1 rounded-md text-sm font-medium\"\n                                      :class=\"lineData.messages[totalLabelIndex]?.severity === 'error'\n                                        ? 'bg-red-50 text-red-700'\n                                        : 'bg-yellow-50 text-yellow-700'\">\n                                      <u-icon :name=\"lineData.messages[totalLabelIndex]?.severity === 'error'\n                                        ? 'radix-icons:cross-2'\n                                        : 'radix-icons:exclamation-triangle'\" class=\"w-3.5 h-3.5\" />\n                                      <span class=\"font-mono\">{{ lineData.messages[totalLabelIndex]?.code }}</span>\n                                    </div>\n                                  </div>\n\n                                  <!-- 消息内容 -->\n                                  <div v-if=\"lineData.messages[totalLabelIndex]?.message\"\n                                    class=\"text-sm leading-relaxed text-neutral-700\"\n                                    v-html=\"processLabelHtml(lineData.messages[totalLabelIndex]?.message)\" />\n\n                                  <!-- 帮助信息 -->\n                                  <div v-if=\"lineData.messages[totalLabelIndex]?.help\"\n                                    class=\"flex items-start gap-2 p-2 bg-blue-50 rounded-md border border-blue-100\">\n                                    <u-icon name=\"heroicons:light-bulb\"\n                                      class=\"w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0\" />\n                                    <div class=\"text-xs text-blue-700 leading-relaxed\">\n                                      {{ lineData.messages[totalLabelIndex]?.help }}\n                                    </div>\n                                  </div>\n\n                                  <!-- 操作按钮 -->\n                                  <div class=\"flex items-center gap-2 pt-2 border-t border-neutral-200\">\n                                    <!-- 跳转到规则 URL -->\n                                    <a v-if=\"lineData.messages[totalLabelIndex]?.url\"\n                                      :href=\"lineData.messages[totalLabelIndex]?.url\" target=\"_blank\"\n                                      class=\"flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-neutral-100 transition-colors text-xs text-neutral-600\">\n                                      <u-icon name=\"radix-icons:info-circled\" class=\"w-3.5 h-3.5\" />\n                                      <span>Check rule</span>\n                                    </a>\n\n                                    <!-- 跳转到编辑器 -->\n                                    <button\n                                      class=\"flex items-center gap-1.5 cursor-pointer px-2 py-1.5 rounded-md hover:bg-neutral-100 transition-colors text-xs text-neutral-600\"\n                                      @click=\"openInEditor(file.filename, lineData.line, label.span.column)\">\n                                      <u-icon name=\"radix-icons:open-in-new-window\" class=\"w-3.5 h-3.5\" />\n                                      <span>Open in editor</span>\n                                    </button>\n                                  </div>\n                                </div>\n                              </template>\n                              <div v-html=\"processLabelHtml(label.label)\" />\n                            </UTooltip>\n                          </div>\n                        </a>\n                      </div>\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </UCard>\n      </div>\n\n      <!-- 加载状态 -->\n      <div v-else-if=\"!data\" class=\"flex items-center justify-center py-12\">\n        <div class=\"text-center\">\n          <u-icon name=\"heroicons:arrow-path\" class=\"w-8 h-8 mx-auto mb-2 animate-spin text-neutral-400\" />\n          <div class=\"text-neutral-500\">\n            正在加载 oxlint 结果...\n          </div>\n        </div>\n      </div>\n\n      <!-- 空状态 -->\n      <div v-else class=\"flex items-center justify-center py-12\">\n        <div class=\"text-center\">\n          <u-icon name=\"heroicons:document-text\" class=\"w-8 h-8 mx-auto mb-2 text-neutral-400\" />\n          <div class=\"text-neutral-500\">\n            没有找到任何文件\n          </div>\n        </div>\n      </div>\n    </main>\n  </UApp>\n</template>\n",
+      "source": "<script setup lang=\"ts\">\nimport type { PayloadData } from '~~/types'\nimport { useDebounceFn, useLocalStorage } from '@vueuse/core'\nimport { isMatch } from 'picomatch'\n\nconst { data, pending } = await useFetch<PayloadData>('/api/payload.json', {})\n\n// 计算问题总数\nconst totalIssues = computed(() => {\n  if (!data.value?.files)\n    return 0\n  return data.value.files.reduce((sum, file) =>\n    sum + file.lines.reduce((s, line) => s + line.messages.length, 0), 0)\n})\n\n// 判断是否显示摘要\nconst showSummary = computed(() => !!data.value?.summary)\n\nconst search = ref('')\n\n// 防抖的搜索值\nconst debouncedSearch = ref('')\n\n// 使用 VueUse 的 useDebounceFn 创建防抖函数\nconst debouncedUpdateSearch = useDebounceFn((value: string) => {\n  debouncedSearch.value = value\n}, 300)\n\n// 监听搜索值变化\nwatch(search, (newValue) => {\n  debouncedUpdateSearch(newValue)\n}, { immediate: true })\n\n\nconst filteredFiles = computed(() => {\n  if (!data.value?.files)\n    return []\n\n  const searchTerm = debouncedSearch.value.trim()\n\n  // 如果搜索词为空，返回所有文件\n  if (!searchTerm) {\n    return data.value.files\n  }\n\n  // 尝试使用 picomatch 进行 glob 匹配\n  try {\n    return data.value.files.filter(file => isMatch(file.filename, searchTerm, { contains: true }))\n  } catch (error) {\n    // 如果 glob 模式无效，回退到简单的字符串包含匹配\n    return data.value.files.filter(file => file.filename.includes(searchTerm))\n  }\n})\n\n// 判断是否显示文件列表\nconst showFiles = computed(() => !!filteredFiles.value && filteredFiles.value.length > 0)\n\n\n// 判断是否显示空状态\nconst showEmpty = computed(() => filteredFiles.value && (!filteredFiles.value.length || filteredFiles.value.length === 0))\n\n\n// 计算布局类名\nconst layoutClass = computed(() => {\n  if (layout.value === 'single') {\n    return 'grid-cols-1'\n  }\n  return 'grid-cols-1 lg:grid-cols-2'\n})\n\nconst layout = useLocalStorage<'single' | 'double'>('layout', 'double')\n</script>\n\n<template>\n  <UApp>\n    <div class=\"container mx-auto p-4\">\n\n      <AppHeader />\n\n      <main>\n\n        <!-- 摘要信息 -->\n        <SummaryCard v-if=\"showSummary && data?.summary\" :summary=\"data.summary\" :total-issues=\"totalIssues\"\n          :version=\"data.version\" :config=\"data.config\" />\n\n        <!-- 搜索和布局控制区域 -->\n        <div class=\"flex flex-col sm:flex-row gap-3 mb-3 items-start sm:items-center\">\n          <Search v-model=\"search\" class=\"flex-1\" />\n          <LayoutToggle v-model=\"layout\" />\n        </div>\n\n        <!-- 文件列表 -->\n        <div v-if=\"showFiles\" :class=\"['grid gap-4', layoutClass]\">\n          <FileCard v-for=\"file in filteredFiles\" :key=\"file.filename\" :file=\"file\" />\n        </div>\n\n        <!-- 加载状态 -->\n        <LoadingState v-else-if=\"pending\" />\n\n        <!-- 空状态 -->\n        <EmptyState v-else-if=\"showEmpty\" />\n      </main>\n    </div>\n\n  </UApp>\n</template>\n",
       "lines": [
         {
-          "line": 38,
+          "line": 11,
           "messages": [
             {
               "message": "Expected { after 'if' condition.",
@@ -180,9 +395,9 @@
               "labels": [
                 {
                   "span": {
-                    "offset": 976,
+                    "offset": 337,
                     "length": 8,
-                    "line": 38,
+                    "line": 11,
                     "column": 5
                   }
                 }
@@ -192,7 +407,7 @@
           ]
         },
         {
-          "line": 58,
+          "line": 37,
           "messages": [
             {
               "message": "Expected { after 'if' condition.",
@@ -200,14 +415,14 @@
               "severity": "error",
               "causes": [],
               "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/curly.html",
-              "help": "Replace `return ''` with `{return ''}`.",
+              "help": "Replace `return []` with `{return []}`.",
               "filename": "packages/client/app/app.vue",
               "labels": [
                 {
                   "span": {
-                    "offset": 1691,
+                    "offset": 982,
                     "length": 9,
-                    "line": 58,
+                    "line": 37,
                     "column": 5
                   }
                 }
@@ -220,9 +435,9 @@
     }
   ],
   "summary": {
-    "number_of_files": 16,
+    "number_of_files": 27,
     "number_of_rules": null,
     "threads_count": 8,
-    "start_time": 0.019192625
+    "start_time": 0.013002125
   }
 }

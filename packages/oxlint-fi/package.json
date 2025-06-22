@@ -43,5 +43,8 @@
     "mrmime": "^2.0.1",
     "open": "^10.1.2",
     "pathe": "^2.0.3"
+  },
+  "devDependencies": {
+    "oxlint": "catalog:"
   }
 }

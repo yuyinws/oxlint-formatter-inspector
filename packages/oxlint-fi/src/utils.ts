@@ -1,8 +1,33 @@
 import { execSync } from 'node:child_process'
 import { readFile } from 'node:fs/promises'
 import { dirname } from 'node:path'
+import { cwd, exit } from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { resolve } from 'pathe'
+
+export async function getOxlintVersion() {
+  try {
+    const version = execSync('npx oxlint --version', { encoding: 'utf-8' })
+    return version.split(' ')[1].replaceAll('\n', '')
+  }
+  catch {
+    console.error('Oxlint is not installed, please install it first')
+    exit(1)
+  }
+}
+
+export async function getOxlintConfig() {
+  // 读取当前目录下的 .oxlintrc.json 文件
+  const configPath = resolve(cwd(), '.oxlintrc.json')
+  try {
+    const config = await readFile(configPath, 'utf-8')
+
+    return config
+  }
+  catch {
+    return null
+  }
+}
 
 function wrapOxlintCommand(rawArgs: string[], buildMode?: boolean) {
   const args = buildMode ? rawArgs.slice(1) : rawArgs

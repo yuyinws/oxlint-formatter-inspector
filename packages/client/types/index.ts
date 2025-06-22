@@ -38,6 +38,8 @@ export interface Summary {
 }
 
 export interface PayloadData {
+  version: string
+  config: object | null
   summary?: Summary
   files?: FileData[]
 }

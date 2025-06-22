@@ -1,2 +1,5 @@
 packages:
   - packages/*
+
+catalog:
+  oxlint: ^1.2.0

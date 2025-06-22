@@ -57,7 +57,7 @@ function handleOpenInEditor() {
       <a v-if="message.url" :href="message.url" target="_blank"
         class="flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors text-xs text-neutral-600 dark:text-neutral-400">
         <u-icon name="radix-icons:info-circled" class="w-3.5 h-3.5" />
-        <span>Check rule</span>
+        <span>Rule details</span>
       </a>
 
       <!-- 跳转到编辑器 -->

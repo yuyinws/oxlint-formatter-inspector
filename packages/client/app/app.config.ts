@@ -8,5 +8,9 @@ export default defineAppConfig({
         footer: 'p-4 sm:px-6',
       },
     },
+    colors: {
+      primary: 'amber',
+      neutral: 'zinc',
+    },
   },
 })

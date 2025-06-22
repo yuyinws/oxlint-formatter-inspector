@@ -7,17 +7,23 @@ import { cli, define } from 'gunshi'
 import { H3, serve, serveStatic } from 'h3'
 import { lookup } from 'mrmime'
 import { join } from 'pathe'
-import { clientDir, execOxlintCommand, groupByFilename } from './utils'
+import { clientDir, execOxlintCommand, getOxlintConfig, getOxlintVersion, groupByFilename } from './utils'
 
 const mainCommand = define({
   name: 'main',
   run: async ({ _ }) => {
+    const version = await getOxlintVersion()
+    const config = await getOxlintConfig()
     const rawOutput = execOxlintCommand(_, false)
     const groupedOutput = await groupByFilename(rawOutput)
     const app = new H3()
 
     app.use('/api/payload.json', () => {
-      return groupedOutput
+      return {
+        version,
+        config: config ? JSON.parse(config) : null,
+        ...groupedOutput,
+      }
     })
 
     app.use('/**', (event) => {

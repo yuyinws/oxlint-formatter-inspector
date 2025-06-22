@@ -12,8 +12,16 @@ function getLang(ext: string) {
       return 'css'
     case '.js':
       return 'javascript'
+    case '.mjs':
+      return 'javascript'
+    case '.cjs':
+      return 'javascript'
     case '.jsx':
       return 'javascript'
+    case '.mts':
+      return 'typescript'
+    case '.cts':
+      return 'typescript'
     case '.ts':
       return 'typescript'
     case '.tsx':
