@@ -37,7 +37,7 @@ export function calculateErrorHeight(messages: any[]) {
 
   // 每个 label 大约需要 2 行的高度（一行给指示器，一行给消息）
   // 每行约 20px 高度，加上一些间距
-  return maxLabels > 0 ? maxLabels * 2 * 20 + 15 : 0
+  return maxLabels > 0 ? maxLabels * 3 * 20 + 15 : 0
 }
 
 // 跳转到编辑器

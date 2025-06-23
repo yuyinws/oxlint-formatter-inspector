@@ -9,6 +9,7 @@
     ],
     "categories": {},
     "rules": {
+      "no-console": "error",
       "for-direction": "warn",
       "no-async-promise-executor": "warn",
       "no-caller": "warn",
@@ -129,67 +130,11 @@
   },
   "files": [
     {
-      "filename": "packages/client/app/composables/useFileUtils.ts",
-      "source": "// 获取文件扩展名\nexport function getFileExt(filename: string) {\n  const ext = filename.split('.').pop()\n  return ext ? `.${ext}` : ''\n}\n\n// 获取文件图标\nexport function getFileIcon(filename: string) {\n  const ext = getFileExt(filename)\n  switch (ext) {\n    case '.ts':\n    case '.tsx':\n      return 'vscode-icons:file-type-typescript'\n    case '.js':\n    case '.jsx':\n      return 'vscode-icons:file-type-js'\n    case '.vue':\n      return 'vscode-icons:file-type-vue'\n    case '.css':\n      return 'vscode-icons:file-type-css'\n    case '.json':\n      return 'vscode-icons:file-type-json'\n    case '.md':\n      return 'vscode-icons:file-type-markdown'\n    default:\n      return 'vscode-icons:file-type-text'\n  }\n}\n\n// 计算错误标记的高度\nexport function calculateErrorHeight(messages: any[]) {\n  if (!messages || messages.length === 0)\n    return 0\n\n  // 计算所有 labels 的最大数量\n  const maxLabels = Math.max(...messages.map(msg => msg.labels?.length || 0))\n\n  // 每个 label 大约需要 2 行的高度（一行给指示器，一行给消息）\n  // 每行约 20px 高度，加上一些间距\n  return maxLabels > 0 ? maxLabels * 2 * 20 + 15 : 0\n}\n\n// 跳转到编辑器\nexport function openInEditor(filename: string, line: number, column: number) {\n  // 尝试使用 vscode:// 协议打开\n  const vscodeUrl = `vscode://file/${encodeURIComponent(filename)}:${line}:${column}`\n  window.open(vscodeUrl, '_blank')\n}\n\n// 处理 v-html 输入，将单引号中间的内容替换为带背景色\nexport function processLabelHtml(text: string) {\n  if (!text)\n    return ''\n\n  // 匹配单引号和反引号中间的内容，并替换为带背景色的 span\n  return text.replace(/['`]([^'`]+)['`]/g, '<span class=\"bg-neutral-100 dark:bg-neutral-800 px-1 py-0.5 rounded font-semibold\">$1</span>')\n}\n",
-      "lines": [
-        {
-          "line": 33,
-          "messages": [
-            {
-              "message": "Expected { after 'if' condition.",
-              "code": "eslint(curly)",
-              "severity": "error",
-              "causes": [],
-              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/curly.html",
-              "help": "Replace `return 0` with `{return 0}`.",
-              "filename": "packages/client/app/composables/useFileUtils.ts",
-              "labels": [
-                {
-                  "span": {
-                    "offset": 861,
-                    "length": 8,
-                    "line": 33,
-                    "column": 5
-                  }
-                }
-              ],
-              "related": []
-            }
-          ]
-        },
-        {
-          "line": 53,
-          "messages": [
-            {
-              "message": "Expected { after 'if' condition.",
-              "code": "eslint(curly)",
-              "severity": "error",
-              "causes": [],
-              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/curly.html",
-              "help": "Replace `return ''` with `{return ''}`.",
-              "filename": "packages/client/app/composables/useFileUtils.ts",
-              "labels": [
-                {
-                  "span": {
-                    "offset": 1590,
-                    "length": 9,
-                    "line": 53,
-                    "column": 5
-                  }
-                }
-              ],
-              "related": []
-            }
-          ]
-        }
-      ]
-    },
-    {
       "filename": "packages/client/app/components/LineError.vue",
-      "source": "<script setup lang=\"ts\">\nimport type { Label, LineData } from '~~/types'\nimport { calculateErrorHeight, getFileExt, processLabelHtml } from '~/composables/useFileUtils'\n\ninterface Props {\n  lineData: LineData\n  filename: string\n  source: string\n}\n\nconst props = defineProps<Props>()\n\n// 计算当前行的代码\nconst currentLineCode = computed(() => {\n  const lines = props.source.split('\\n')\n  return lines[props.lineData.line - 1] || ''\n})\n\n// 获取文件扩展名\nconst fileExt = computed(() => getFileExt(props.filename))\n\n// 计算错误标记高度\nconst errorHeight = computed(() => calculateErrorHeight(props.lineData.messages))\n\n// 获取排序后的标签\nconst sortedLabels = computed(() => {\n  return props.lineData.messages\n    .flatMap(m => m.labels || [])\n    .sort((a, b) => a.span.column - b.span.column)\n})\n\n// 获取标签对应的消息\nfunction getMessageForLabel(labelIndex: number) {\n  let currentIndex = 0\n  for (const message of props.lineData.messages) {\n    if (message.labels) {\n      for (const _ of message.labels) {\n        if (currentIndex === labelIndex) {\n          return message\n        }\n        currentIndex++\n      }\n    }\n  }\n  return null\n}\n\n// 计算标签的垂直位置样式\nfunction getLabelVerticalStyle(labelIndex: number) {\n  const label = sortedLabels.value[labelIndex]\n  if (!label)\n    return { left: '0ch' }\n\n  return {\n    left: `calc(${Math.floor((label.span.length - 1) / 2)}ch)`,\n  }\n}\n\n// 生成标签指示器\nfunction generateLabelIndicator(label: Label) {\n  const preDashes = Math.floor((label.span.length - 1) / 2)\n  const postDashes = Math.ceil((label.span.length - 1) / 2)\n\n  return {\n    preDashes: Array.from({ length: preDashes }, (_, i) => i),\n    postDashes: Array.from({ length: postDashes }, (_, i) => i),\n  }\n}\n</script>\n\n<template>\n  <div class=\"overflow-auto\">\n    <div class=\"p-4\">\n      <!-- 当前行代码 -->\n      <div class=\"flex gap-4 items-start\">\n        <span class=\"text-neutral-500 font-mono text-sm relative top-[3px]\">{{ lineData.line }}</span>\n        <div class=\"flex-1\">\n          <Shiki :code=\"currentLineCode\" :ext=\"fileExt\" />\n\n          <div class=\"flex relative text-neutral-400\" :style=\"{ minHeight: `${errorHeight}px`, top: '-10px' }\">\n            <a v-for=\"(label, labelIndex) in sortedLabels\" :key=\"labelIndex\" target=\"_blank\"\n              :href=\"getMessageForLabel(labelIndex)?.url\"\n              class=\"absolute whitespace-pre text-neutral-500/50 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer\"\n              :style=\"{ left: `calc(${label.span.column - 1}ch)` }\">\n              <UTooltip :delay-duration=\"100\" :content=\"{ side: 'top' }\" :disable-hoverable-content=\"false\"\n                :ui=\"{ content: 'py-4 px-5 h-auto max-w-sm' }\">\n                <template #content>\n                  <ErrorTooltip v-if=\"getMessageForLabel(labelIndex)\" :message=\"getMessageForLabel(labelIndex)!\"\n                    :filename=\"filename\" :line=\"lineData.line\" :column=\"label.span.column\" />\n                </template>\n                <div>\n                  <div>\n                    <span v-for=\"i in generateLabelIndicator(label).preDashes\" :key=\"`pre-${i}`\">─</span>┬<span\n                      v-for=\"i in generateLabelIndicator(label).postDashes\" :key=\"`post-${i}`\">─</span>\n                  </div>\n                  <div v-for=\"i in (sortedLabels.length - 1 - labelIndex)\" :key=\"`bar-${i}`\" class=\"relative\">\n                    │\n                  </div>\n                  <div class=\"relative flex\" :style=\"getLabelVerticalStyle(labelIndex)\">\n                    <div>╰─</div>\n                    <div\n                      v-html=\"processLabelHtml((label as any).label || getMessageForLabel(labelIndex)?.code || '')\" />\n                  </div>\n                </div>\n              </UTooltip>\n            </a>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</template>\n",
+      "source": "<script setup lang=\"ts\">\nimport type { Label, LineData } from '~~/types'\nimport { calculateErrorHeight, getFileExt, processLabelHtml } from '~/composables/useFileUtils'\n\ninterface Props {\n  lineData: LineData\n  filename: string\n  source: string\n}\n\nconst props = defineProps<Props>()\n\n// 计算当前行的代码\nconst currentLineCode = computed(() => {\n  const lines = props.source.split('\\n')\n  return lines[props.lineData.line - 1] || ''\n})\n\n// 获取文件扩展名\nconst fileExt = computed(() => getFileExt(props.filename))\n\n// 计算错误标记高度\nconst errorHeight = computed(() => calculateErrorHeight(props.lineData.messages))\n\n// 获取排序后的标签\nconst sortedLabels = computed(() => {\n  return props.lineData.messages\n    .flatMap(m => m.labels || [])\n    .sort((a, b) => a.span.column - b.span.column)\n})\n\n// 获取标签对应的消息\nfunction getMessageForLabel(column: number) {\n  for (const message of props.lineData.messages) {\n    if (message.labels) {\n      for (const label of message.labels) {\n        if (label.span.column === column) {\n          return message\n        }\n      }\n    }\n  }\n  return null\n}\n\n// 计算标签的垂直位置样式\nfunction getLabelVerticalStyle(labelIndex: number, baseLeft = 0) {\n  const label = sortedLabels.value[labelIndex]\n  if (!label)\n    return { left: '0ch' }\n\n  return {\n    left: `calc(${Math.floor((label.span.length - 1) / 2) + baseLeft}ch)`,\n  }\n}\n\n// 生成标签指示器\nfunction generateLabelIndicator(label: Label) {\n  const preDashes = Math.floor((label.span.length - 1) / 2)\n  const postDashes = Math.ceil((label.span.length - 1) / 2)\n\n  return {\n    preDashes: Array.from({ length: preDashes }, (_, i) => i),\n    postDashes: Array.from({ length: postDashes }, (_, i) => i),\n  }\n}\n</script>\n\n<template>\n  <div class=\"overflow-auto\">\n    <div class=\"p-4\">\n      <!-- 当前行代码 -->\n      <div class=\"flex gap-4 items-start\">\n        <span class=\"text-neutral-500 font-mono text-sm relative top-[3px]\">{{ lineData.line }}</span>\n        <div class=\"flex-1\">\n          <Shiki :code=\"currentLineCode\" :ext=\"fileExt\" />\n\n          <div class=\"flex relative text-neutral-400\" :style=\"{ minHeight: `${errorHeight}px`, top: '-10px' }\">\n            <a v-for=\"(label, labelIndex) in sortedLabels\" :key=\"labelIndex\" target=\"_blank\"\n              :href=\"getMessageForLabel(label.span.column)?.url\"\n              class=\"absolute whitespace-pre text-neutral-500/50 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer\"\n              :style=\"{ left: `calc(${label.span.column - 1}ch)` }\">\n              <UTooltip :delay-duration=\"100\" :content=\"{ side: 'top' }\" :disable-hoverable-content=\"false\"\n                :ui=\"{ content: 'py-4 px-5 h-auto max-w-sm' }\">\n                <template #content>\n                  <ErrorTooltip v-if=\"getMessageForLabel(label.span.column)\"\n                    :message=\"getMessageForLabel(label.span.column)!\" :filename=\"filename\" :line=\"lineData.line\"\n                    :column=\"label.span.column\" />\n                </template>\n                <div>\n                  <div>\n                    <span v-for=\"i in generateLabelIndicator(label).preDashes\" :key=\"`pre-${i}`\">─</span>\n                    <span>┬</span>\n                    <span v-for=\"i in generateLabelIndicator(label).postDashes\" :key=\"`post-${i}`\">─</span>\n                  </div>\n                  <div v-for=\"i in (sortedLabels.length - labelIndex - 1) * 2\" :key=\"`bar-${i}`\" class=\"relative\"\n                    :style=\"getLabelVerticalStyle(labelIndex, -1)\">\n                    │\n                  </div>\n                  <div class=\"relative flex\" :style=\"getLabelVerticalStyle(labelIndex)\">\n                    <div>╰─</div>\n                    <div\n                      v-html=\"processLabelHtml((label as any).label || getMessageForLabel(label.span.column)?.code || '')\" />\n                  </div>\n                </div>\n              </UTooltip>\n            </a>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</template>\n",
       "lines": [
         {
-          "line": 52,
+          "line": 50,
           "messages": [
             {
               "message": "Expected { after 'if' condition.",
@@ -202,9 +147,9 @@
               "labels": [
                 {
                   "span": {
-                    "offset": 1340,
+                    "offset": 1309,
                     "length": 22,
-                    "line": 52,
+                    "line": 50,
                     "column": 5
                   }
                 }
@@ -216,28 +161,27 @@
       ]
     },
     {
-      "filename": "tests/fixtures/foo.ts",
-      "source": "const a = 1\nconst b = 2\nconst c = 3\n\nconst d = a + b + c\n\nconst e = 1\n\nconsole.log('a')\n",
+      "filename": "packages/oxlint-fi/src/utils.ts",
+      "source": "import { execSync } from 'node:child_process'\nimport { readFile } from 'node:fs/promises'\nimport { dirname } from 'node:path'\nimport { cwd, exit } from 'node:process'\nimport { fileURLToPath } from 'node:url'\nimport { resolve } from 'pathe'\n\nexport async function getOxlintVersion() {\n  try {\n    const version = execSync('npx oxlint --version', { encoding: 'utf-8' })\n    return version.split(' ')[1].replaceAll('\\n', '')\n  }\n  catch {\n    console.error('Oxlint is not installed, please install it first')\n    exit(1)\n  }\n}\n\nexport async function getOxlintConfig() {\n  // 读取当前目录下的 .oxlintrc.json 文件\n  const configPath = resolve(cwd(), '.oxlintrc.json')\n  try {\n    const config = await readFile(configPath, 'utf-8')\n\n    return config\n  }\n  catch {\n    return null\n  }\n}\n\nfunction wrapOxlintCommand(rawArgs: string[], buildMode?: boolean) {\n  const args = buildMode ? rawArgs.slice(1) : rawArgs\n  const commandArgs = ['npx', 'oxlint', '-f', 'json', ...args]\n  return commandArgs.join(' ')\n}\n\nexport function execOxlintCommand(rawArgs: string[], buildMode?: boolean) {\n  try {\n    const oxlintCommand = wrapOxlintCommand(rawArgs, buildMode)\n    const output = execSync(oxlintCommand, { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] })\n    return output\n  }\n  catch (error) {\n    if (error instanceof Error && 'stdout' in error) {\n      return error.stdout as string\n    }\n    throw error\n  }\n}\n\nexport const clientDir = resolve(dirname(fileURLToPath(import.meta.url)), './client/public')\n\n// 按 filename 分组的函数\nexport async function groupByFilename(oxlintOutput: string) {\n  try {\n    const data = JSON.parse(oxlintOutput)\n    const diagnostics = data.diagnostics || []\n\n    // 按 filename 分组\n    const grouped = diagnostics.reduce((acc: Record<string, any>, diagnostic: any) => {\n      const filename = diagnostic.filename\n      if (!acc[filename]) {\n        acc[filename] = {\n          filename,\n          lines: {},\n        }\n      }\n\n      // 按 line 分组\n      const line = diagnostic.labels?.[0]?.span?.line || 1\n      if (!acc[filename].lines[line]) {\n        acc[filename].lines[line] = []\n      }\n      acc[filename].lines[line].push(diagnostic)\n\n      return acc\n    }, {})\n\n    // 转换为数组格式，并将 lines 对象转换为数组，同时读取文件内容\n    const result = await Promise.all(\n      Object.values(grouped).map(async (file: any) => {\n        let source = ''\n        try {\n          source = await readFile(file.filename, 'utf-8')\n        }\n        catch (error) {\n          console.warn(`无法读取文件 ${file.filename}:`, error)\n          source = ''\n        }\n\n        return {\n          filename: file.filename,\n          source,\n          lines: Object.entries(file.lines).map(([line, messages]: [string, any]) => ({\n            line: Number.parseInt(line),\n            messages,\n          })).sort((a, b) => a.line - b.line), // 按行号排序\n        }\n      }),\n    )\n\n    return {\n      files: result,\n      summary: {\n        number_of_files: data.number_of_files,\n        number_of_rules: data.number_of_rules,\n        threads_count: data.threads_count,\n        start_time: data.start_time,\n        files_with_issues: result.length,\n        error_count: diagnostics.filter((d: any) => d.severity === 'error').length,\n        warning_count: diagnostics.filter((d: any) => d.severity === 'warning').length,\n      },\n    }\n  }\n  catch (error) {\n    console.error('解析 oxlint 输出失败:', error)\n    return { files: [], summary: {} }\n  }\n}\n",
       "lines": [
         {
-          "line": 5,
+          "line": 14,
           "messages": [
             {
-              "message": "Variable 'd' is declared but never used. Unused variables should start with a '_'.",
-              "code": "eslint(no-unused-vars)",
-              "severity": "warning",
+              "message": "Unexpected console statement.",
+              "code": "eslint(no-console)",
+              "severity": "error",
               "causes": [],
-              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
-              "help": "Consider removing this declaration.",
-              "filename": "tests/fixtures/foo.ts",
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-console.html",
+              "help": "Delete this console statement.",
+              "filename": "packages/oxlint-fi/src/utils.ts",
               "labels": [
                 {
-                  "label": "'d' is declared here",
                   "span": {
-                    "offset": 43,
-                    "length": 1,
-                    "line": 5,
-                    "column": 7
+                    "offset": 440,
+                    "length": 13,
+                    "line": 14,
+                    "column": 5
                   }
                 }
               ],
@@ -246,24 +190,48 @@
           ]
         },
         {
-          "line": 7,
+          "line": 88,
           "messages": [
             {
-              "message": "Variable 'e' is declared but never used. Unused variables should start with a '_'.",
-              "code": "eslint(no-unused-vars)",
-              "severity": "warning",
+              "message": "Unexpected console statement.",
+              "code": "eslint(no-console)",
+              "severity": "error",
               "causes": [],
-              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
-              "help": "Consider removing this declaration.",
-              "filename": "tests/fixtures/foo.ts",
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-console.html",
+              "help": "Delete this console statement.",
+              "filename": "packages/oxlint-fi/src/utils.ts",
               "labels": [
                 {
-                  "label": "'e' is declared here",
                   "span": {
-                    "offset": 64,
-                    "length": 1,
-                    "line": 7,
-                    "column": 7
+                    "offset": 2554,
+                    "length": 12,
+                    "line": 88,
+                    "column": 11
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        },
+        {
+          "line": 117,
+          "messages": [
+            {
+              "message": "Unexpected console statement.",
+              "code": "eslint(no-console)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-console.html",
+              "help": "Delete this console statement.",
+              "filename": "packages/oxlint-fi/src/utils.ts",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 3441,
+                    "length": 13,
+                    "line": 117,
+                    "column": 5
                   }
                 }
               ],
@@ -274,100 +242,27 @@
       ]
     },
     {
-      "filename": "tests/fixtures/bar.ts",
-      "source": "function bar() { console.log('xxx'); function baz() { console.log('xxx') } }\n\n\nfunction foo() { console.log('xxx') }\n\nconsole.log('xxxx');\n\n\ndebugger\n",
+      "filename": "packages/oxlint-fi/src/index.ts",
+      "source": "import { readFile, stat } from 'node:fs/promises'\nimport { argv } from 'node:process'\nimport c from 'ansis'\nimport consola from 'consola'\nimport { getPort } from 'get-port-please'\nimport { cli, define } from 'gunshi'\nimport { H3, serve, serveStatic } from 'h3'\nimport { lookup } from 'mrmime'\nimport { join } from 'pathe'\nimport { clientDir, execOxlintCommand, getOxlintConfig, getOxlintVersion, groupByFilename } from './utils'\n\nconst mainCommand = define({\n  name: 'main',\n  run: async ({ _ }) => {\n    const version = await getOxlintVersion()\n    const config = await getOxlintConfig()\n    const rawOutput = execOxlintCommand(_, false)\n    const groupedOutput = await groupByFilename(rawOutput)\n    const app = new H3()\n\n    app.use('/api/payload.json', () => {\n      return {\n        version,\n        config: config ? JSON.parse(config) : null,\n        ...groupedOutput,\n      }\n    })\n\n    app.use('/**', (event) => {\n      return serveStatic(event, {\n        indexNames: ['/index.html'],\n        getContents: id => readFile(join(clientDir, id)),\n        getMeta: async (id) => {\n          const stats = await stat(join(clientDir, id)).catch(() => { })\n          if (stats?.isFile()) {\n            return {\n              size: stats.size,\n              mtime: stats.mtimeMs,\n              type: lookup(id),\n            }\n          }\n        },\n        fallthrough: true,\n      })\n    })\n\n    const port = await getPort({ port: 3778, portRange: [3778, 4000] })\n\n    serve(app, { port, silent: true })\n\n    consola.info(`Starting Oxlint formatter inspector at`, c.green`http://localhost:${port}`, '\\n')\n  },\n})\n\nconst buildCommand = define({\n  name: 'build',\n  run: async ({ _ }) => {\n    const rawOutput = execOxlintCommand(_, true)\n    const groupedOutput = await groupByFilename(rawOutput)\n    console.log(JSON.stringify(groupedOutput, null, 2))\n  },\n})\n\ncli(argv.slice(2), mainCommand, {\n  name: 'oxlint-formatter-inspector',\n  description: 'hello world',\n  version: '1.0.0',\n  subCommands: new Map([\n    ['build', buildCommand],\n  ]),\n})\n",
       "lines": [
         {
-          "line": 1,
+          "line": 60,
           "messages": [
             {
-              "message": "Function 'bar' is declared but never used.",
-              "code": "eslint(no-unused-vars)",
-              "severity": "warning",
-              "causes": [],
-              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
-              "help": "Consider removing this declaration.",
-              "filename": "tests/fixtures/bar.ts",
-              "labels": [
-                {
-                  "label": "'bar' is declared here",
-                  "span": {
-                    "offset": 9,
-                    "length": 3,
-                    "line": 1,
-                    "column": 10
-                  }
-                }
-              ],
-              "related": []
-            },
-            {
-              "message": "Function 'baz' is declared but never used.",
-              "code": "eslint(no-unused-vars)",
-              "severity": "warning",
-              "causes": [],
-              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
-              "help": "Consider removing this declaration.",
-              "filename": "tests/fixtures/bar.ts",
-              "labels": [
-                {
-                  "label": "'baz' is declared here",
-                  "span": {
-                    "offset": 46,
-                    "length": 3,
-                    "line": 1,
-                    "column": 47
-                  }
-                }
-              ],
-              "related": []
-            }
-          ]
-        },
-        {
-          "line": 4,
-          "messages": [
-            {
-              "message": "Function 'foo' is declared but never used.",
-              "code": "eslint(no-unused-vars)",
-              "severity": "warning",
-              "causes": [],
-              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
-              "help": "Consider removing this declaration.",
-              "filename": "tests/fixtures/bar.ts",
-              "labels": [
-                {
-                  "label": "'foo' is declared here",
-                  "span": {
-                    "offset": 88,
-                    "length": 3,
-                    "line": 4,
-                    "column": 10
-                  }
-                }
-              ],
-              "related": []
-            }
-          ]
-        },
-        {
-          "line": 9,
-          "messages": [
-            {
-              "message": "`debugger` statement is not allowed",
-              "code": "eslint(no-debugger)",
+              "message": "Unexpected console statement.",
+              "code": "eslint(no-console)",
               "severity": "error",
               "causes": [],
-              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-debugger.html",
-              "help": "Remove the debugger statement",
-              "filename": "tests/fixtures/bar.ts",
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-console.html",
+              "help": "Delete this console statement.",
+              "filename": "packages/oxlint-fi/src/index.ts",
               "labels": [
                 {
                   "span": {
-                    "offset": 141,
-                    "length": 8,
-                    "line": 9,
-                    "column": 1
+                    "offset": 1800,
+                    "length": 11,
+                    "line": 60,
+                    "column": 5
                   }
                 }
               ],
@@ -432,12 +327,333 @@
           ]
         }
       ]
+    },
+    {
+      "filename": "packages/client/app/composables/useFileUtils.ts",
+      "source": "// 获取文件扩展名\nexport function getFileExt(filename: string) {\n  const ext = filename.split('.').pop()\n  return ext ? `.${ext}` : ''\n}\n\n// 获取文件图标\nexport function getFileIcon(filename: string) {\n  const ext = getFileExt(filename)\n  switch (ext) {\n    case '.ts':\n    case '.tsx':\n      return 'vscode-icons:file-type-typescript'\n    case '.js':\n    case '.jsx':\n      return 'vscode-icons:file-type-js'\n    case '.vue':\n      return 'vscode-icons:file-type-vue'\n    case '.css':\n      return 'vscode-icons:file-type-css'\n    case '.json':\n      return 'vscode-icons:file-type-json'\n    case '.md':\n      return 'vscode-icons:file-type-markdown'\n    default:\n      return 'vscode-icons:file-type-text'\n  }\n}\n\n// 计算错误标记的高度\nexport function calculateErrorHeight(messages: any[]) {\n  if (!messages || messages.length === 0)\n    return 0\n\n  // 计算所有 labels 的最大数量\n  const maxLabels = Math.max(...messages.map(msg => msg.labels?.length || 0))\n\n  // 每个 label 大约需要 2 行的高度（一行给指示器，一行给消息）\n  // 每行约 20px 高度，加上一些间距\n  return maxLabels > 0 ? maxLabels * 3 * 20 + 15 : 0\n}\n\n// 跳转到编辑器\nexport function openInEditor(filename: string, line: number, column: number) {\n  // 尝试使用 vscode:// 协议打开\n  const vscodeUrl = `vscode://file/${encodeURIComponent(filename)}:${line}:${column}`\n  window.open(vscodeUrl, '_blank')\n}\n\n// 处理 v-html 输入，将单引号中间的内容替换为带背景色\nexport function processLabelHtml(text: string) {\n  if (!text)\n    return ''\n\n  // 匹配单引号和反引号中间的内容，并替换为带背景色的 span\n  return text.replace(/['`]([^'`]+)['`]/g, '<span class=\"bg-neutral-100 dark:bg-neutral-800 px-1 py-0.5 rounded font-semibold\">$1</span>')\n}\n",
+      "lines": [
+        {
+          "line": 33,
+          "messages": [
+            {
+              "message": "Expected { after 'if' condition.",
+              "code": "eslint(curly)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/curly.html",
+              "help": "Replace `return 0` with `{return 0}`.",
+              "filename": "packages/client/app/composables/useFileUtils.ts",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 861,
+                    "length": 8,
+                    "line": 33,
+                    "column": 5
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        },
+        {
+          "line": 53,
+          "messages": [
+            {
+              "message": "Expected { after 'if' condition.",
+              "code": "eslint(curly)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/curly.html",
+              "help": "Replace `return ''` with `{return ''}`.",
+              "filename": "packages/client/app/composables/useFileUtils.ts",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 1590,
+                    "length": 9,
+                    "line": 53,
+                    "column": 5
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "tests/fixtures/foo.vue",
+      "source": "<script setup lang=\"ts\">\nconst a = 1\nconst b = 2\nconst c = 3\n\nconst d = a + b + c\n\nconst e = 1\n\nconsole.log('a')\n\n</script>\n\n<template>\n  <div v-for=\"i in 10\">\n  {{ i }}\n  </div>\n</template>\n",
+      "lines": [
+        {
+          "line": 10,
+          "messages": [
+            {
+              "message": "Unexpected console statement.",
+              "code": "eslint(no-console)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-console.html",
+              "help": "Delete this console statement.",
+              "filename": "tests/fixtures/foo.vue",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 96,
+                    "length": 11,
+                    "line": 10,
+                    "column": 1
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "tests/fixtures/bar.ts",
+      "source": "function bar() { console.log('xxx'); }\n\n\nfunction foo() { console.log('xxx') }\n\nconsole.log('xxxx');\n\n\ndebugger\n",
+      "lines": [
+        {
+          "line": 1,
+          "messages": [
+            {
+              "message": "Unexpected console statement.",
+              "code": "eslint(no-console)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-console.html",
+              "help": "Delete this console statement.",
+              "filename": "tests/fixtures/bar.ts",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 17,
+                    "length": 11,
+                    "line": 1,
+                    "column": 18
+                  }
+                }
+              ],
+              "related": []
+            },
+            {
+              "message": "Function 'bar' is declared but never used.",
+              "code": "eslint(no-unused-vars)",
+              "severity": "warning",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
+              "help": "Consider removing this declaration.",
+              "filename": "tests/fixtures/bar.ts",
+              "labels": [
+                {
+                  "label": "'bar' is declared here",
+                  "span": {
+                    "offset": 9,
+                    "length": 3,
+                    "line": 1,
+                    "column": 10
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        },
+        {
+          "line": 4,
+          "messages": [
+            {
+              "message": "Unexpected console statement.",
+              "code": "eslint(no-console)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-console.html",
+              "help": "Delete this console statement.",
+              "filename": "tests/fixtures/bar.ts",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 58,
+                    "length": 11,
+                    "line": 4,
+                    "column": 18
+                  }
+                }
+              ],
+              "related": []
+            },
+            {
+              "message": "Function 'foo' is declared but never used.",
+              "code": "eslint(no-unused-vars)",
+              "severity": "warning",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
+              "help": "Consider removing this declaration.",
+              "filename": "tests/fixtures/bar.ts",
+              "labels": [
+                {
+                  "label": "'foo' is declared here",
+                  "span": {
+                    "offset": 50,
+                    "length": 3,
+                    "line": 4,
+                    "column": 10
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        },
+        {
+          "line": 6,
+          "messages": [
+            {
+              "message": "Unexpected console statement.",
+              "code": "eslint(no-console)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-console.html",
+              "help": "Delete this console statement.",
+              "filename": "tests/fixtures/bar.ts",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 80,
+                    "length": 11,
+                    "line": 6,
+                    "column": 1
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        },
+        {
+          "line": 9,
+          "messages": [
+            {
+              "message": "`debugger` statement is not allowed",
+              "code": "eslint(no-debugger)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-debugger.html",
+              "help": "Remove the debugger statement",
+              "filename": "tests/fixtures/bar.ts",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 103,
+                    "length": 8,
+                    "line": 9,
+                    "column": 1
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "tests/fixtures/foo.ts",
+      "source": "const a = 1\nconst b = 2\nconst c = 3\n\nconst d = a + b + c\n\nconst e = 1\n\nconsole.log('a')\n",
+      "lines": [
+        {
+          "line": 5,
+          "messages": [
+            {
+              "message": "Variable 'd' is declared but never used. Unused variables should start with a '_'.",
+              "code": "eslint(no-unused-vars)",
+              "severity": "warning",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
+              "help": "Consider removing this declaration.",
+              "filename": "tests/fixtures/foo.ts",
+              "labels": [
+                {
+                  "label": "'d' is declared here",
+                  "span": {
+                    "offset": 43,
+                    "length": 1,
+                    "line": 5,
+                    "column": 7
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        },
+        {
+          "line": 7,
+          "messages": [
+            {
+              "message": "Variable 'e' is declared but never used. Unused variables should start with a '_'.",
+              "code": "eslint(no-unused-vars)",
+              "severity": "warning",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.html",
+              "help": "Consider removing this declaration.",
+              "filename": "tests/fixtures/foo.ts",
+              "labels": [
+                {
+                  "label": "'e' is declared here",
+                  "span": {
+                    "offset": 64,
+                    "length": 1,
+                    "line": 7,
+                    "column": 7
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        },
+        {
+          "line": 9,
+          "messages": [
+            {
+              "message": "Unexpected console statement.",
+              "code": "eslint(no-console)",
+              "severity": "error",
+              "causes": [],
+              "url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-console.html",
+              "help": "Delete this console statement.",
+              "filename": "tests/fixtures/foo.ts",
+              "labels": [
+                {
+                  "span": {
+                    "offset": 71,
+                    "length": 11,
+                    "line": 9,
+                    "column": 1
+                  }
+                }
+              ],
+              "related": []
+            }
+          ]
+        }
+      ]
     }
   ],
   "summary": {
     "number_of_files": 27,
     "number_of_rules": null,
     "threads_count": 8,
-    "start_time": 0.013002125
+    "start_time": 0.011558791,
+    "files_with_issues": 8,
+    "error_count": 15,
+    "warning_count": 4
   }
 }

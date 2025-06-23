@@ -107,6 +107,9 @@ export async function groupByFilename(oxlintOutput: string) {
         number_of_rules: data.number_of_rules,
         threads_count: data.threads_count,
         start_time: data.start_time,
+        files_with_issues: result.length,
+        error_count: diagnostics.filter((d: any) => d.severity === 'error').length,
+        warning_count: diagnostics.filter((d: any) => d.severity === 'warning').length,
       },
     }
   }

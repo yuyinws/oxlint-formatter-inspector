@@ -30,15 +30,13 @@ const sortedLabels = computed(() => {
 })
 
 // 获取标签对应的消息
-function getMessageForLabel(labelIndex: number) {
-  let currentIndex = 0
+function getMessageForLabel(column: number) {
   for (const message of props.lineData.messages) {
     if (message.labels) {
-      for (const _ of message.labels) {
-        if (currentIndex === labelIndex) {
+      for (const label of message.labels) {
+        if (label.span.column === column) {
           return message
         }
-        currentIndex++
       }
     }
   }
@@ -46,13 +44,13 @@ function getMessageForLabel(labelIndex: number) {
 }
 
 // 计算标签的垂直位置样式
-function getLabelVerticalStyle(labelIndex: number) {
+function getLabelVerticalStyle(labelIndex: number, baseLeft = 0) {
   const label = sortedLabels.value[labelIndex]
   if (!label)
     return { left: '0ch' }
 
   return {
-    left: `calc(${Math.floor((label.span.length - 1) / 2)}ch)`,
+    left: `calc(${Math.floor((label.span.length - 1) / 2) + baseLeft}ch)`,
   }
 }
 
@@ -66,6 +64,13 @@ function generateLabelIndicator(label: Label) {
     postDashes: Array.from({ length: postDashes }, (_, i) => i),
   }
 }
+
+function severityClass(severity: string | undefined) {
+  if (severity === 'error')
+    return 'text-red-300 group-hover:text-red-600 dark:text-red-800 dark:group-hover:text-red-500'
+
+  return 'text-yellow-400 group-hover:text-yellow-600 dark:text-yellow-800 dark:group-hover:text-yellow-300'
+}
 </script>
 
 <template>
@@ -77,29 +82,35 @@ function generateLabelIndicator(label: Label) {
         <div class="flex-1">
           <Shiki :code="currentLineCode" :ext="fileExt" />
 
-          <div class="flex relative text-neutral-400" :style="{ minHeight: `${errorHeight}px`, top: '-10px' }">
+          <div class="flex relative" :style="{ minHeight: `${errorHeight}px`, top: '-10px' }">
             <a v-for="(label, labelIndex) in sortedLabels" :key="labelIndex" target="_blank"
-              :href="getMessageForLabel(labelIndex)?.url"
-              class="absolute whitespace-pre text-neutral-500/50 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer"
+              :href="getMessageForLabel(label.span.column)?.url"
+              class="absolute whitespace-pre text-neutral-300 dark:text-neutral-600 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer group"
               :style="{ left: `calc(${label.span.column - 1}ch)` }">
               <UTooltip :delay-duration="100" :content="{ side: 'top' }" :disable-hoverable-content="false"
                 :ui="{ content: 'py-4 px-5 h-auto max-w-sm' }">
                 <template #content>
-                  <ErrorTooltip v-if="getMessageForLabel(labelIndex)" :message="getMessageForLabel(labelIndex)!"
-                    :filename="filename" :line="lineData.line" :column="label.span.column" />
+                  <ErrorTooltip v-if="getMessageForLabel(label.span.column)"
+                    :message="getMessageForLabel(label.span.column)!" :filename="filename" :line="lineData.line"
+                    :column="label.span.column" />
                 </template>
                 <div>
                   <div>
-                    <span v-for="i in generateLabelIndicator(label).preDashes" :key="`pre-${i}`">─</span>┬<span
-                      v-for="i in generateLabelIndicator(label).postDashes" :key="`post-${i}`">─</span>
+                    <span v-for="i in generateLabelIndicator(label).preDashes" :key="`pre-${i}`">─</span>
+                    <span>┬</span>
+                    <span v-for="i in generateLabelIndicator(label).postDashes" :key="`post-${i}`">─</span>
                   </div>
-                  <div v-for="i in (sortedLabels.length - 1 - labelIndex)" :key="`bar-${i}`" class="relative">
+                  <div v-for="i in (sortedLabels.length - labelIndex - 1) * 2" :key="`bar-${i}`" class="relative"
+                    :style="getLabelVerticalStyle(labelIndex, -1)">
                     │
                   </div>
                   <div class="relative flex" :style="getLabelVerticalStyle(labelIndex)">
                     <div>╰─</div>
-                    <div
-                      v-html="processLabelHtml((label as any).label || getMessageForLabel(labelIndex)?.code || '')" />
+                    <div class="ml-1" v-if="(label as any).label"
+                      v-html="processLabelHtml((label as any).label) + '.'" />
+                    <div class="ml-1" :class="severityClass(getMessageForLabel(label.span.column)?.severity)">
+                      {{ getMessageForLabel(label.span.column)?.code }}
+                    </div>
                   </div>
                 </div>
               </UTooltip>

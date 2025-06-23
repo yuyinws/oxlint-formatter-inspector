@@ -23,7 +23,13 @@ defineProps<Props>()
         <span class="font-medium ml-1">{{ version }}</span>
       </NuxtLink>
 
-      <UModal title="Oxlint Config" :ui="{ content: 'max-w-2xl' }">
+      <UModal :ui="{ content: 'max-w-2xl' }">
+        <template #title>
+          <div class="flex items-center gap-1">
+            <u-icon class="flex-shrink-0" name="vscode-icons:file-type-oxlint" />
+            <div>.oxlintrc.json</div>
+          </div>
+        </template>
         <div class="summary-card hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
           <u-icon name="ph:gear" class="w-5 h-5" />
           <span class="text-sm">Oxlint Config</span>
@@ -39,24 +45,6 @@ defineProps<Props>()
         </template>
       </UModal>
 
-
-      <div class="summary-card">
-        <u-icon name="ph:alarm" class="w-5 h-5" />
-        <span class="text-sm">Generated at</span>
-
-        <span class="font-medium ml-1">{{ new Date().toLocaleString() }}</span>
-      </div>
-    </div>
-
-
-    <div class="flex w-full flex-wrap gap-2">
-      <div class="summary-card">
-        <u-icon name="ph-files" class="w-5 h-5" />
-        <span class="text-sm">Files Checked</span>
-
-        <span class="font-medium ml-1">{{ summary.number_of_files }}</span>
-      </div>
-
       <div class="summary-card">
         <u-icon name="ph:line-segments" class="w-5 h-5" />
         <span class="text-sm">Threads</span>
@@ -71,19 +59,49 @@ defineProps<Props>()
         <span class="font-medium ml-1">{{ (summary.start_time * 1000).toFixed(2) }}ms</span>
       </div>
 
+
+      <div class="summary-card">
+        <u-icon name="ph:alarm" class="w-5 h-5" />
+        <span class="text-sm">Generated at</span>
+
+        <span class="font-medium ml-1">{{ new Date().toLocaleString() }}</span>
+      </div>
+    </div>
+
+
+    <div class="flex w-full flex-wrap gap-2">
+      <div class="summary-card">
+        <u-icon name="ph-files" class="w-5 h-5" />
+        <span class="font-medium ml-1">{{ summary.number_of_files }}</span>
+
+        <span class="text-sm">Files Checked</span>
+
+        <USeparator orientation="vertical" />
+
+        <span class="font-medium text-red-600 dark:text-red-400">{{ summary.files_with_issues }}</span>
+
+        <span class="text-sm">Files with Issues</span>
+      </div>
+
+
+
       <div class="summary-card">
         <u-icon name="codicon:issues" class="w-5 h-5" />
+        <span class="font-medium ml-1">{{ totalIssues }}</span>
+
         <span class="text-sm">Total Issues</span>
 
-        <span class="font-medium ml-1">{{ totalIssues }}</span>
+        <USeparator orientation="vertical" />
+
+        <span class="font-medium text-red-600 dark:text-red-400">{{ summary.error_count }}</span>
+
+        <span class="text-sm">Errors</span>
+
+        <span class="font-medium text-yellow-600 dark:text-yellow-400">{{ summary.warning_count }}</span>
+
+        <span class="text-sm">Warnings</span>
       </div>
     </div>
 
   </div>
 </template>
-
-<!-- <style scoped>
-.summary-card {
-  @apply border gap-1 border-gray-200 dark:border-red-900 rounded-sm px-2 py-1 flex items-center;
-}
-</style> -->

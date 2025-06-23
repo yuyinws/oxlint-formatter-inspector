@@ -35,6 +35,9 @@ export interface Summary {
   number_of_files: number
   threads_count: number
   start_time: number
+  warning_count: number
+  error_count: number
+  files_with_issues: number
 }
 
 export interface PayloadData {
