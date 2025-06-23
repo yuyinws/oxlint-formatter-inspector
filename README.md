@@ -1,1 +1,1 @@
-./packages/eslint-formatter-i/README.md
+./packages/oxlint-fi/README.md

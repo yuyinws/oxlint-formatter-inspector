@@ -1,1 +1,1 @@
-./packages/eslint-formatter-i/LICENSE.md
+./packages/oxlint-fi/LICENSE.md

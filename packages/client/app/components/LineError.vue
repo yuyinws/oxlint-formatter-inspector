@@ -47,7 +47,7 @@ function getMessageForLabel(column: number) {
 function getLabelVerticalStyle(labelIndex: number, baseLeft = 0) {
   const label = sortedLabels.value[labelIndex]
   if (!label)
-    return { left: '0ch' }
+    {return { left: '0ch' }}
 
   return {
     left: `calc(${Math.floor((label.span.length - 1) / 2) + baseLeft}ch)`,
@@ -67,7 +67,7 @@ function generateLabelIndicator(label: Label) {
 
 function severityClass(severity: string | undefined) {
   if (severity === 'error')
-    return 'text-red-300 group-hover:text-red-600 dark:text-red-800 dark:group-hover:text-red-500'
+    {return 'text-red-300 group-hover:text-red-600 dark:text-red-800 dark:group-hover:text-red-500'}
 
   return 'text-yellow-400 group-hover:text-yellow-600 dark:text-yellow-800 dark:group-hover:text-yellow-300'
 }

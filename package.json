@@ -8,13 +8,11 @@
     "build:client": "nr --filter client-app build",
     "dev": "nr --filter oxlint-fi dev",
     "dev:client": "nr --filter client-app dev",
-    "lint": "eslint --cache .",
+    "lint": "eslint --cache . && oxlint",
     "prepublishOnly": "nr --filter oxlint-fi build",
     "release": "bumpp -r && pnpm -r publish",
     "typecheck": "vue-tsc --noEmit",
-    "prepare": "nr --filter client-app postinstall && npx simple-git-hooks",
-    "start": "eslint -c eslint.fixtures.config.js -f i tests/fixtures",
-    "build:static": "nr build && INSPECTOR_MODE=build nr start"
+    "prepare": "nr --filter client-app postinstall && npx simple-git-hooks"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.14.1",
@@ -36,6 +34,7 @@
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*": "eslint --fix"
+    "*": "eslint --fix",
+    "**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,vue,astro,svelte}": "oxlint"
   }
 }

@@ -84,11 +84,13 @@ defineProps<Props>()
 
         <span class="text-sm">Files Checked</span>
 
-        <USeparator orientation="vertical" />
+        <template v-if="totalIssues > 0">
+          <USeparator orientation="vertical" />
 
-        <span class="font-medium text-red-600 dark:text-red-400">{{ summary.files_with_issues }}</span>
+          <span class="font-medium text-red-600 dark:text-red-400">{{ summary.files_with_issues }}</span>
 
-        <span class="text-sm">Files with Issues</span>
+          <span class="text-sm">Files with Issues</span>
+        </template>
       </div>
 
 
@@ -99,15 +101,17 @@ defineProps<Props>()
 
         <span class="text-sm">Total Issues</span>
 
-        <USeparator orientation="vertical" />
+        <template v-if="totalIssues > 0">
+          <USeparator orientation="vertical" />
 
-        <span class="font-medium text-red-600 dark:text-red-400">{{ summary.error_count }}</span>
+          <span class="font-medium text-red-600 dark:text-red-400">{{ summary.error_count }}</span>
 
-        <span class="text-sm">Errors</span>
+          <span class="text-sm">Errors</span>
 
-        <span class="font-medium text-yellow-600 dark:text-yellow-400">{{ summary.warning_count }}</span>
+          <span class="font-medium text-yellow-600 dark:text-yellow-400">{{ summary.warning_count }}</span>
 
-        <span class="text-sm">Warnings</span>
+          <span class="text-sm">Warnings</span>
+        </template>
       </div>
     </div>
 

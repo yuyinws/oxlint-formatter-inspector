@@ -7,7 +7,6 @@
   ],
   "categories": {},
   "rules": {
-    "no-console": "error",
     "for-direction": "warn",
     "no-async-promise-executor": "warn",
     "no-caller": "warn",
@@ -124,5 +123,7 @@
     "builtin": true
   },
   "globals": {},
-  "ignorePatterns": []
+  "ignorePatterns": [
+    "**/fixtures/**"
+  ]
 }

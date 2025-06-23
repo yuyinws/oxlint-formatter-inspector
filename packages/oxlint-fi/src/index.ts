@@ -88,9 +88,6 @@ const buildCommand = define({
     const oxLintVersion = await getOxlintVersion()
     const config = await getOxlintConfig()
     const rawOutput = execOxlintCommand(_, true)
-    console.log({
-      rawOutput,
-    })
     const groupedOutput = await groupByFilename(rawOutput)
 
     const outputDir = resolve(cwd(), '.oxlint-formatter-inspector')

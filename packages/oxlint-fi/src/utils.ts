@@ -85,7 +85,7 @@ export async function groupByFilename(oxlintOutput: string) {
           source = await readFile(file.filename, 'utf-8')
         }
         catch (error) {
-          console.warn(`无法读取文件 ${file.filename}:`, error)
+          console.warn(`Can not read file ${file.filename}:`, error)
           source = ''
         }
 
@@ -114,7 +114,7 @@ export async function groupByFilename(oxlintOutput: string) {
     }
   }
   catch (error) {
-    console.error('解析 oxlint 输出失败:', error)
+    console.error('Failed to parse oxlint output:', error)
     return { files: [], summary: {} }
   }
 }

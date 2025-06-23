@@ -7,8 +7,7 @@ const { data, pending } = await useFetch<PayloadData>('/api/payload.json', {})
 
 // 计算问题总数
 const totalIssues = computed(() => {
-  if (!data.value?.files)
-    return 0
+  if (!data.value?.files) { return 0 }
   return data.value.files.reduce((sum, file) =>
     sum + file.lines.reduce((s, line) => s + line.messages.length, 0), 0)
 })
@@ -33,8 +32,7 @@ watch(search, (newValue) => {
 
 
 const filteredFiles = computed(() => {
-  if (!data.value?.files)
-    return []
+  if (!data.value?.files) { return [] }
 
   const searchTerm = debouncedSearch.value.trim()
 
@@ -84,7 +82,7 @@ const layout = useLocalStorage<'single' | 'double'>('layout', 'double')
           :version="data.version" :config="data.config" :timestamp="data.timestamp" />
 
         <!-- 搜索和布局控制区域 -->
-        <div class="flex flex-col sm:flex-row gap-3 mb-3 items-start sm:items-center">
+        <div class="flex flex-col sm:flex-row gap-3 mb-3 items-start sm:items-center" v-if="totalIssues > 0">
           <Search v-model="search" class="flex-1" />
           <LayoutToggle v-model="layout" />
         </div>
@@ -96,6 +94,8 @@ const layout = useLocalStorage<'single' | 'double'>('layout', 'double')
 
         <!-- 加载状态 -->
         <LoadingState v-else-if="pending" />
+
+        <CongratState v-else-if="totalIssues === 0" />
 
         <!-- 空状态 -->
         <EmptyState v-else-if="showEmpty" />

@@ -29,8 +29,9 @@ export function getFileIcon(filename: string) {
 
 // 计算错误标记的高度
 export function calculateErrorHeight(messages: any[]) {
-  if (!messages || messages.length === 0)
+  if (!messages || messages.length === 0) {
     return 0
+  }
 
   // 计算所有 labels 的最大数量
   const maxLabels = Math.max(...messages.map(msg => msg.labels?.length || 0))
@@ -49,8 +50,9 @@ export function openInEditor(filename: string, line: number, column: number) {
 
 // 处理 v-html 输入，将单引号中间的内容替换为带背景色
 export function processLabelHtml(text: string) {
-  if (!text)
+  if (!text) {
     return ''
+  }
 
   // 匹配单引号和反引号中间的内容，并替换为带背景色的 span
   return text.replace(/['`]([^'`]+)['`]/g, '<span class="bg-neutral-100 dark:bg-neutral-800 px-1 py-0.5 rounded font-semibold">$1</span>')

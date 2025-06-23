@@ -4,7 +4,7 @@ import oxlint from 'eslint-plugin-oxlint'
 
 export default antfu(
   {
-    ignores: ['**/fixtures/**'],
+    ignores: ['**/fixtures/**', '**/.specstory/**'],
     rules: {
       'no-console': 'off',
       // 'vue/html-indent': 'off',
