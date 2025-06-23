@@ -32,9 +32,6 @@ importers:
       eslint-plugin-oxlint:
         specifier: ^1.1.0
         version: 1.2.0
-      gunshi:
-        specifier: ^0.26.3
-        version: 0.26.3
       lint-staged:
         specifier: ^16.0.0
         version: 16.1.2
@@ -116,15 +113,15 @@ importers:
       ansis:
         specifier: ^4.0.0
         version: 4.1.0
-      citty:
-        specifier: ^0.1.6
-        version: 0.1.6
       consola:
         specifier: ^3.4.2
         version: 3.4.2
       get-port-please:
         specifier: ^3.1.2
         version: 3.1.2
+      gunshi:
+        specifier: ^0.26.3
+        version: 0.26.3
       h3:
         specifier: npm:h3-nightly@2x
         version: h3-nightly@2.0.0-20250609-212857-67af057
