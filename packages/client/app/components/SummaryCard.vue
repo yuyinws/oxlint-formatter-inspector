@@ -60,12 +60,19 @@ defineProps<Props>()
       </div>
 
 
-      <div class="summary-card">
-        <u-icon name="ph:alarm" class="w-5 h-5" />
-        <span class="text-sm">Generated at</span>
+      <UTooltip>
+        <div class="summary-card">
+          <u-icon name="ph:alarm" class="w-5 h-5" />
+          <span class="text-sm">Generated at</span>
+          <span class="font-medium ml-1">{{ new Date().toLocaleString('en-US', {
+            month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'
+          }) }}</span>
+        </div>
 
-        <span class="font-medium ml-1">{{ new Date().toLocaleString() }}</span>
-      </div>
+        <template #content>
+          {{ new Date().toLocaleString('en-US') }}
+        </template>
+      </UTooltip>
     </div>
 
 
