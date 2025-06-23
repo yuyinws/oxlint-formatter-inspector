@@ -11,4 +11,4 @@ node_modules
 temp
 cache
 .eslintcache
-.eslint-formatter-inspector
+.oxlint-formatter-inspector

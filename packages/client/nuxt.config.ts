@@ -13,6 +13,13 @@ export default defineNuxtConfig({
   },
   modules: ['@nuxt/ui'],
   css: ['~/assets/css/main.css'],
+  icon: {
+    clientBundle: {
+      scan: {
+        globInclude: ['app/**/*'],
+      },
+    },
+  },
   devServer: {
     port: 5555,
   },

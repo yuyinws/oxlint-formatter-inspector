@@ -43,6 +43,7 @@ export interface Summary {
 export interface PayloadData {
   version: string
   config: object | null
+  timestamp: number
   summary?: Summary
   files?: FileData[]
 }

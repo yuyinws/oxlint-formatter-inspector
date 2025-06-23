@@ -6,6 +6,7 @@ interface Props {
   totalIssues: number
   version: string
   config: object | null
+  timestamp: number
 }
 
 defineProps<Props>()
@@ -61,16 +62,16 @@ defineProps<Props>()
 
 
       <UTooltip>
-        <div class="summary-card">
+        <div class="summary-card hover:bg-gray-100 dark:hover:bg-gray-800 cursor-default">
           <u-icon name="ph:alarm" class="w-5 h-5" />
           <span class="text-sm">Generated at</span>
-          <span class="font-medium ml-1">{{ new Date().toLocaleString('en-US', {
+          <span class="font-medium ml-1">{{ new Date(timestamp).toLocaleString('en-US', {
             month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'
           }) }}</span>
         </div>
 
         <template #content>
-          {{ new Date().toLocaleString('en-US') }}
+          {{ new Date(timestamp).toLocaleString('en-US') }}
         </template>
       </UTooltip>
     </div>

@@ -24,7 +24,11 @@ const severityIcon = computed(() => {
 })
 
 function handleOpenInEditor() {
-  openInEditor(props.filename, props.line, props.column)
+  $fetch('/api/launch', {
+    query: {
+      file: `${props.filename}:${props.line}:${props.column}`,
+    },
+  })
 }
 </script>
 

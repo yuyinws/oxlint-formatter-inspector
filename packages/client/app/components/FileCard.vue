@@ -10,12 +10,18 @@ const props = defineProps<Props>()
 
 // 获取文件图标
 const fileIcon = computed(() => getFileIcon(props.file.filename))
+
+function handleOpenInEditor() {
+  $fetch('/api/launch', {
+    query: { file: props.file.filename },
+  })
+}
 </script>
 
 <template>
   <UCard>
     <template #header>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2" @click="handleOpenInEditor">
         <u-icon class="flex-shrink-0" :name="fileIcon" />
         <span class="truncate dark:text-neutral-300 text-neutral-700 cursor-pointer hover:underline font-mono">
           {{ file.filename }}

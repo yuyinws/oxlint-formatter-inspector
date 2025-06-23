@@ -81,7 +81,7 @@ const layout = useLocalStorage<'single' | 'double'>('layout', 'double')
 
         <!-- 摘要信息 -->
         <SummaryCard v-if="showSummary && data?.summary" :summary="data.summary" :total-issues="totalIssues"
-          :version="data.version" :config="data.config" />
+          :version="data.version" :config="data.config" :timestamp="data.timestamp" />
 
         <!-- 搜索和布局控制区域 -->
         <div class="flex flex-col sm:flex-row gap-3 mb-3 items-start sm:items-center">

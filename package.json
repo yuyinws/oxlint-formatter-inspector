@@ -23,7 +23,6 @@
     "bumpp": "^10.1.0",
     "eslint": "^9.29.0",
     "eslint-plugin-oxlint": "^1.1.0",
-    "gunshi": "^0.26.3",
     "lint-staged": "^16.0.0",
     "oxlint": "catalog:",
     "pnpm": "^10.11.0",
