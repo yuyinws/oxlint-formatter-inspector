@@ -6,6 +6,7 @@
   "scripts": {
     "build": "nr --filter oxlint-fi build",
     "build:client": "nr --filter client-app build",
+    "build:static": "node packages/oxlint-fi/dist/index.js build --no-ignore",
     "dev": "nr --filter oxlint-fi dev",
     "dev:client": "nr --filter client-app dev",
     "lint": "eslint --cache . && oxlint",

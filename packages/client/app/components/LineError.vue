@@ -46,8 +46,7 @@ function getMessageForLabel(column: number) {
 // 计算标签的垂直位置样式
 function getLabelVerticalStyle(labelIndex: number, baseLeft = 0) {
   const label = sortedLabels.value[labelIndex]
-  if (!label)
-    {return { left: '0ch' }}
+  if (!label) { return { left: '0ch' } }
 
   return {
     left: `calc(${Math.floor((label.span.length - 1) / 2) + baseLeft}ch)`,
@@ -66,8 +65,7 @@ function generateLabelIndicator(label: Label) {
 }
 
 function severityClass(severity: string | undefined) {
-  if (severity === 'error')
-    {return 'text-red-300 group-hover:text-red-600 dark:text-red-800 dark:group-hover:text-red-500'}
+  if (severity === 'error') { return 'text-red-300 group-hover:text-red-600 dark:text-red-800 dark:group-hover:text-red-500' }
 
   return 'text-yellow-400 group-hover:text-yellow-600 dark:text-yellow-800 dark:group-hover:text-yellow-300'
 }
@@ -87,7 +85,7 @@ function severityClass(severity: string | undefined) {
               :href="getMessageForLabel(label.span.column)?.url"
               class="absolute whitespace-pre text-neutral-300 dark:text-neutral-600 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer group"
               :style="{ left: `calc(${label.span.column - 1}ch)` }">
-              <UTooltip :delay-duration="100" :content="{ side: 'top' }" :disable-hoverable-content="false"
+              <UTooltip :delay-duration="100" :disable-hoverable-content="false"
                 :ui="{ content: 'py-4 px-5 h-auto max-w-sm' }">
                 <template #content>
                   <ErrorTooltip v-if="getMessageForLabel(label.span.column)"
