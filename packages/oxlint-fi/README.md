@@ -1,55 +1,51 @@
-<img src="https://eslint-formatter-inspector.vercel.app/favicon.svg" width="100" height="100"><br>
+<img src="https://oxlint-formatter-inspector.vercel.app/favicon.svg" width="100" height="100"><br>
 
 # Oxlint Formatter Inspector
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 
-![demo](https://static.yuy1n.io/eslint-formatter-inspector-demo.png)
+![demo](https://static.yuy1n.io/oxlint-fi.png)
 
 <p align='center'>
-An interactive tool for inspecting ESLint formatter in the browser.
+An interactive tool for inspecting OxLint formatter in the browser.
 </p>
 
 <p align='center'>
-  <a target='_blank' href='https://eslint-formatter-inspector.vercel.app/'>
+  <a target='_blank' href='https://oxlint-formatter-inspector.vercel.app/'>
     Live Demo
   </a>
 </p>
 
 ## Features
 
-- 🖥️ Terminal-style UI.
-- 🌓 Multi-theme switch.
-- 📦 Static Build.
-- 🌈 Code highlight.
-- 🚀 Launch Editor support.
-- 🔍 Glob patterns search support.
+- 🔍 Glob patterns search support
+- 🌈 Code highlight
+- 🚀 Launch Editor support
+- 🌓 Dark mode support
+- 📦 Static Build
 
 ## Installation
 
 ```bash
-npm i eslint-formatter-i -D
+npm i oxlint-fi -D
 ```
 
 ## Usage
 
 ```bash
-eslint [patterns] -f i
+npx oxlint-fi
 ```
-
-> -f is short for --format
-> See [ESLint Formatters](https://eslint.org/docs/latest/use/formatters/#eslint-formatters) for more details
 
 ### Static Build
 
-If you want to build a static web app for ESLint Formatter, you can set the environment variable `INSPECTOR_MODE=build`:
+If you want to build a static web app for Oxlint Formatter
 
 ```bash
-INSPECTOR_MODE=build eslint [patterns] -f i
+npx oxlint-fi build
 ```
 
-> This will generate a SPA under `.eslint-formatter-inspector` folder. You can deploy it to any static file server.
+> This will generate a SPA under `.oxlint-formatter-inspector` folder. You can deploy it to any static file server.
 
 ## License
 
@@ -57,17 +53,9 @@ INSPECTOR_MODE=build eslint [patterns] -f i
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/eslint-formatter-i?style=flat&colorA=080f12&colorB=1fa669
-[npm-version-href]: https://npmjs.com/package/eslint-formatter-i
-[npm-downloads-src]: https://img.shields.io/npm/dm/eslint-formatter-i?style=flat&colorA=080f12&colorB=1fa669
-[npm-downloads-href]: https://npmjs.com/package/eslint-formatter-i
-[license-src]: https://img.shields.io/github/license/yuyinws/eslint-formatter-inspector.svg?style=flat&colorA=080f12&colorB=1fa669
-[license-href]: https://github.com/yuyinws/eslint-formatter-inspector/blob/main/LICENSE
-
-## Credits
-
-- [webtui](https://webtui.ironclad.sh/)
-
-- [eslint-formatter-mo](https://github.com/fengzilong/eslint-formatter-mo)
-
-- [eslint-config-inspector](https://github.com/eslint/config-inspector)
+[npm-version-src]: https://img.shields.io/npm/v/oxlint-fi?style=flat&colorA=080f12&colorB=1fa669
+[npm-version-href]: https://npmjs.com/package/oxlint-fi
+[npm-downloads-src]: https://img.shields.io/npm/dm/oxlint-fi?style=flat&colorA=080f12&colorB=1fa669
+[npm-downloads-href]: https://npmjs.com/package/oxlint-fi
+[license-src]: https://img.shields.io/github/license/yuyinws/oxlint-formatter-inspector.svg?style=flat&colorA=080f12&colorB=1fa669
+[license-href]: https://github.com/yuyinws/oxlint-formatter-inspector/blob/main/LICENSE
