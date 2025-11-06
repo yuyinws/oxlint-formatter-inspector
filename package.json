@@ -4,38 +4,31 @@
   "private": true,
   "packageManager": "pnpm@10.11.0",
   "scripts": {
-    "build": "nr --filter oxlint-fi build",
-    "build:client": "nr --filter client-app build",
-    "build:static": "node packages/oxlint-fi/dist/index.js build --no-ignore",
-    "dev": "nr --filter oxlint-fi dev",
-    "dev:client": "nr --filter client-app dev",
+    "build": "pnpm -r run build",
+    "dev": "pnpm -C packages/core dev",
     "lint": "eslint --cache . && oxlint",
-    "prepublishOnly": "nr --filter oxlint-fi build",
-    "release": "bumpp -r && pnpm -r publish",
+    "prepublishOnly": "pnpm -C packages/core build",
+    "release": "bumpp -r",
     "typecheck": "vue-tsc --noEmit",
-    "prepare": "nr --filter client-app postinstall && npx simple-git-hooks"
+    "prepare": "pnpm -C packages/core postinstall && npx simple-git-hooks"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.14.1",
-    "@antfu/ni": "^24.3.0",
-    "@types/node": "^22.15.17",
-    "bumpp": "^10.1.0",
-    "eslint": "^9.29.0",
-    "eslint-plugin-oxlint": "^1.1.0",
-    "lint-staged": "^16.0.0",
+    "@antfu/eslint-config": "catalog:",
+    "@types/node": "catalog:",
+    "bumpp": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-oxlint": "catalog:",
+    "lint-staged": "catalog:",
     "oxlint": "catalog:",
-    "pnpm": "^10.11.0",
-    "simple-git-hooks": "^2.13.0",
-    "tsdown": "^0.11.9",
-    "tsx": "^4.19.4",
-    "typescript": "^5.8.3",
-    "vue-tsc": "^2.2.10"
+    "simple-git-hooks": "catalog:",
+    "tsdown": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*": "eslint --fix",
-    "**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,vue,astro,svelte}": "oxlint"
+    "*": ""
   }
 }

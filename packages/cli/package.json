@@ -1,0 +1,49 @@
+{
+  "name": "oxlint-inspector",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Oxlint Inspector CLI",
+  "author": "Leo <https://github.com/yuyinws>",
+  "license": "MIT",
+  "homepage": "https://github.com/yuyinws/oxlint-formatter-i#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuyinws/oxlint-formatter-i.git"
+  },
+  "bugs": "https://github.com/yuyinws/oxlint-formatter-i/issues",
+  "keywords": [
+    "oxlint",
+    "oxlint-formatter"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "bin": {
+    "oxlint-inspector": "./bin/oxlint-inspector.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "prepublishOnly": "nr build",
+    "start": "tsx src/test.ts"
+  },
+  "dependencies": {
+    "ansis": "catalog:",
+    "consola": "catalog:",
+    "get-port-please": "catalog:",
+    "gunshi": "catalog:",
+    "h3": "catalog:",
+    "launch-editor": "catalog:",
+    "mrmime": "catalog:",
+    "open": "catalog:",
+    "pathe": "catalog:"
+  },
+  "devDependencies": {
+    "oxlint": "catalog:"
+  }
+}

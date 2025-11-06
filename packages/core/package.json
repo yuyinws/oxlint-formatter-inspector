@@ -1,0 +1,46 @@
+{
+  "name": "vite-plugin-devtools-oxlint",
+  "type": "module",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "nuxt build && tsdown",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@iconify-json/codicon": "catalog:",
+    "@iconify-json/lucide": "catalog:",
+    "@iconify-json/ph": "catalog:",
+    "@iconify-json/radix-icons": "catalog:",
+    "@iconify-json/vscode-icons": "catalog:",
+    "@nuxt/eslint": "catalog:",
+    "@nuxt/kit": "catalog:",
+    "@nuxt/ui": "catalog:",
+    "@shikijs/langs": "catalog:",
+    "@shikijs/themes": "catalog:",
+    "@types/picomatch": "catalog:",
+    "@vitejs/devtools": "catalog:",
+    "@vitejs/devtools-kit": "catalog:",
+    "@vueuse/core": "catalog:",
+    "nuxt": "catalog:",
+    "pathe": "catalog:",
+    "picomatch": "catalog:",
+    "shiki": "catalog:",
+    "tailwindcss": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:"
+  }
+
+}

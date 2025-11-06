@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: "Maple Mono";
+  src: url("/fonts/MapleMono-NF-Bold.ttf") format("truetype");
+  font-stretch: normal;
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Maple Mono";
+  src: url("/fonts/MapleMono-NF-Regular.ttf") format("truetype");
+  font-stretch: normal;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'Maple Mono', 'JetBrains Mono', monospace;
+}
+
+body {
+  background-color: unset;
+}
+
+.bg-dots {
+  background-image: url('/dot-grid-light.png');
+  background-size: 50px;
+  background-repeat: repeat;
+}
+
+.dark .bg-dots,
+.bg-dots.dark {
+  color-scheme: dark;
+  background-color: black;
+  background-image: url('/dot-grid-dark.png');
+}
+
+.shiki,
+.shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--ui-bg) !important;
+}
+
+.summary-card {
+  @apply border gap-1 border-neutral-200 dark:border-neutral-700 rounded-sm px-2 py-1 flex items-center;
+}

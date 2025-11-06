@@ -1,0 +1,16 @@
+{
+  "name": "playground",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/devtools": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-devtools-oxlint": "workspace:*"
+  }
+}

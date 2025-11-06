@@ -122,8 +122,5 @@
   "env": {
     "builtin": true
   },
-  "globals": {},
-  "ignorePatterns": [
-    "**/fixtures/**"
-  ]
+  "globals": {}
 }

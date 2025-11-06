@@ -12,3 +12,6 @@ temp
 cache
 .eslintcache
 .oxlint-formatter-inspector
+.rolldown
+.oxlint
+.nuxt
