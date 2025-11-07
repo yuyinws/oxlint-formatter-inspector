@@ -2,8 +2,6 @@ packages:
   - packages/*
   - playground
 
-overrides:
-  vite: npm:rolldown-vite@7.1.14
 catalog:
   '@antfu/eslint-config': ^6.2.0
   '@iconify-json/codicon': ^1.2.31
