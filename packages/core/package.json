@@ -17,7 +17,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare && oxlint-inspector",
+    "postinstall": "nuxt prepare",
     "oxlint-inspector": "oxlint-inspector"
   },
   "devDependencies": {

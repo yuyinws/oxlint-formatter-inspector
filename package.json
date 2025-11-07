@@ -12,7 +12,8 @@
     "play": "pnpm -C playground dev",
     "release": "bumpp -r",
     "typecheck": "vue-tsc --noEmit",
-    "prepare": "npx simple-git-hooks"
+    "prepare": "npx simple-git-hooks",
+    "oxlint-inspector": "pnpm -C packages/core oxlint-inspector"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",
