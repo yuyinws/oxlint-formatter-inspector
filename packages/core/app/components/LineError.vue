@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Label, LineData } from '~~/types'
+import type { Label, LineData } from 'shared'
 import { calculateErrorHeight, getFileExt, processLabelHtml } from '~/composables/useFileUtils'
 
 interface Props {
@@ -46,7 +46,9 @@ function getMessageForLabel(column: number) {
 // 计算标签的垂直位置样式
 function getLabelVerticalStyle(labelIndex: number, baseLeft = 0) {
   const label = sortedLabels.value[labelIndex]
-  if (!label) { return { left: '0ch' } }
+  if (!label) {
+    return { left: '0ch' }
+  }
 
   return {
     left: `calc(${Math.floor((label.span.length - 1) / 2) + baseLeft}ch)`,
@@ -65,7 +67,9 @@ function generateLabelIndicator(label: Label) {
 }
 
 function severityClass(severity: string | undefined) {
-  if (severity === 'error') { return 'text-red-300 group-hover:text-red-600 dark:text-red-800 dark:group-hover:text-red-500' }
+  if (severity === 'error') {
+    return 'text-red-300 group-hover:text-red-600 dark:text-red-800 dark:group-hover:text-red-500'
+  }
 
   return 'text-yellow-400 group-hover:text-yellow-600 dark:text-yellow-800 dark:group-hover:text-yellow-300'
 }
@@ -81,16 +85,22 @@ function severityClass(severity: string | undefined) {
           <Shiki :code="currentLineCode" :ext="fileExt" />
 
           <div class="flex relative" :style="{ minHeight: `${errorHeight}px`, top: '-10px' }">
-            <a v-for="(label, labelIndex) in sortedLabels" :key="labelIndex" target="_blank"
+            <a
+              v-for="(label, labelIndex) in sortedLabels" :key="labelIndex" target="_blank"
               :href="getMessageForLabel(label.span.column)?.url"
               class="absolute whitespace-pre text-neutral-300 dark:text-neutral-600 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer group"
-              :style="{ left: `calc(${label.span.column - 1}ch)` }">
-              <UTooltip :delay-duration="100" :disable-hoverable-content="false"
-                :ui="{ content: 'py-4 px-5 h-auto max-w-sm' }">
+              :style="{ left: `calc(${label.span.column - 1}ch)` }"
+            >
+              <UTooltip
+                :delay-duration="100" :disable-hoverable-content="false"
+                :ui="{ content: 'py-4 px-5 h-auto max-w-sm' }"
+              >
                 <template #content>
-                  <ErrorTooltip v-if="getMessageForLabel(label.span.column)"
+                  <ErrorTooltip
+                    v-if="getMessageForLabel(label.span.column)"
                     :message="getMessageForLabel(label.span.column)!" :filename="filename" :line="lineData.line"
-                    :column="label.span.column" />
+                    :column="label.span.column"
+                  />
                 </template>
                 <div>
                   <div>
@@ -98,14 +108,18 @@ function severityClass(severity: string | undefined) {
                     <span>┬</span>
                     <span v-for="i in generateLabelIndicator(label).postDashes" :key="`post-${i}`">─</span>
                   </div>
-                  <div v-for="i in (sortedLabels.length - labelIndex - 1) * 2" :key="`bar-${i}`" class="relative"
-                    :style="getLabelVerticalStyle(labelIndex, -1)">
+                  <div
+                    v-for="i in (sortedLabels.length - labelIndex - 1) * 2" :key="`bar-${i}`" class="relative"
+                    :style="getLabelVerticalStyle(labelIndex, -1)"
+                  >
                     │
                   </div>
                   <div class="relative flex" :style="getLabelVerticalStyle(labelIndex)">
                     <div>╰─</div>
-                    <div class="ml-1" v-if="(label as any).label"
-                      v-html="processLabelHtml((label as any).label) + '.'" />
+                    <div
+                      v-if="(label as any).label" class="ml-1"
+                      v-html="`${processLabelHtml((label as any).label)}.`"
+                    />
                     <div class="ml-1" :class="severityClass(getMessageForLabel(label.span.column)?.severity)">
                       {{ getMessageForLabel(label.span.column)?.code }}
                     </div>

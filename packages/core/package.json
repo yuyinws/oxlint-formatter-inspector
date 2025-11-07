@@ -17,7 +17,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare && oxlint-inspector",
+    "oxlint-inspector": "oxlint-inspector"
   },
   "devDependencies": {
     "@iconify-json/codicon": "catalog:",
@@ -34,13 +35,16 @@
     "@vitejs/devtools": "catalog:",
     "@vitejs/devtools-kit": "catalog:",
     "@vueuse/core": "catalog:",
+    "@vueuse/nuxt": "catalog:",
     "nuxt": "catalog:",
+    "oxlint": "catalog:",
+    "oxlint-inspector": "workspace:*",
     "pathe": "catalog:",
     "picomatch": "catalog:",
+    "shared": "workspace:*",
     "shiki": "catalog:",
     "tailwindcss": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"
   }
-
 }

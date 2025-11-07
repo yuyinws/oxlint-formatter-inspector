@@ -5,12 +5,14 @@
   "packageManager": "pnpm@10.11.0",
   "scripts": {
     "build": "pnpm -r run build",
+    "build:shared": "pnpm -C packages/shared build",
     "dev": "pnpm -C packages/core dev",
     "lint": "eslint --cache . && oxlint",
     "prepublishOnly": "pnpm -C packages/core build",
+    "play": "pnpm -C playground dev",
     "release": "bumpp -r",
     "typecheck": "vue-tsc --noEmit",
-    "prepare": "pnpm -C packages/core postinstall && npx simple-git-hooks"
+    "prepare": "npx simple-git-hooks"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",

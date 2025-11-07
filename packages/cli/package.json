@@ -29,7 +29,7 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
-    "prepublishOnly": "nr build",
+    "prepublishOnly": "pnpm build",
     "start": "tsx src/test.ts"
   },
   "dependencies": {

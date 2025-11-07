@@ -1,3 +1,4 @@
+import type { Logs, Meta } from 'shared'
 import { existsSync } from 'node:fs'
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'pathe'
@@ -8,7 +9,7 @@ export class OxlintLogsManager {
   ) {
   }
 
-  async list() {
+  async list(): Promise<Meta[] | null> {
     if (!existsSync(this.dir)) {
       return []
     }
@@ -18,6 +19,9 @@ export class OxlintLogsManager {
     const metas = await Promise.all(sessions
       .filter(entry => entry.isDirectory())
       .filter(entry => existsSync(join(this.dir, entry.name, 'meta.json')))
+      .sort((a, b) => {
+        return Number(b.name) - Number(a.name)
+      })
       .map(async (entry): Promise<any | null> => {
         const metaPath = join(this.dir, entry.name, 'meta.json')
         const content = await readFile(metaPath, 'utf-8')
@@ -32,7 +36,7 @@ export class OxlintLogsManager {
     return metas.filter(Boolean)
   }
 
-  async loadSession(session: string) {
+  async loadSession(session: string): Promise<{ meta: Meta, logs: Logs } | null> {
     try {
       const metaPath = join(this.dir, session, 'meta.json')
       const logsPath = join(this.dir, session, 'logs.json')

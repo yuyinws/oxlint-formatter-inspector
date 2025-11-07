@@ -10,9 +10,13 @@ export function getFileIcon(filename: string) {
   switch (ext) {
     case '.ts':
     case '.tsx':
+    case '.mts':
+    case '.cts':
       return 'vscode-icons:file-type-typescript'
     case '.js':
     case '.jsx':
+    case '.mjs':
+    case '.cjs':
       return 'vscode-icons:file-type-js'
     case '.vue':
       return 'vscode-icons:file-type-vue'
@@ -22,6 +26,10 @@ export function getFileIcon(filename: string) {
       return 'vscode-icons:file-type-json'
     case '.md':
       return 'vscode-icons:file-type-markdown'
+    case '.svelte':
+      return 'vscode-icons:file-type-svelte'
+    case '.astro':
+      return 'vscode-icons:file-type-astro'
     default:
       return 'vscode-icons:file-type-text'
   }
@@ -39,13 +47,6 @@ export function calculateErrorHeight(messages: any[]) {
   // 每个 label 大约需要 2 行的高度（一行给指示器，一行给消息）
   // 每行约 20px 高度，加上一些间距
   return maxLabels > 0 ? maxLabels * 3 * 20 + 15 : 0
-}
-
-// 跳转到编辑器
-export function openInEditor(filename: string, line: number, column: number) {
-  // 尝试使用 vscode:// 协议打开
-  const vscodeUrl = `vscode://file/${encodeURIComponent(filename)}:${line}:${column}`
-  window.open(vscodeUrl, '_blank')
 }
 
 // 处理 v-html 输入，将单引号中间的内容替换为带背景色

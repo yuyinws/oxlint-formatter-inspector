@@ -25,12 +25,12 @@ const mainCommand = define({
     await mkdir(sessionDir, { recursive: true })
     await writeFile(resolve(sessionDir, 'meta.json'), JSON.stringify({
       version: oxLintVersion,
-      config: config ? JSON.parse(config) : null,
       timestamp: sessionId,
       summary: groupedOutput.summary,
     }, null, 2), 'utf-8')
     await writeFile(resolve(sessionDir, 'logs.json'), JSON.stringify({
       files: groupedOutput.files,
+      config: config ? JSON.parse(config) : null,
     }, null, 2), 'utf-8')
     consola.success(`Session created: ${c.cyan(relative(cwd(), sessionDir))}`)
   },

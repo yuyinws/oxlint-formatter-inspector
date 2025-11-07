@@ -7,9 +7,6 @@ export function DevToolsOxlint(): PluginWithDevTools {
     name: 'vite:devtools:oxlint',
     devtools: {
       setup(ctx) {
-        // eslint-disable-next-line no-console
-        console.log('Vite DevTools Oxlint plugin setup')
-
         for (const fn of rpcFunctions) {
           ctx.rpc.register(fn)
         }

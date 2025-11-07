@@ -3,23 +3,34 @@ import { useRpc } from '#imports'
 
 const rpc = useRpc()
 
-const sessions = await rpc.value!['vite:oxlint:list-sessions']()
+const { data: sessionMetaList, refresh: reloadSessions } = useAsyncData('sessionMetaList', async () => {
+  return await rpc.value!['vite:oxlint:list-sessions']()
+})
+
+const hidePassed = useLocalStorage('hidePassed', false)
+
+const filteredSessionMetaList = computed(() => {
+  return sessionMetaList.value?.filter(meta => !hidePassed.value || meta.summary.files_with_issues > 0)
+})
 </script>
 
 <template>
   <div class="items-center justify-center relative flex flex-col gap-4 p-4 max-w-2xl mx-auto">
     <VisualLogoBanner />
-    <p class="opacity-50">
-      Select a lint session to get started:
-    </p>
+    <div class="flex justify-between w-full">
+      <div class="flex items-center gap-2">
+        <UButton size="sm" class="cursor-pointer" icon="lucide:refresh-cw" color="neutral" variant="outline" @click="reloadSessions()" />
 
-    <NuxtLink v-for="session in sessions" :key="session.timestamp" class="w-full" :to="`/session/${session.timestamp}`">
-      <UCard class="w-full p-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer">
-        <div class="flex items-center gap-1 font-mono opacity-50">
-          <u-icon name="ph:hash-duotone" class="w-4 h-4" />
-          <span class="text-sm">{{ session.timestamp }}</span>
-        </div>
-      </UCard>
-    </NuxtLink>
+        <p class="opacity-50">
+          Select a lint session to get started:
+        </p>
+      </div>
+
+      <UCheckbox v-model="hidePassed" label="Hide Passed" />
+    </div>
+
+    <template v-if="filteredSessionMetaList">
+      <SessionCard v-for="meta in filteredSessionMetaList" :key="meta.timestamp" :meta="meta" />
+    </template>
   </div>
 </template>

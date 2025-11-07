@@ -9,6 +9,8 @@ const e = 1
 
 console.log('a')
 
+debugger
+
 </script>
 
 <template>

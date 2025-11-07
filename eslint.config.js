@@ -8,8 +8,7 @@ export default antfu({
 })
   .append(nuxt())
   .append({
-    files: ['./packages/vite/src/node/**/*.ts'],
-    rules: {
-      'no-console': 'off',
-    },
+    ignores: [
+      'packages/core/fixtures/*',
+    ],
   })

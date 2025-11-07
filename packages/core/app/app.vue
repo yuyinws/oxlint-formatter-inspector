@@ -9,9 +9,7 @@ connect()
     {{ connectionState.error }}
   </div>
   <VisualLoading v-else-if="!connectionState.connected" text="Connecting..." />
-  <div v-else class="h-screen">
-    <UApp>
-      <NuxtPage />
-    </UApp>
-  </div>
+  <UApp v-else>
+    <NuxtPage />
+  </UApp>
 </template>

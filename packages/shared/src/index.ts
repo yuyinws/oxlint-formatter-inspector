@@ -1,3 +1,18 @@
+export interface Summary {
+  number_of_files: number
+  threads_count: number
+  start_time: number
+  warning_count: number
+  error_count: number
+  files_with_issues: number
+}
+
+export interface Meta {
+  version: string
+  timestamp: number
+  summary: Summary
+}
+
 export interface Label {
   label?: string
   span: {
@@ -31,19 +46,7 @@ export interface FileData {
   lines: LineData[]
 }
 
-export interface Summary {
-  number_of_files: number
-  threads_count: number
-  start_time: number
-  warning_count: number
-  error_count: number
-  files_with_issues: number
-}
-
-export interface PayloadData {
-  version: string
+export interface Logs {
+  files: FileData[]
   config: object | null
-  timestamp: number
-  summary?: Summary
-  files?: FileData[]
 }

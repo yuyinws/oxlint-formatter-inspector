@@ -15,7 +15,8 @@ export function getLogsManager(context: DevToolsNodeContext): OxlintLogsManager 
     ]
     const dir = dirs.find(dir => existsSync(dir))
     if (!dir) {
-      console.warn('[Vite DevTools] Oxlint logs directory `.oxlint` not found, you might want to run build with `build.oxlintOptions.debug` enabled first.')
+      // TODO
+      console.warn('[Vite DevTools Oxlint] Oxlint logs directory `.oxlint` not found, you might want to run build with `build.oxlintOptions.debug` enabled first.')
     }
     manager = new OxlintLogsManager(dir ?? dirs[0]!)
   }

@@ -27,7 +27,7 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ['@nuxt/ui', '@nuxt/eslint'],
+  modules: ['@nuxt/ui', '@nuxt/eslint', '@vueuse/nuxt'],
   css: ['~/assets/css/main.css'],
   icon: {
     clientBundle: {

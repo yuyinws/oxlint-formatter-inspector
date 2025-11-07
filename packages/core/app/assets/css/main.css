@@ -25,6 +25,7 @@
 
 body {
   background-color: unset;
+  @apply text-neutral-800 dark:text-neutral-300;
 }
 
 .bg-dots {
@@ -49,3 +50,26 @@ body {
 .summary-card {
   @apply border gap-1 border-neutral-200 dark:border-neutral-700 rounded-sm px-2 py-1 flex items-center;
 }
+
+
+
+.color-scale-neutral {
+  @apply text-gray-700/75 dark:text-gray-300/75;
+}
+
+.color-scale-low {
+  @apply text-lime-700/75 dark:text-lime-300/75 dark:saturate-50;
+}
+
+.color-scale-medium {
+  @apply text-amber-700/85 dark:text-amber-300/85 dark:saturate-80;
+}
+
+.color-scale-high {
+  @apply text-orange-700/95 dark:text-orange-300/95;
+}
+
+.color-scale-critical {
+  @apply text-red-700/95 dark:text-red-300/95;
+}
+

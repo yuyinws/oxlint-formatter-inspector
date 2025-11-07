@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Summary } from '~~/types'
+import type { Summary } from 'shared'
 
 interface Props {
   summary: Summary
@@ -9,111 +9,128 @@ interface Props {
   timestamp: number
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const durationData = computed(() => {
+  const value = Math.round(props.summary.start_time * 1000)
+
+  if (value < 100) {
+    return {
+      value,
+      color: 'color-scale-low',
+    }
+  }
+
+  if (value < 500) {
+    return {
+      value,
+      color: 'color-scale-medium',
+    }
+  }
+
+  if (value < 1000) {
+    return {
+      value,
+      color: 'color-scale-high',
+    }
+  }
+
+  return {
+    value,
+    color: 'color-scale-critical',
+  }
+})
 </script>
 
 <template>
-  <div class="my-3 flex flex-col gap-2">
+  <div class="flex flex-col gap-2">
+    <UCard class="p-4">
+      <div class="grid grid-cols-[max-content_160px_2fr] gap-2 items-center">
+        <UIcon name="ph:anchor" class="w-5 h-5" />
 
-    <div class="flex gap-2 flex-wrap">
-      <NuxtLink :to="`https://github.com/oxc-project/oxc/releases/tag/oxlint_v${version}`" external target="_blank"
-        class="summary-card hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
-        <u-icon name="ph:anchor" class="w-5 h-5" />
-        <span class="text-sm">Oxlint Version</span>
-
-        <span class="font-medium ml-1">{{ version }}</span>
-      </NuxtLink>
-
-      <UModal :ui="{ content: 'max-w-2xl' }">
-        <template #title>
-          <div class="flex items-center gap-1">
-            <u-icon class="flex-shrink-0" name="vscode-icons:file-type-oxlint" />
-            <div>.oxlintrc.json</div>
-          </div>
-        </template>
-        <div class="summary-card hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
-          <u-icon name="ph:gear" class="w-5 h-5" />
-          <span class="text-sm">Oxlint Config</span>
+        <div class="font-medium">
+          Oxlint Version
         </div>
 
-        <template #body>
-          <div v-if="config" class="w-200">
-            <Shiki :code="JSON.stringify(config, null, 2)" ext=".json" />
-          </div>
-          <div v-else>
-            <p class="text-sm text-gray-500">No config found</p>
-          </div>
-        </template>
-      </UModal>
+        <NuxtLink
+          :to="`https://github.com/oxc-project/oxc/releases/tag/oxlint_v${version}`" external target="_blank"
+          class="hover:text-primary hover:font-semibold"
+        >
+          <UBadge class="hover:text-primary hover:font-semibold" variant="outline" color="neutral" size="lg" trailing-icon="ph:arrow-up-right">
+            <span class="font-mono ml-1">v{{ version }}</span>
+          </UBadge>
+        </NuxtLink>
 
-      <div class="summary-card">
-        <u-icon name="ph:line-segments" class="w-5 h-5" />
-        <span class="text-sm">Threads</span>
+        <UIcon name="ph:gear" class="w-5 h-5" />
 
-        <span class="font-medium ml-1">{{ summary.threads_count }}</span>
-      </div>
-
-      <div class="summary-card">
-        <u-icon name="ph:clock" class="w-5 h-5" />
-        <span class="text-sm">Duration</span>
-
-        <span class="font-medium ml-1">{{ (summary.start_time * 1000).toFixed(2) }}ms</span>
-      </div>
-
-
-      <UTooltip>
-        <div class="summary-card hover:bg-gray-100 dark:hover:bg-gray-800 cursor-default">
-          <u-icon name="ph:alarm" class="w-5 h-5" />
-          <span class="text-sm">Generated at</span>
-          <span class="font-medium ml-1">{{ new Date(timestamp).toLocaleString('en-US', {
-            month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'
-          }) }}</span>
+        <div class="font-medium">
+          Oxlint Config
         </div>
 
-        <template #content>
-          {{ new Date(timestamp).toLocaleString('en-US') }}
-        </template>
-      </UTooltip>
-    </div>
+        <UModal :ui="{ content: 'max-w-2xl' }">
+          <template #title>
+            <div class="flex items-center gap-1">
+              <u-icon class="flex-shrink-0" name="vscode-icons:file-type-oxlint" />
+              <div>.oxlintrc.json</div>
+            </div>
+          </template>
 
+          <UBadge class="hover:text-primary hover:font-semibold w-fit cursor-pointer" variant="outline" color="neutral" size="lg" trailing-icon="ph:arrow-up-right">
+            <span class="font-mono ml-1">.oxlintrc.json</span>
+          </UBadge>
+          <template #body>
+            <div v-if="config" class="w-200">
+              <Shiki :code="JSON.stringify(config, null, 2)" ext=".json" />
+            </div>
+            <div v-else>
+              <p class="text-sm text-gray-500">
+                No config found
+              </p>
+            </div>
+          </template>
+        </UModal>
 
-    <div class="flex w-full flex-wrap gap-2">
-      <div class="summary-card">
-        <u-icon name="ph-files" class="w-5 h-5" />
-        <span class="font-medium ml-1">{{ summary.number_of_files }}</span>
+        <UIcon name="ph:clock-duotone" class="w-5 h-5" />
 
-        <span class="text-sm">Files Checked</span>
+        <div class="font-medium">
+          Created At
+        </div>
 
-        <template v-if="totalIssues > 0">
-          <USeparator orientation="vertical" />
+        <UBadge class="w-fit font-mono" size="lg" variant="outline" color="neutral">
+          {{ new Date(timestamp).toLocaleString() }}
+        </UBadge>
 
-          <span class="font-medium text-red-600 dark:text-red-400">{{ summary.files_with_issues }}</span>
+        <UIcon name="ph:timer-duotone" class="w-5 h-5" />
 
-          <span class="text-sm">Files with Issues</span>
-        </template>
+        <div class="font-medium">
+          Lint Duration
+        </div>
+
+        <UBadge class="w-fit font-mono" size="lg" variant="outline" color="neutral" :class="durationData.color">
+          <span> {{ durationData.value }}</span>
+          <span class="text-xs opacity-[75]">ms</span>
+        </UBadge>
+
+        <UIcon name="ph:file-duotone" class="w-5 h-5" />
+
+        <div class="font-medium">
+          Checked Files
+        </div>
+
+        <UBadge class="w-fit font-mono" size="lg" variant="outline" color="neutral">
+          {{ summary.number_of_files }} files. <span class="text-red-600 dark:text-red-400 font-semibold">{{ summary.files_with_issues }} with issues</span>
+        </UBadge>
+
+        <UIcon name="ph:warning-octagon-duotone" class="w-5 h-5" />
+
+        <div class="font-medium">
+          Issues
+        </div>
+
+        <UBadge class="w-fit font-mono" size="lg" variant="outline" color="neutral">
+          {{ totalIssues }} issues. <span v-if="summary.error_count > 0" class="text-red-600 dark:text-red-400 font-semibold">{{ summary.error_count }} errors</span> <span v-if="summary.warning_count > 0" class="text-yellow-600 dark:text-yellow-400 font-semibold">{{ summary.warning_count }} warnings</span>
+        </UBadge>
       </div>
-
-
-
-      <div class="summary-card">
-        <u-icon name="codicon:issues" class="w-5 h-5" />
-        <span class="font-medium ml-1">{{ totalIssues }}</span>
-
-        <span class="text-sm">Total Issues</span>
-
-        <template v-if="totalIssues > 0">
-          <USeparator orientation="vertical" />
-
-          <span class="font-medium text-red-600 dark:text-red-400">{{ summary.error_count }}</span>
-
-          <span class="text-sm">Errors</span>
-
-          <span class="font-medium text-yellow-600 dark:text-yellow-400">{{ summary.warning_count }}</span>
-
-          <span class="text-sm">Warnings</span>
-        </template>
-      </div>
-    </div>
-
+    </UCard>
   </div>
 </template>

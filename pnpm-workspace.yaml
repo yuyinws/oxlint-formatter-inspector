@@ -6,7 +6,6 @@ overrides:
   vite: npm:rolldown-vite@7.1.14
 catalog:
   '@antfu/eslint-config': ^6.2.0
-  '@antfu/ni': ^24.3.0
   '@iconify-json/codicon': ^1.2.31
   '@iconify-json/lucide': ^1.2.72
   '@iconify-json/ph': ^1.2.2
@@ -22,6 +21,7 @@ catalog:
   '@vitejs/devtools': 0.0.0-alpha.10
   '@vitejs/devtools-kit': 0.0.0-alpha.10
   '@vueuse/core': ^14.0.0
+  '@vueuse/nuxt': ^14.0.0
   ansis: ^4.0.0
   bumpp: ^10.1.0
   consola: ^3.4.2
@@ -33,25 +33,17 @@ catalog:
   launch-editor: ^2.10.0
   lint-staged: ^16.0.0
   mrmime: ^2.0.1
-  nuxt: ^4.2.0
+  nuxt: 4.1.2
   open: ^10.1.2
-  oxlint: ^1.2.0
+  oxlint: ^1.26.0
   pathe: ^2.0.3
   picomatch: ^4.0.3
-  pnpm: ^10.11.0
   shiki: ^3.14.0
   simple-git-hooks: ^2.13.0
   tailwindcss: ^4.1.16
   tsdown: ^0.11.9
   tsx: ^4.19.4
   typescript: ^5.8.3
-  vite: npm:rolldown-vite@7.1.14
-  vite-plugin-devtools-oxlint: wor
+  vite: npm:rolldown-vite@^7.1.20
   vue: ^3.5.22
   vue-router: ^4.6.3
-  vue-tsc: ^2.2.10
-catalogs:
-  conflicts_@antfu/eslint-config_h4_14_1:
-    '@antfu/eslint-config': ^4.14.1
-  conflicts_eslint_h9_29_0:
-    eslint: ^9.29.0

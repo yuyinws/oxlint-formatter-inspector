@@ -1,22 +1,91 @@
 <script setup lang="ts">
-const route = useRoute()
-const id = route.params.id as string
+import { useDebounceFn } from '@vueuse/core'
+import { isMatch } from 'picomatch'
 
+const sessionId = useRoute().params.id as string
 const rpc = useRpc()
+const session = await rpc.value!['vite:oxlint:get-session']({ sessionId })!
 
-const session = await rpc.value!['vite:oxlint:get-session']({ sessionId: id })
+// 计算问题总数
+const totalIssues = computed(() => {
+  if (!session?.logs) {
+    return 0
+  }
+  return session.logs.files.reduce((sum, file) =>
+    sum + file.lines.reduce((s, line) => s + line.messages.length, 0), 0)
+})
+
+// 判断是否显示摘要
+const showSummary = computed(() => !!session?.meta.summary)
+
+const search = ref('')
+
+// 防抖的搜索值
+const debouncedSearch = ref('')
+
+// 使用 VueUse 的 useDebounceFn 创建防抖函数
+const debouncedUpdateSearch = useDebounceFn((value: string) => {
+  debouncedSearch.value = value
+}, 300)
+
+// 监听搜索值变化
+watch(search, (newValue) => {
+  debouncedUpdateSearch(newValue)
+}, { immediate: true })
+
+const filteredFiles = computed(() => {
+  if (!session?.logs?.files) {
+    return []
+  }
+
+  const searchTerm = debouncedSearch.value.trim()
+
+  // 如果搜索词为空，返回所有文件
+  if (!searchTerm) {
+    return session.logs.files
+  }
+
+  // 尝试使用 picomatch 进行 glob 匹配
+  try {
+    return session.logs.files.filter(file => isMatch(file.filename, searchTerm, { contains: true }))
+  }
+  catch {
+    // 如果 glob 模式无效，回退到简单的字符串包含匹配
+    return session.logs.files.filter(file => file.filename.includes(searchTerm))
+  }
+})
+
+// 判断是否显示文件列表
+const showFiles = computed(() => !!filteredFiles.value && filteredFiles.value.length > 0)
+
+// 判断是否显示空状态
+const showEmpty = computed(() => filteredFiles.value && (!filteredFiles.value.length || filteredFiles.value.length === 0))
 </script>
 
 <template>
-  <div class="h-screen w-screen max-w-screen max-h-screen">
-    <div class="p-4">
-      <UButton variant="outline" icon="ph:arrow-bend-up-left-duotone" to="/">
-        Re-select session
-      </UButton>
-    </div>
+  <UApp>
+    <div class="container mx-auto p-4">
+      <main class="flex flex-col gap-4">
+        <UButton class="cursor-pointer w-fit" icon="ph:arrow-bend-up-left-duotone" color="neutral" variant="outline" @click="navigateTo('/')">
+          Re-select Session
+        </UButton>
+        <!-- 摘要信息 -->
+        <SummaryCard
+          v-if="showSummary && session?.meta.summary" :summary="session.meta.summary" :total-issues="totalIssues"
+          :version="session.meta.version" :config="session.logs.config" :timestamp="session.meta.timestamp"
+        />
 
-    <div>
-      {{ session }}
+        <!-- 搜索和布局控制区域 -->
+        <Search v-model="search" />
+
+        <!-- 文件列表 -->
+        <div v-if="showFiles" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <FileCard v-for="file in filteredFiles" :key="file.filename" :file="file" />
+        </div>
+
+        <!-- 空状态 -->
+        <EmptyState v-else-if="showEmpty" />
+      </main>
     </div>
-  </div>
+  </UApp>
 </template>
