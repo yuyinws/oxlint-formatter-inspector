@@ -10,5 +10,6 @@ export default antfu({
   .append({
     ignores: [
       'packages/core/fixtures/*',
+      'README.md',
     ],
   })

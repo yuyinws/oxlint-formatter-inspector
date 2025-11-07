@@ -17,7 +17,7 @@ const filteredSessionMetaList = computed(() => {
 <template>
   <div class="items-center justify-center relative flex flex-col gap-4 p-4 max-w-2xl mx-auto">
     <VisualLogoBanner />
-    <div class="flex justify-between w-full">
+    <div class="flex justify-between items-center w-full">
       <div class="flex items-center gap-2">
         <UButton size="sm" class="cursor-pointer" icon="lucide:refresh-cw" color="neutral" variant="outline" @click="reloadSessions()" />
 
@@ -26,7 +26,7 @@ const filteredSessionMetaList = computed(() => {
         </p>
       </div>
 
-      <UCheckbox v-model="hidePassed" label="Hide Passed" />
+      <UCheckbox v-model="hidePassed" color="success" label="Hide Passed" />
     </div>
 
     <template v-if="filteredSessionMetaList">
