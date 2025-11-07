@@ -30,7 +30,7 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
-    "prepublishOnly": "pnpm build",
+    "prepack": "pnpm build",
     "start": "tsx src/test.ts"
   },
   "dependencies": {
