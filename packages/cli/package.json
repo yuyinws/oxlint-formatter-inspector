@@ -37,10 +37,6 @@
     "consola": "catalog:",
     "get-port-please": "catalog:",
     "gunshi": "catalog:",
-    "h3": "catalog:",
-    "launch-editor": "catalog:",
-    "mrmime": "catalog:",
-    "open": "catalog:",
     "pathe": "catalog:"
   },
   "devDependencies": {

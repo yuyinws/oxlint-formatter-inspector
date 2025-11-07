@@ -1,61 +1,48 @@
-<img src="https://oxlint-formatter-inspector.vercel.app/favicon.svg" width="100" height="100"><br>
+<img src="https://cdn.jsdelivr.net/gh/yuyinws/static@master/2025/11/upgit_20251107_1762507194.png" ><br>
 
-# Oxlint Formatter Inspector
+Visualize The Oxlint.
 
-[![npm version][npm-version-src]][npm-version-href]
-[![npm downloads][npm-downloads-src]][npm-downloads-href]
-
-![demo](https://static.yuy1n.io/oxlint-fi.png)
-
-<p align='center'>
-An interactive tool for inspecting OxLint formatter in the browser.
-</p>
-
-<p align='center'>
-  <a target='_blank' href='https://oxlint-formatter-inspector.vercel.app/'>
-    Live Demo
-  </a>
-</p>
+> [!WARNING]
+> This is an experimental PoC project. It's not ready for production use yet.
 
 ## Features
 
+- ⚡️ Integration with [Vite DevTools](https://github.com/vitejs/devtools)
 - 🔍 Glob patterns search support
 - 🌈 Code highlight
 - 🚀 Launch Editor support
-- 🌓 Dark mode support
-- 📦 Static Build
 
-## Installation
+## Integration with Vite DevTools
 
-```bash
-npm i oxlint-fi -D
-```
-
-## Usage
+1. Generate Oxlint logs
 
 ```bash
-npx oxlint-fi
+npx oxlint-inspector
 ```
 
-### Static Build
+> Make sure oxlint is installed first. this command will generate a `.oxlint` directory in the current process directory, which includes the Oxlint logs.
 
-If you want to build a static web app for Oxlint Formatter
+2. Install Plugin
 
 ```bash
-npx oxlint-fi build
+npm i vite-plugin-devtools-oxlint -D
 ```
 
-> This will generate a SPA under `.oxlint-formatter-inspector` folder. You can deploy it to any static file server.
+3. Configure Vite
+
+```ts
+import { DevTools } from '@vitejs/devtools'
+import { defineConfig } from 'vite'
+import { DevToolsOxlint } from 'vite-plugin-devtools-oxlint'
+
+export default defineConfig({
+  plugins: [
+    DevTools(),
+    DevToolsOxlint(),
+  ],
+})
+```
 
 ## License
 
 [MIT](./LICENSE) License © 2025-PRESENT [Leo](https://github.com/yuyinws)
-
-<!-- Badges -->
-
-[npm-version-src]: https://img.shields.io/npm/v/oxlint-fi?style=flat&colorA=080f12&colorB=1fa669
-[npm-version-href]: https://npmjs.com/package/oxlint-fi
-[npm-downloads-src]: https://img.shields.io/npm/dm/oxlint-fi?style=flat&colorA=080f12&colorB=1fa669
-[npm-downloads-href]: https://npmjs.com/package/oxlint-fi
-[license-src]: https://img.shields.io/github/license/yuyinws/oxlint-formatter-inspector.svg?style=flat&colorA=080f12&colorB=1fa669
-[license-href]: https://github.com/yuyinws/oxlint-formatter-inspector/blob/main/LICENSE

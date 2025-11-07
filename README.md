@@ -1,1 +1,1 @@
-./packages/oxlint-fi/README.md
+./packages/core/README.md

@@ -1,1 +1,1 @@
-./packages/oxlint-fi/LICENSE.md
+./packages/core/LICENSE.md
