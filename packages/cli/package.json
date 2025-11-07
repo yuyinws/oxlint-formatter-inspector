@@ -5,12 +5,13 @@
   "description": "Oxlint Inspector CLI",
   "author": "Leo <https://github.com/yuyinws>",
   "license": "MIT",
-  "homepage": "https://github.com/yuyinws/oxlint-formatter-i#readme",
+  "homepage": "https://github.com/yuyinws/oxlint-inspector#readme",
   "repository": {
+    "directory": "packages/cli",
     "type": "git",
-    "url": "git+https://github.com/yuyinws/oxlint-formatter-i.git"
+    "url": "git+https://github.com/yuyinws/oxlint-inspector.git"
   },
-  "bugs": "https://github.com/yuyinws/oxlint-formatter-i/issues",
+  "bugs": "https://github.com/yuyinws/oxlint-inspector/issues",
   "keywords": [
     "oxlint",
     "oxlint-formatter"

@@ -2,6 +2,11 @@
   "name": "vite-plugin-devtools-oxlint",
   "type": "module",
   "version": "0.1.2",
+  "repository": {
+    "directory": "packages/core",
+    "type": "git",
+    "url": "git+https://github.com/yuyinws/oxlint-inspector.git"
+  },
   "exports": {
     ".": "./dist/index.js",
     "./package.json": "./package.json"

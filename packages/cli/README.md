@@ -1,1 +1,1 @@
-[README](https://github.com/yuyinws/oxlint-formatter-inspector/blob/main/packages/core/README.md)
+[README](https://github.com/yuyinws/oxlint-inspector/blob/main/packages/core/README.md)
