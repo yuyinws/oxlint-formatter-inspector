@@ -29,12 +29,8 @@ catalog:
   eslint-plugin-oxlint: ^1.1.0
   get-port-please: ^3.1.2
   gunshi: ^0.26.3
-  h3: ^2.0.1-rc.5
-  launch-editor: ^2.10.0
   lint-staged: ^16.0.0
-  mrmime: ^2.0.1
   nuxt: 4.1.2
-  open: ^10.1.2
   oxlint: ^1.26.0
   pathe: ^2.0.3
   picomatch: ^4.0.3
