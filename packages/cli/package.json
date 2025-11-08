@@ -18,9 +18,9 @@
   ],
   "sideEffects": false,
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.mjs"
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.mjs",
   "bin": {
     "oxlint-inspector": "./bin/oxlint-inspector.mjs"
   },
