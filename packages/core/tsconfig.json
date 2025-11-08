@@ -1,4 +1,9 @@
 {
+  "compilerOptions": {
+    "types": [
+      "@vitejs/devtools-kit"
+    ]
+  },
   "references": [
     {
       "path": "./.nuxt/tsconfig.app.json"

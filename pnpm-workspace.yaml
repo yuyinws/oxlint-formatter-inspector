@@ -2,6 +2,11 @@ packages:
   - packages/*
   - playground
 
+shamefullyHoist: true
+strictPeerDependencies: false
+shellEmulator: true
+ignoreWorkspaceRootCheck: true
+
 catalog:
   '@antfu/eslint-config': ^6.2.0
   '@iconify-json/codicon': ^1.2.31
