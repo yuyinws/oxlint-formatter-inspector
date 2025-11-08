@@ -10,7 +10,7 @@ const { data: sessionMetaList, refresh: reloadSessions } = useAsyncData('session
 const hidePassed = useLocalStorage('hidePassed', false)
 
 const filteredSessionMetaList = computed(() => {
-  return sessionMetaList.value?.filter(meta => !hidePassed.value || meta.summary.files_with_issues > 0)
+  return sessionMetaList.value?.filter(meta => !hidePassed.value || meta.summary.files_with_issues > 0) || []
 })
 </script>
 
@@ -29,8 +29,36 @@ const filteredSessionMetaList = computed(() => {
       <UCheckbox v-model="hidePassed" color="success" label="Hide Passed" />
     </div>
 
-    <template v-if="filteredSessionMetaList">
+    <template v-if="filteredSessionMetaList?.length > 0">
       <SessionCard v-for="meta in filteredSessionMetaList" :key="meta.timestamp" :meta="meta" />
     </template>
+
+    <UEmpty
+      v-else
+      class="w-full mt-4"
+      title="No sessions found"
+      icon="i-ph-folder-simple-duotone"
+    >
+      <template #description>
+        <div class="text-sm text-neutral-500 leading-7">
+          <span>Oxlint logs directory</span><code>.oxlint</code> not found.
+          <br>
+          Run <code>npx oxlint-inspector</code> to generate it first.
+          <br>
+          Read more:
+          <NuxtLink to="https://github.com/yuyinws/oxlint-inspector" external target="_blank" class="text-primary-500">
+            https://github.com/yuyinws/oxlint-inspector
+          </NuxtLink>
+        </div>
+      </template>
+    </UEmpty>
   </div>
 </template>
+
+<style scoped>
+@reference '~/assets/css/main.css';
+
+code {
+  @apply bg-neutral-100 dark:bg-neutral-800 rounded-sm px-1 py-0.5;
+}
+</style>

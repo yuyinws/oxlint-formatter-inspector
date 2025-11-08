@@ -75,16 +75,19 @@ const showEmpty = computed(() => filteredFiles.value && (!filteredFiles.value.le
           :version="session.meta.version" :config="session.logs.config" :timestamp="session.meta.timestamp"
         />
 
-        <!-- 搜索和布局控制区域 -->
-        <Search v-model="search" />
+        <Search v-if="showFiles" v-model="search" />
 
         <!-- 文件列表 -->
         <div v-if="showFiles" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <FileCard v-for="file in filteredFiles" :key="file.filename" :file="file" />
         </div>
 
-        <!-- 空状态 -->
-        <EmptyState v-else-if="showEmpty" />
+        <UEmpty
+          v-if="showEmpty"
+          icon="twemoji:partying-face"
+          size="xl"
+          description="Congratulations! There is no oxlint issues."
+        />
       </main>
     </div>
   </UApp>

@@ -72,4 +72,3 @@ body {
 .color-scale-critical {
   @apply text-red-700/95 dark:text-red-300/95;
 }
-
