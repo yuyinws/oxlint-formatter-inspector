@@ -31,7 +31,7 @@ export async function getOxlintConfig() {
 
 function wrapOxlintCommand(rawArgs: string[], buildMode?: boolean) {
   const args = buildMode ? rawArgs.slice(1) : rawArgs
-  const commandArgs = ['npx', 'oxlint', '-f', 'json', ...args]
+  const commandArgs = ['npx', '--yes', 'oxlint', '-f', 'json', ...args]
   return commandArgs.join(' ')
 }
 
