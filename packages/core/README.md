@@ -1,6 +1,8 @@
 <img src="https://cdn.jsdelivr.net/gh/yuyinws/static@master/2025/11/upgit_20251107_1762507194.png" ><br>
 
-Visualize The Oxlint.
+<p align="center">Visualize The Oxlint.</p>
+
+https://github.com/user-attachments/assets/c9cd8648-8d3c-40de-a3d9-00cfed3dd39a
 
 > [!WARNING]
 > This is an experimental PoC project. It's not ready for production use yet.
