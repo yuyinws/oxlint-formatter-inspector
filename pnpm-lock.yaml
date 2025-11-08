@@ -21,6 +21,9 @@ catalogs:
     '@iconify-json/radix-icons':
       specifier: ^1.2.5
       version: 1.2.5
+    '@iconify-json/twemoji':
+      specifier: ^1.2.4
+      version: 1.2.4
     '@iconify-json/vscode-icons':
       specifier: ^1.2.33
       version: 1.2.33
@@ -196,7 +199,7 @@ importers:
         specifier: 'catalog:'
         version: 1.2.5
       '@iconify-json/twemoji':
-        specifier: ^1.2.4
+        specifier: 'catalog:'
         version: 1.2.4
       '@iconify-json/vscode-icons':
         specifier: 'catalog:'
