@@ -22,7 +22,7 @@ https://github.com/user-attachments/assets/c9cd8648-8d3c-40de-a3d9-00cfed3dd39a
 npx oxlint-inspector
 ```
 
-> Make sure oxlint is installed first. this command will generate a `.oxlint` directory in the current process directory, which includes the Oxlint logs.
+> Make sure oxlint is installed first. This command will generate a `.oxlint` directory in the current process directory, which includes the Oxlint logs.
 
 2. Install Plugin
 
