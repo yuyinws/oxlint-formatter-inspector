@@ -16,7 +16,7 @@ https://github.com/user-attachments/assets/c9cd8648-8d3c-40de-a3d9-00cfed3dd39a
 
 ## Integration with Vite DevTools
 
-1. Generate Oxlint logs
+1. Generate Oxlint logs (No need for this step if Oxlint can built-in it. trace on [oxc#15573](https://github.com/oxc-project/oxc/issues/15573))
 
 ```bash
 npx oxlint-inspector
