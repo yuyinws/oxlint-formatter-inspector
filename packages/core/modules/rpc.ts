@@ -10,9 +10,7 @@ export default defineNuxtModule({
   async setup() {
     addVitePlugin({
       name: 'vite:devtools-oxlint',
-      // @ts-expect-error - TODO: fix type error
       devtools: {
-        // @ts-expect-error - TODO: fix type error
         setup(ctx) {
           for (const fn of rpcFunctions) {
             ctx.rpc.register(fn as unknown as any)
@@ -23,7 +21,6 @@ export default defineNuxtModule({
 
     const devtools = await DevTools()
 
-    // @ts-expect-error - TODO: fix type error
     addVitePlugin(devtools)
   },
 })
