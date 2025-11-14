@@ -6,6 +6,9 @@ const sessionId = useRoute().params.id as string
 const rpc = useRpc()
 const session = await rpc.value!['vite:oxlint:get-session']({ sessionId })!
 
+// 判断是否显示空状态
+const showEmpty = computed(() => session?.logs.files.length === 0)
+
 // 计算问题总数
 const totalIssues = computed(() => {
   if (!session?.logs) {
@@ -57,9 +60,6 @@ const filteredFiles = computed(() => {
 
 // 判断是否显示文件列表
 const showFiles = computed(() => !!filteredFiles.value && filteredFiles.value.length > 0)
-
-// 判断是否显示空状态
-const showEmpty = computed(() => filteredFiles.value && (!filteredFiles.value.length || filteredFiles.value.length === 0))
 </script>
 
 <template>
@@ -75,12 +75,7 @@ const showEmpty = computed(() => filteredFiles.value && (!filteredFiles.value.le
           :version="session.meta.version" :config="session.logs.config" :timestamp="session.meta.timestamp"
         />
 
-        <Search v-if="showFiles" v-model="search" />
-
-        <!-- 文件列表 -->
-        <div v-if="showFiles" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <FileCard v-for="file in filteredFiles" :key="file.filename" :file="file" />
-        </div>
+        <Search v-model="search" />
 
         <UEmpty
           v-if="showEmpty"
@@ -88,6 +83,20 @@ const showEmpty = computed(() => filteredFiles.value && (!filteredFiles.value.le
           size="xl"
           description="Congratulations! There is no oxlint issues."
         />
+
+        <template v-else>
+          <div v-if="showFiles" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <FileCard v-for="file in filteredFiles" :key="file.filename" :file="file" />
+          </div>
+
+          <UEmpty
+            v-else
+            icon="ph:file-duotone"
+            size="xl"
+            description="No files found."
+          />
+        </template>
+        '
       </main>
     </div>
   </UApp>
