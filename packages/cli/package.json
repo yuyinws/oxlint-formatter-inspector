@@ -1,7 +1,7 @@
 {
   "name": "oxlint-inspector",
   "type": "module",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Oxlint Inspector CLI",
   "author": "Leo <https://github.com/yuyinws>",
   "license": "MIT",
