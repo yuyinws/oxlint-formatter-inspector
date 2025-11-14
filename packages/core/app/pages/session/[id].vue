@@ -96,7 +96,6 @@ const showFiles = computed(() => !!filteredFiles.value && filteredFiles.value.le
             description="No files found."
           />
         </template>
-        '
       </main>
     </div>
   </UApp>
