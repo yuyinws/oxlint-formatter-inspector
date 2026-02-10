@@ -8,42 +8,40 @@ shellEmulator: true
 ignoreWorkspaceRootCheck: true
 
 catalog:
-  '@antfu/eslint-config': ^6.2.0
-  '@iconify-json/codicon': ^1.2.31
-  '@iconify-json/lucide': ^1.2.72
+  '@iconify-json/codicon': ^1.2.43
+  '@iconify-json/lucide': ^1.2.89
   '@iconify-json/ph': ^1.2.2
-  '@iconify-json/radix-icons': ^1.2.5
-  '@iconify-json/twemoji': ^1.2.4
-  '@iconify-json/vscode-icons': ^1.2.33
-  '@nuxt/eslint': ^1.10.0
-  '@nuxt/kit': ^4.2.1
-  '@nuxt/ui': ^4.1.0
-  '@shikijs/langs': ^3.15.0
-  '@shikijs/themes': ^3.15.0
-  '@types/node': ^22.19.0
+  '@iconify-json/radix-icons': ^1.2.6
+  '@iconify-json/twemoji': ^1.2.5
+  '@iconify-json/vscode-icons': ^1.2.40
+  '@nuxt/kit': ^4.3.1
+  '@nuxt/ui': ^4.4.0
+  '@shikijs/langs': ^3.22.0
+  '@shikijs/themes': ^3.22.0
+  '@types/node': ^22.19.10
   '@types/picomatch': ^4.0.2
   '@vitejs/devtools': 0.0.0-alpha.17
   '@vitejs/devtools-kit': 0.0.0-alpha.17
-  '@vueuse/core': ^14.0.0
-  '@vueuse/nuxt': ^14.0.0
+  '@vueuse/core': ^14.2.0
+  '@vueuse/nuxt': ^14.2.0
+  pncat: ^0.9.1
+  oxfmt: ^0.28.0
   ansis: ^4.2.0
-  bumpp: ^10.3.1
+  bumpp: ^10.4.1
   consola: ^3.4.2
-  eslint: ^9.39.1
-  eslint-plugin-oxlint: ^1.26.0
   get-port-please: ^3.2.0
-  gunshi: ^0.26.3
-  lint-staged: ^16.2.6
-  nuxt: ^4.2.1
-  oxlint: ^1.26.0
+  gunshi: ^0.28.0
+  lint-staged: ^16.2.7
+  nuxt: ^4.3.1
+  oxlint: ^1.43.0
   pathe: ^2.0.3
   picomatch: ^4.0.3
-  shiki: ^3.15.0
+  shiki: ^3.22.0
   simple-git-hooks: ^2.13.1
-  tailwindcss: ^4.1.17
-  tsdown: ^0.16.1
-  tsx: ^4.20.6
+  tailwindcss: ^4.1.18
+  tsdown: ^0.20.3
+  tsx: ^4.21.0
   typescript: ^5.9.3
-  vite: npm:rolldown-vite@^7.2.2
-  vue: ^3.5.24
-  vue-router: ^4.6.3
+  vite: ^8.0.0-beta.13
+  vue: ^3.5.28
+  vue-router: ^5.0.2

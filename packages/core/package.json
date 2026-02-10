@@ -33,7 +33,6 @@
     "@iconify-json/radix-icons": "catalog:",
     "@iconify-json/twemoji": "catalog:",
     "@iconify-json/vscode-icons": "catalog:",
-    "@nuxt/eslint": "catalog:",
     "@nuxt/kit": "catalog:",
     "@nuxt/ui": "catalog:",
     "@shikijs/langs": "catalog:",

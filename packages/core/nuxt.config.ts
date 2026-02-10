@@ -27,18 +27,13 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ['@nuxt/ui', '@nuxt/eslint', '@vueuse/nuxt'],
+  modules: ['@nuxt/ui', '@vueuse/nuxt'],
   css: ['~/assets/css/main.css'],
   icon: {
     clientBundle: {
       scan: {
         globInclude: ['app/**/*'],
       },
-    },
-  },
-  eslint: {
-    config: {
-      standalone: false,
     },
   },
   devServer: {
