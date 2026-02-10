@@ -1,4 +1,4 @@
-<script setup lang=ts>
+<script setup lang="ts">
 import { connect, connectionState } from './composables/rpc'
 
 connect()

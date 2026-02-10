@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
-    "types": [
-      "@vitejs/devtools-kit"
-    ]
+    "types": ["@vitejs/devtools-kit"]
   },
   "references": [
     {

@@ -25,7 +25,11 @@ function clearSearch() {
     <u-input v-model="search" size="lg" class="w-full" placeholder="Search file names">
       <template v-if="search?.length" #trailing>
         <UButton
-          color="neutral" variant="link" size="sm" icon="i-lucide-circle-x" aria-label="Clear input"
+          color="neutral"
+          variant="link"
+          size="sm"
+          icon="i-lucide-circle-x"
+          aria-label="Clear input"
           @click="clearSearch"
         />
       </template>

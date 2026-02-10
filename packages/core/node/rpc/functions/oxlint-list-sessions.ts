@@ -4,7 +4,7 @@ import { getLogsManager } from '../utils'
 export const oxlintListSessions = defineRpcFunction({
   name: 'vite:oxlint:list-sessions',
   type: 'query',
-  setup: (context) => {
+  setup: context => {
     return {
       handler: async () => {
         const logsManager = getLogsManager(context)

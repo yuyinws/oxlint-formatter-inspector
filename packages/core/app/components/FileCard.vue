@@ -23,7 +23,9 @@ function handleOpenInEditor() {
     <template #header>
       <div class="flex items-center gap-2" @click="handleOpenInEditor">
         <u-icon class="flex-shrink-0" :name="fileIcon" />
-        <span class="truncate dark:text-neutral-300 text-neutral-700 cursor-pointer hover:underline font-mono">
+        <span
+          class="truncate dark:text-neutral-300 text-neutral-700 cursor-pointer hover:underline font-mono"
+        >
           {{ file.filename }}
         </span>
       </div>
@@ -33,8 +35,11 @@ function handleOpenInEditor() {
       <!-- 问题列表 -->
       <div v-if="file.lines.length > 0">
         <LineError
-          v-for="lineData in file.lines" :key="`${file.filename}-${lineData.line}`" :line-data="lineData"
-          :filename="file.filename" :source="file.source"
+          v-for="lineData in file.lines"
+          :key="`${file.filename}-${lineData.line}`"
+          :line-data="lineData"
+          :filename="file.filename"
+          :source="file.source"
         />
       </div>
     </div>

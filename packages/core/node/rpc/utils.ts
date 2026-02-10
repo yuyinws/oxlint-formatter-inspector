@@ -9,13 +9,12 @@ const weakMap = new WeakMap<DevToolsNodeContext, OxlintLogsManager>()
 export function getLogsManager(context: DevToolsNodeContext): OxlintLogsManager {
   let manager = weakMap.get(context)!
   if (!manager) {
-    const dirs = [
-      join(context.cwd, '.oxlint'),
-      join(process.cwd(), '.oxlint'),
-    ]
+    const dirs = [join(context.cwd, '.oxlint'), join(process.cwd(), '.oxlint')]
     const dir = dirs.find(dir => existsSync(dir))
     if (!dir) {
-      console.warn('[Vite DevTools Oxlint] Oxlint logs directory `.oxlint` not found, you might want to run build with `npx oxlint-inspector` to generate it first. Read more: https://github.com/yuyinws/oxlint-inspector')
+      console.warn(
+        '[Vite DevTools Oxlint] Oxlint logs directory `.oxlint` not found, you might want to run build with `npx oxlint-inspector` to generate it first. Read more: https://github.com/yuyinws/oxlint-inspector',
+      )
     }
     manager = new OxlintLogsManager(dir ?? dirs[0]!)
   }

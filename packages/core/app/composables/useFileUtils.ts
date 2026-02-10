@@ -56,5 +56,8 @@ export function processLabelHtml(text: string) {
   }
 
   // 匹配单引号和反引号中间的内容，并替换为带背景色的 span
-  return text.replace(/['`]([^'`]+)['`]/g, '<span class="bg-neutral-100 dark:bg-neutral-800 px-1 py-0.5 rounded font-semibold">$1</span>')
+  return text.replace(
+    /['`]([^'`]+)['`]/g,
+    '<span class="bg-neutral-100 dark:bg-neutral-800 px-1 py-0.5 rounded font-semibold">$1</span>',
+  )
 }

@@ -19,16 +19,13 @@ export async function connect() {
   const runtimeConfig = useRuntimeConfig()
   try {
     const result = await getDevToolsRpcClient({
-      baseURL: [
-        '/.devtools/',
-        runtimeConfig.app.baseURL,
-      ],
+      baseURL: ['/.devtools/', runtimeConfig.app.baseURL],
       connectionMeta: runtimeConfig.app.connection,
       wsOptions: {
         onConnected: () => {
           connectionState.connected = true
         },
-        onError: (e) => {
+        onError: e => {
           connectionState.error = e
         },
         onDisconnected: () => {
@@ -45,8 +42,7 @@ export async function connect() {
 
     rpc.value = result.rpc
     connectionState.connected = true
-  }
-  catch (e) {
+  } catch (e) {
     connectionState.error = e as Error
   }
 }

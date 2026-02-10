@@ -80,36 +80,49 @@ function severityClass(severity: string | undefined) {
     <div class="p-4">
       <!-- 当前行代码 -->
       <div class="flex gap-4 items-start">
-        <span class="text-neutral-500 font-mono text-sm relative top-[3px]">{{ lineData.line }}</span>
+        <span class="text-neutral-500 font-mono text-sm relative top-[3px]">{{
+          lineData.line
+        }}</span>
         <div class="flex-1">
           <Shiki :code="currentLineCode" :ext="fileExt" />
 
           <div class="flex relative" :style="{ minHeight: `${errorHeight}px`, top: '-10px' }">
             <a
-              v-for="(label, labelIndex) in sortedLabels" :key="labelIndex" target="_blank"
+              v-for="(label, labelIndex) in sortedLabels"
+              :key="labelIndex"
+              target="_blank"
               :href="getMessageForLabel(label.span.column)?.url"
               class="absolute whitespace-pre text-neutral-300 dark:text-neutral-600 hover:text-neutral-800 dark:hover:text-neutral-200 cursor-pointer group"
               :style="{ left: `calc(${label.span.column - 1}ch)` }"
             >
               <UTooltip
-                :delay-duration="100" :disable-hoverable-content="false"
+                :delay-duration="100"
+                :disable-hoverable-content="false"
                 :ui="{ content: 'py-4 px-5 h-auto max-w-sm' }"
               >
                 <template #content>
                   <ErrorTooltip
                     v-if="getMessageForLabel(label.span.column)"
-                    :message="getMessageForLabel(label.span.column)!" :filename="filename" :line="lineData.line"
+                    :message="getMessageForLabel(label.span.column)!"
+                    :filename="filename"
+                    :line="lineData.line"
                     :column="label.span.column"
                   />
                 </template>
                 <div>
                   <div>
-                    <span v-for="i in generateLabelIndicator(label).preDashes" :key="`pre-${i}`">─</span>
+                    <span v-for="i in generateLabelIndicator(label).preDashes" :key="`pre-${i}`"
+                      >─</span
+                    >
                     <span>┬</span>
-                    <span v-for="i in generateLabelIndicator(label).postDashes" :key="`post-${i}`">─</span>
+                    <span v-for="i in generateLabelIndicator(label).postDashes" :key="`post-${i}`"
+                      >─</span
+                    >
                   </div>
                   <div
-                    v-for="i in (sortedLabels.length - labelIndex - 1) * 2" :key="`bar-${i}`" class="relative"
+                    v-for="i in (sortedLabels.length - labelIndex - 1) * 2"
+                    :key="`bar-${i}`"
+                    class="relative"
                     :style="getLabelVerticalStyle(labelIndex, -1)"
                   >
                     │
@@ -117,10 +130,14 @@ function severityClass(severity: string | undefined) {
                   <div class="relative flex" :style="getLabelVerticalStyle(labelIndex)">
                     <div>╰─</div>
                     <div
-                      v-if="(label as any).label" class="ml-1"
+                      v-if="(label as any).label"
+                      class="ml-1"
                       v-html="`${processLabelHtml((label as any).label)}.`"
                     />
-                    <div class="ml-1" :class="severityClass(getMessageForLabel(label.span.column)?.severity)">
+                    <div
+                      class="ml-1"
+                      :class="severityClass(getMessageForLabel(label.span.column)?.severity)"
+                    >
                       {{ getMessageForLabel(label.span.column)?.code }}
                     </div>
                   </div>

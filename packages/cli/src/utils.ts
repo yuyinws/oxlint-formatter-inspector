@@ -9,8 +9,7 @@ export async function getOxlintVersion() {
   try {
     const version = execSync('npx oxlint --version', { encoding: 'utf-8' })
     return version.split(' ')[1].replaceAll('\n', '')
-  }
-  catch {
+  } catch {
     console.error('Oxlint is not installed, please install it first')
     exit(1)
   }
@@ -23,8 +22,7 @@ export async function getOxlintConfig() {
     const config = await readFile(configPath, 'utf-8')
 
     return config
-  }
-  catch {
+  } catch {
     return null
   }
 }
@@ -40,8 +38,7 @@ export function execOxlintCommand(rawArgs: string[], buildMode?: boolean) {
     const oxlintCommand = wrapOxlintCommand(rawArgs, buildMode)
     const output = execSync(oxlintCommand, { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] })
     return output
-  }
-  catch (error) {
+  } catch (error) {
     if (error instanceof Error && 'stdout' in error) {
       return error.stdout as string
     }
@@ -83,8 +80,7 @@ export async function groupByFilename(oxlintOutput: string) {
         let source = ''
         try {
           source = await readFile(file.filename, 'utf-8')
-        }
-        catch (error) {
+        } catch (error) {
           console.warn(`Can not read file ${file.filename}:`, error)
           source = ''
         }
@@ -92,10 +88,12 @@ export async function groupByFilename(oxlintOutput: string) {
         return {
           filename: file.filename,
           source,
-          lines: Object.entries(file.lines).map(([line, messages]: [string, any]) => ({
-            line: Number.parseInt(line),
-            messages,
-          })).sort((a, b) => a.line - b.line), // 按行号排序
+          lines: Object.entries(file.lines)
+            .map(([line, messages]: [string, any]) => ({
+              line: Number.parseInt(line),
+              messages,
+            }))
+            .sort((a, b) => a.line - b.line), // 按行号排序
         }
       }),
     )
@@ -112,8 +110,7 @@ export async function groupByFilename(oxlintOutput: string) {
         warning_count: diagnostics.filter((d: any) => d.severity === 'warning').length,
       },
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Failed to parse oxlint output:', error)
     return { files: [], summary: {} }
   }

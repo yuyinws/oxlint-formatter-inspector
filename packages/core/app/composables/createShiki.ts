@@ -15,10 +15,7 @@ import { createHighlighterCoreSync } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 
 export const createShiki = createHighlighterCoreSync({
-  themes: [
-    ThemeLight,
-    ThemeDark,
-  ],
+  themes: [ThemeLight, ThemeDark],
   langs: [css, javascript, json, json5, jsonc, markdown, mdx, ts, tsx, vue, svelte],
   engine: createJavaScriptRegexEngine(),
 })

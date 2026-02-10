@@ -1,18 +1,18 @@
-@import "tailwindcss";
-@import "@nuxt/ui";
+@import 'tailwindcss';
+@import '@nuxt/ui';
 @custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
-  font-family: "Maple Mono";
-  src: url("/fonts/MapleMono-NF-Bold.ttf") format("truetype");
+  font-family: 'Maple Mono';
+  src: url('/fonts/MapleMono-NF-Bold.ttf') format('truetype');
   font-stretch: normal;
   font-style: normal;
   font-weight: 700;
 }
 
 @font-face {
-  font-family: "Maple Mono";
-  src: url("/fonts/MapleMono-NF-Regular.ttf") format("truetype");
+  font-family: 'Maple Mono';
+  src: url('/fonts/MapleMono-NF-Regular.ttf') format('truetype');
   font-stretch: normal;
   font-style: normal;
   font-weight: 400;
@@ -50,8 +50,6 @@ body {
 .summary-card {
   @apply border gap-1 border-neutral-200 dark:border-neutral-700 rounded-sm px-2 py-1 flex items-center;
 }
-
-
 
 .color-scale-neutral {
   @apply text-gray-700/75 dark:text-gray-300/75;

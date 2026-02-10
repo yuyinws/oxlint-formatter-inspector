@@ -4,10 +4,7 @@ import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'pathe'
 
 export class OxlintLogsManager {
-  constructor(
-    readonly dir: string,
-  ) {
-  }
+  constructor(readonly dir: string) {}
 
   async list(): Promise<Meta[] | null> {
     if (!existsSync(this.dir)) {
@@ -16,27 +13,27 @@ export class OxlintLogsManager {
     const sessions = await readdir(this.dir, {
       withFileTypes: true,
     })
-    const metas = await Promise.all(sessions
-      .filter(entry => entry.isDirectory())
-      .filter(entry => existsSync(join(this.dir, entry.name, 'meta.json')))
-      .sort((a, b) => {
-        return Number(b.name) - Number(a.name)
-      })
-      .map(async (entry): Promise<any | null> => {
-        const metaPath = join(this.dir, entry.name, 'meta.json')
-        const content = await readFile(metaPath, 'utf-8')
-        try {
-          return JSON.parse(content)
-        }
-        catch {
-          return null
-        }
-      }),
+    const metas = await Promise.all(
+      sessions
+        .filter(entry => entry.isDirectory())
+        .filter(entry => existsSync(join(this.dir, entry.name, 'meta.json')))
+        .sort((a, b) => {
+          return Number(b.name) - Number(a.name)
+        })
+        .map(async (entry): Promise<any | null> => {
+          const metaPath = join(this.dir, entry.name, 'meta.json')
+          const content = await readFile(metaPath, 'utf-8')
+          try {
+            return JSON.parse(content)
+          } catch {
+            return null
+          }
+        }),
     )
     return metas.filter(Boolean)
   }
 
-  async loadSession(session: string): Promise<{ meta: Meta, logs: Logs } | null> {
+  async loadSession(session: string): Promise<{ meta: Meta; logs: Logs } | null> {
     try {
       const metaPath = join(this.dir, session, 'meta.json')
       const logsPath = join(this.dir, session, 'logs.json')
@@ -46,8 +43,7 @@ export class OxlintLogsManager {
         meta: JSON.parse(meta),
         logs: JSON.parse(logs),
       }
-    }
-    catch {
+    } catch {
       return null
     }
   }

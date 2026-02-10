@@ -14,8 +14,10 @@ const totalIssues = computed(() => {
   if (!session?.logs) {
     return 0
   }
-  return session.logs.files.reduce((sum, file) =>
-    sum + file.lines.reduce((s, line) => s + line.messages.length, 0), 0)
+  return session.logs.files.reduce(
+    (sum, file) => sum + file.lines.reduce((s, line) => s + line.messages.length, 0),
+    0,
+  )
 })
 
 // 判断是否显示摘要
@@ -32,9 +34,13 @@ const debouncedUpdateSearch = useDebounceFn((value: string) => {
 }, 300)
 
 // 监听搜索值变化
-watch(search, (newValue) => {
-  debouncedUpdateSearch(newValue)
-}, { immediate: true })
+watch(
+  search,
+  newValue => {
+    debouncedUpdateSearch(newValue)
+  },
+  { immediate: true },
+)
 
 const filteredFiles = computed(() => {
   if (!session?.logs?.files) {
@@ -51,8 +57,7 @@ const filteredFiles = computed(() => {
   // 尝试使用 picomatch 进行 glob 匹配
   try {
     return session.logs.files.filter(file => isMatch(file.filename, searchTerm, { contains: true }))
-  }
-  catch {
+  } catch {
     // 如果 glob 模式无效，回退到简单的字符串包含匹配
     return session.logs.files.filter(file => file.filename.includes(searchTerm))
   }
@@ -66,13 +71,23 @@ const showFiles = computed(() => !!filteredFiles.value && filteredFiles.value.le
   <UApp>
     <div class="container mx-auto p-4">
       <main class="flex flex-col gap-4">
-        <UButton class="cursor-pointer w-fit" icon="ph:arrow-bend-up-left-duotone" color="neutral" variant="outline" @click="navigateTo('/')">
+        <UButton
+          class="cursor-pointer w-fit"
+          icon="ph:arrow-bend-up-left-duotone"
+          color="neutral"
+          variant="outline"
+          @click="navigateTo('/')"
+        >
           Re-select Session
         </UButton>
         <!-- 摘要信息 -->
         <SummaryCard
-          v-if="showSummary && session?.meta.summary" :summary="session.meta.summary" :total-issues="totalIssues"
-          :version="session.meta.version" :config="session.logs.config" :timestamp="session.meta.timestamp"
+          v-if="showSummary && session?.meta.summary"
+          :summary="session.meta.summary"
+          :total-issues="totalIssues"
+          :version="session.meta.version"
+          :config="session.logs.config"
+          :timestamp="session.meta.timestamp"
         />
 
         <Search v-model="search" />
@@ -89,12 +104,7 @@ const showFiles = computed(() => !!filteredFiles.value && filteredFiles.value.le
             <FileCard v-for="file in filteredFiles" :key="file.filename" :file="file" />
           </div>
 
-          <UEmpty
-            v-else
-            icon="ph:file-duotone"
-            size="xl"
-            description="No files found."
-          />
+          <UEmpty v-else icon="ph:file-duotone" size="xl" description="No files found." />
         </template>
       </main>
     </div>

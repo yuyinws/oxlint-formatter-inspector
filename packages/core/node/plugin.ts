@@ -11,10 +11,7 @@ export function DevToolsOxlint(): PluginWithDevTools {
           ctx.rpc.register(fn)
         }
 
-        ctx.views.hostStatic(
-          '/.devtools-oxlint/',
-          clientPublicDir,
-        )
+        ctx.views.hostStatic('/.devtools-oxlint/', clientPublicDir)
 
         ctx.docks.register({
           id: 'oxlint',
