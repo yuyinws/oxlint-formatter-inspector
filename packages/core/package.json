@@ -1,56 +1,48 @@
 {
-  "name": "vite-plugin-devtools-oxlint",
+  "name": "oxc-inspector",
   "type": "module",
   "version": "0.2.3",
+  "description": "Oxc Inspector CLI",
+  "author": "Leo <https://github.com/yuyinws>",
+  "license": "MIT",
+  "homepage": "https://github.com/yuyinws/oxc-inspector#readme",
   "repository": {
-    "directory": "packages/core",
+    "directory": "packages/cli",
     "type": "git",
-    "url": "git+https://github.com/yuyinws/oxlint-inspector.git"
+    "url": "git+https://github.com/yuyinws/oxc-inspector.git"
   },
+  "bugs": "https://github.com/yuyinws/oxc-inspector/issues",
+  "keywords": [
+    "oxlint",
+    "oxlint-formatter"
+  ],
+  "sideEffects": false,
   "exports": {
-    ".": "./dist/index.mjs",
-    "package.json": "./package.json"
+    ".": "./dist/index.mjs"
   },
   "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
+  "bin": {
+    "oxc-inspector": "./bin/oxc-inspector.mjs"
+  },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "nuxt build && tsdown",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "prepare": "nuxt prepare",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
     "prepack": "pnpm build",
-    "oxlint-inspector": "oxlint-inspector"
+    "start": "tsx src/test.ts"
+  },
+  "dependencies": {
+    "ansis": "catalog:",
+    "consola": "catalog:",
+    "get-port-please": "catalog:",
+    "gunshi": "catalog:",
+    "pathe": "catalog:",
+    "h3": "catalog:prod",
+    "@vitejs/devtools-rpc": "catalog:build"
   },
   "devDependencies": {
-    "@iconify-json/codicon": "catalog:",
-    "@iconify-json/lucide": "catalog:",
-    "@iconify-json/ph": "catalog:",
-    "@iconify-json/radix-icons": "catalog:",
-    "@iconify-json/twemoji": "catalog:",
-    "@iconify-json/vscode-icons": "catalog:",
-    "@nuxt/kit": "catalog:",
-    "@nuxt/ui": "catalog:",
-    "@shikijs/langs": "catalog:",
-    "@shikijs/themes": "catalog:",
-    "@types/picomatch": "catalog:",
-    "@vitejs/devtools": "catalog:",
-    "@vitejs/devtools-kit": "catalog:",
-    "@vueuse/core": "catalog:",
-    "@vueuse/nuxt": "catalog:",
-    "nuxt": "catalog:",
-    "oxlint": "catalog:",
-    "oxlint-inspector": "workspace:*",
-    "pathe": "catalog:",
-    "picomatch": "catalog:",
-    "shared": "workspace:*",
-    "shiki": "catalog:",
-    "tailwindcss": "catalog:",
-    "vue": "catalog:",
-    "vue-router": "catalog:"
+    "oxlint": "catalog:"
   }
 }

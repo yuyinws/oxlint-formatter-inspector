@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "name": "oxlint-inspector",
+  "name": "@oxc-inspector/monorepo",
   "version": "0.2.3",
   "private": true,
   "packageManager": "pnpm@10.29.2",
@@ -15,7 +15,7 @@
     "release": "bumpp -r",
     "typecheck": "vue-tsc --noEmit",
     "prepare": "npx simple-git-hooks",
-    "oxlint-inspector": "pnpm -C packages/core oxlint-inspector"
+    "oxc-inspector": "pnpm -C packages/core oxc-inspector"
   },
   "devDependencies": {
     "@types/node": "catalog:",

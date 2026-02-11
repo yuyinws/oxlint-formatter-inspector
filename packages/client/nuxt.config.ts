@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'static',
     output: {
-      dir: 'dist',
+      dir: '../core/dist/client',
     },
     routeRules: {
       '/': {

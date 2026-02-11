@@ -6,7 +6,7 @@ const rpc = useRpc()
 const { data: sessionMetaList, refresh: reloadSessions } = useAsyncData(
   'sessionMetaList',
   async () => {
-    return await rpc.value!['vite:oxlint:list-sessions']()
+    return await rpc.value.call('vite:oxlint:list-sessions')
   },
 )
 
@@ -50,16 +50,16 @@ const filteredSessionMetaList = computed(() => {
         <div class="text-sm text-neutral-500 leading-7">
           <span>Oxlint logs directory</span><code>.oxlint</code> not found.
           <br />
-          Run <code>npx oxlint-inspector</code> to generate it first.
+          Run <code>npx oxc-inspector</code> to generate it first.
           <br />
           Read more:
           <NuxtLink
-            to="https://github.com/yuyinws/oxlint-inspector"
+            to="https://github.com/yuyinws/oxc-inspector"
             external
             target="_blank"
             class="text-primary-500"
           >
-            https://github.com/yuyinws/oxlint-inspector
+            https://github.com/yuyinws/oxc-inspector
           </NuxtLink>
         </div>
       </template>

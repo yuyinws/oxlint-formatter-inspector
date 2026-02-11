@@ -1,14 +1,15 @@
-import { mkdir, writeFile } from 'node:fs/promises'
-import { argv, cwd } from 'node:process'
-import c from 'ansis'
 import consola from 'consola'
-import { cli, define } from 'gunshi'
+import { define } from 'gunshi'
+import { execOxlintCommand, getOxlintConfig, getOxlintVersion, groupByFilename } from '../utils'
+import { mkdir, writeFile } from 'node:fs/promises'
+import { cwd } from 'node:process'
+import c from 'ansis'
+import { version } from '../../package.json'
 import { relative, resolve } from 'pathe'
-import { version } from '../package.json'
-import { execOxlintCommand, getOxlintConfig, getOxlintVersion, groupByFilename } from './utils'
 
-const mainCommand = define({
-  name: 'main',
+export const lint = define({
+  name: 'lint',
+  description: 'Generate oxlint logs',
   run: async ({ _ }) => {
     consola.info(`Using Oxlint Inspector v${version}`)
     consola.start('Analyzing project...')
@@ -50,10 +51,4 @@ const mainCommand = define({
     )
     consola.success(`Session created: ${c.cyan(relative(cwd(), sessionDir))}`)
   },
-})
-
-cli(argv.slice(2), mainCommand, {
-  name: 'oxlint-inspector',
-  version,
-  renderHeader: () => Promise.resolve(''),
 })

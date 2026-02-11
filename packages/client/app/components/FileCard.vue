@@ -14,7 +14,7 @@ const fileIcon = computed(() => getFileIcon(props.file.filename))
 const rpc = useRpc()
 
 function handleOpenInEditor() {
-  rpc.value!['vite:core:open-in-editor'](props.file.filename)
+  rpc.value.call('vite:core:open-in-editor', props.file.filename)
 }
 </script>
 

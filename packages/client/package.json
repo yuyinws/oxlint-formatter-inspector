@@ -1,0 +1,57 @@
+{
+  "name": "vite-plugin-devtools-oxlint",
+  "type": "module",
+  "version": "0.2.3",
+  "repository": {
+    "directory": "packages/core",
+    "type": "git",
+    "url": "git+https://github.com/yuyinws/oxc-inspector.git"
+  },
+  "exports": {
+    ".": "./dist/index.mjs",
+    "package.json": "./package.json"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "nuxt build && tsdown",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "prepare": "nuxt prepare",
+    "prepack": "pnpm build",
+    "oxc-inspector": "oxc-inspector"
+  },
+  "devDependencies": {
+    "@iconify-json/codicon": "catalog:",
+    "@iconify-json/lucide": "catalog:",
+    "@iconify-json/ph": "catalog:",
+    "@iconify-json/radix-icons": "catalog:",
+    "@iconify-json/twemoji": "catalog:",
+    "@iconify-json/vscode-icons": "catalog:",
+    "@nuxt/kit": "catalog:",
+    "@nuxt/ui": "catalog:",
+    "@shikijs/langs": "catalog:",
+    "@shikijs/themes": "catalog:",
+    "@types/picomatch": "catalog:",
+    "@vitejs/devtools": "catalog:",
+    "@vitejs/devtools-kit": "catalog:",
+    "@vueuse/core": "catalog:",
+    "@vueuse/nuxt": "catalog:",
+    "nuxt": "catalog:",
+    "oxlint": "catalog:",
+    "oxc-inspector": "workspace:*",
+    "pathe": "catalog:",
+    "picomatch": "catalog:",
+    "shared": "workspace:*",
+    "shiki": "catalog:",
+    "tailwindcss": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:",
+    "@vitejs/devtools-rpc": "catalog:build"
+  }
+}
