@@ -4,7 +4,7 @@ const BASE = '/.oxc-inspector/'
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   ssr: false,
   nitro: {
     preset: 'static',
@@ -37,16 +37,16 @@ export default defineNuxtConfig({
     },
   },
   devServer: {
-    port: 5555,
+    port: 4448,
   },
   app: {
     baseURL: BASE,
     head: {
-      title: 'Oxlint Inspector',
+      title: 'Oxc Inspector',
       meta: [
         {
           name: 'description',
-          content: 'An interactive tool to inspect Oxlint formatter on the browser.',
+          content: 'Inspect and understand your Oxc toolchain better.',
         },
       ],
       link: [
