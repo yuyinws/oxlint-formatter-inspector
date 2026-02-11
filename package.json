@@ -1,21 +1,42 @@
 {
   "type": "module",
-  "name": "@oxc-inspector/monorepo",
-  "version": "0.2.3",
-  "private": true,
+  "name": "oxc-inspector",
+  "version": "0.0.0",
   "packageManager": "pnpm@10.29.2",
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./vite": "./dist/vite.mjs"
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "bin": {
+    "oxc-inspector": "./bin/oxc-inspector.mjs"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "pnpm -r --filter='!playground' run build",
-    "build:shared": "pnpm -C packages/shared build",
-    "dev": "pnpm -C packages/core dev",
+    "dev:client": "pnpm -C client dev",
+    "build": "tsdown && pnpm build:client",
+    "build:client": "pnpm -C client run build",
     "lint": "oxlint && oxfmt --check",
     "lint:fix": "oxlint --fix && oxfmt",
-    "prepublishOnly": "pnpm -C packages/core build",
+    "prepublishOnly": "pnpm build",
     "play": "pnpm -C playground dev",
     "release": "bumpp -r",
     "typecheck": "vue-tsc --noEmit",
-    "prepare": "npx simple-git-hooks",
-    "oxc-inspector": "pnpm -C packages/core oxc-inspector"
+    "prepare": "npx simple-git-hooks"
+  },
+  "dependencies": {
+    "ansis": "catalog:",
+    "consola": "catalog:",
+    "get-port-please": "catalog:",
+    "gunshi": "catalog:",
+    "pathe": "catalog:",
+    "h3": "catalog:prod",
+    "@vitejs/devtools-rpc": "catalog:build",
+    "@vitejs/devtools-kit": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",

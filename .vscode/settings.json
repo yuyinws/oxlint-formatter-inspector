@@ -8,5 +8,8 @@
   "tailwindCSS.classAttributes": ["class", "ui"],
   "tailwindCSS.experimental.classRegex": [["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]],
   "editor.defaultFormatter": "oxc.oxc-vscode",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  }
 }

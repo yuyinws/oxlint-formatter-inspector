@@ -1,0 +1,41 @@
+{
+  "name": "client",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "prepare": "nuxt prepare",
+    "prepack": "pnpm build"
+  },
+  "devDependencies": {
+    "@iconify-json/codicon": "catalog:",
+    "@iconify-json/lucide": "catalog:",
+    "@iconify-json/ph": "catalog:",
+    "@iconify-json/radix-icons": "catalog:",
+    "@iconify-json/twemoji": "catalog:",
+    "@iconify-json/vscode-icons": "catalog:",
+    "@nuxt/kit": "catalog:",
+    "@nuxt/ui": "catalog:",
+    "@shikijs/langs": "catalog:",
+    "@shikijs/themes": "catalog:",
+    "@types/picomatch": "catalog:",
+    "@vitejs/devtools": "catalog:",
+    "@vitejs/devtools-kit": "catalog:",
+    "@vueuse/core": "catalog:",
+    "@vueuse/nuxt": "catalog:",
+    "nuxt": "catalog:",
+    "oxlint": "catalog:",
+    "oxc-inspector": "workspace:*",
+    "pathe": "catalog:",
+    "picomatch": "catalog:",
+    "shiki": "catalog:",
+    "tailwindcss": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:",
+    "@vitejs/devtools-rpc": "catalog:build"
+  }
+}

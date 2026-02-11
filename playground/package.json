@@ -1,7 +1,7 @@
 {
   "name": "playground",
   "type": "module",
-  "version": "0.2.3",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -11,6 +11,6 @@
   "devDependencies": {
     "@vitejs/devtools": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-devtools-oxlint": "workspace:*"
+    "oxc-inspector": "workspace:*"
   }
 }
