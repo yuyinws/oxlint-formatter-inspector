@@ -4,7 +4,7 @@ import { isMatch } from 'picomatch'
 
 const sessionId = useRoute().params.id as string
 const rpc = useRpc()
-const session = await rpc.value.call('vite:oxlint:get-session', { sessionId })!
+const session = await rpc.value.call('oxc-inspector:get-lint-session', { sessionId })!
 
 // 判断是否显示空状态
 const showEmpty = computed(() => session?.logs.files.length === 0)

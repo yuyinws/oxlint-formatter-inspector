@@ -1,5 +1,4 @@
 import type {} from '@vitejs/devtools'
-import type { DevToolsRpcClient } from '@vitejs/devtools-kit/client'
 import type { ServerFunctions } from '../../../src/node/rpc'
 import { useRuntimeConfig } from '#app/nuxt'
 import { getDevToolsRpcClient } from '@vitejs/devtools-kit/client'
@@ -15,19 +14,39 @@ export const connectionState = reactive<{
   error: null,
 })
 
-const rpc = shallowRef<DevToolsRpcClient>(undefined!)
+/** Unified RPC client type, compatible with two sources: h3 WebSocket and DevTools */
+export type RpcClient = {
+  /** Typed call with full inference: method name, params and return value from ServerFunctions */
+  call<K extends keyof ServerFunctions>(
+    method: K,
+    ...args: Parameters<ServerFunctions[K]>
+  ): Promise<Awaited<ReturnType<ServerFunctions[K]>>>
+  /** Fallback for built-in DevTools methods (e.g. vite:core:open-in-editor) */
+  call(method: string, params?: unknown): Promise<unknown>
+}
+
+/** Type assertion: convert h3 RPC client ($call) to unified RpcClient interface */
+function asRpcClient(client: {
+  $call: (method: string, ...args: unknown[]) => Promise<unknown>
+}): RpcClient {
+  return {
+    call: (name: string, ...args: unknown[]) => client.$call(name, ...args),
+  } as RpcClient
+}
+
+const rpc = shallowRef<RpcClient>(undefined!)
 
 export async function connect() {
   const runtimeConfig = useRuntimeConfig()
   try {
-    let rawRpcClient: any = undefined
+    let rawRpcClient: RpcClient
 
     const connection = await $fetch<{ backend?: string; port: number }>(
       '/.devtools.vdt-connection.json',
     )
 
     if (connection?.backend === 'h3') {
-      rawRpcClient = createRpcClient<ServerFunctions>(
+      const wsClient = createRpcClient<ServerFunctions>(
         {},
         {
           preset: createWsRpcPreset({
@@ -35,8 +54,9 @@ export async function connect() {
           }),
         },
       )
-
-      rawRpcClient.call = rawRpcClient.$call
+      rawRpcClient = asRpcClient(
+        wsClient as { $call: (method: string, ...args: unknown[]) => Promise<unknown> },
+      )
     } else {
       const rpcClient = await getDevToolsRpcClient({
         baseURL: ['/.devtools/', runtimeConfig.app.baseURL],
@@ -52,10 +72,19 @@ export async function connect() {
             connectionState.connected = false
           },
         },
-        rpcOptions: {},
+        rpcOptions: {
+          onGeneralError: (e, name) => {
+            connectionState.error = e
+            console.error(`[oxc-inspector] RPC error on executing "${name}":`)
+          },
+          onFunctionError: (e, name) => {
+            connectionState.error = e
+            console.error(`[oxc-inspector] RPC error on executing "${name}":`)
+          },
+        },
       })
 
-      rawRpcClient = rpcClient
+      rawRpcClient = rpcClient as RpcClient
     }
 
     rpc.value = rawRpcClient

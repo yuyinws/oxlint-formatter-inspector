@@ -6,7 +6,7 @@ const rpc = useRpc()
 const { data: sessionMetaList, refresh: reloadSessions } = useAsyncData(
   'sessionMetaList',
   async () => {
-    return await rpc.value.call('vite:oxlint:list-sessions')
+    return await rpc.value.call('oxc-inspector:list-lint-session')
   },
 )
 

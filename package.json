@@ -3,6 +3,7 @@
   "name": "oxc-inspector",
   "version": "0.0.0",
   "packageManager": "pnpm@10.29.2",
+  "description": "Inspect and understand your Oxlint toolchain better.",
   "sideEffects": false,
   "exports": {
     ".": "./dist/index.mjs",

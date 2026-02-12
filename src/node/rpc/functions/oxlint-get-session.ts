@@ -2,7 +2,7 @@ import { defineRpcFunction } from '@vitejs/devtools-kit'
 import { getLogsManager } from '../utils'
 
 export const oxlintGetSession = defineRpcFunction({
-  name: 'vite:oxlint:get-session',
+  name: 'oxc-inspector:get-lint-session',
   type: 'query',
   setup: context => {
     return {

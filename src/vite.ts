@@ -4,7 +4,7 @@ import { clientPublicDir } from './dirs'
 
 export function DevToolsOxlint(): PluginWithDevTools {
   return {
-    name: 'vite:devtools:oxlint',
+    name: 'oxc-inspector',
     devtools: {
       setup(ctx) {
         for (const fn of rpcFunctions) {
