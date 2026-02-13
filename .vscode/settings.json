@@ -11,5 +11,8 @@
   "editor.formatOnSave": true,
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   }
 }
