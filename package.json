@@ -35,10 +35,10 @@
     "get-port-please": "catalog:",
     "gunshi": "catalog:",
     "pathe": "catalog:",
-    "h3": "catalog:prod",
-    "@vitejs/devtools-rpc": "catalog:build",
+    "h3": "catalog:",
+    "@vitejs/devtools-rpc": "catalog:",
     "@vitejs/devtools-kit": "catalog:",
-    "tinyexec": "catalog:node"
+    "tinyexec": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",

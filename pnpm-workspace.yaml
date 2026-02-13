@@ -8,22 +8,22 @@ shellEmulator: true
 ignoreWorkspaceRootCheck: true
 
 catalog:
-  '@iconify-json/codicon': ^1.2.43
-  '@iconify-json/lucide': ^1.2.89
-  '@iconify-json/ph': ^1.2.2
-  '@iconify-json/radix-icons': ^1.2.6
-  '@iconify-json/twemoji': ^1.2.5
-  '@iconify-json/vscode-icons': ^1.2.40
-  '@nuxt/kit': ^4.3.1
-  '@nuxt/ui': ^4.4.0
-  '@shikijs/langs': ^3.22.0
-  '@shikijs/themes': ^3.22.0
-  '@types/node': ^22.19.10
-  '@types/picomatch': ^4.0.2
-  '@vitejs/devtools': 0.0.0-alpha.29
-  '@vitejs/devtools-kit': 0.0.0-alpha.29
-  '@vueuse/core': ^14.2.0
-  '@vueuse/nuxt': ^14.2.0
+  "@iconify-json/codicon": ^1.2.43
+  "@iconify-json/lucide": ^1.2.89
+  "@iconify-json/ph": ^1.2.2
+  "@iconify-json/radix-icons": ^1.2.6
+  "@iconify-json/twemoji": ^1.2.5
+  "@iconify-json/vscode-icons": ^1.2.40
+  "@nuxt/kit": ^4.3.1
+  "@nuxt/ui": ^4.4.0
+  "@shikijs/langs": ^3.22.0
+  "@shikijs/themes": ^3.22.0
+  "@types/node": ^22.19.10
+  "@types/picomatch": ^4.0.2
+  "@vitejs/devtools": 0.0.0-alpha.29
+  "@vitejs/devtools-kit": 0.0.0-alpha.29
+  "@vueuse/core": ^14.2.0
+  "@vueuse/nuxt": ^14.2.0
   pncat: ^0.9.1
   oxfmt: ^0.28.0
   ansis: ^4.2.0
@@ -45,10 +45,6 @@ catalog:
   vite: ^8.0.0-beta.13
   vue: ^3.5.28
   vue-router: ^5.0.2
-catalogs:
-  prod:
-    h3: 2.0.1-rc.14
-  build:
-    '@vitejs/devtools-rpc': ^0.0.0-alpha.31
-  node:
-    tinyexec: ^1.0.2
+  h3: 2.0.1-rc.14
+  "@vitejs/devtools-rpc": ^0.0.0-alpha.31
+  tinyexec: ^1.0.2

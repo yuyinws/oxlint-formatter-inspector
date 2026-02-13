@@ -5,10 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 catalogs:
-  build:
-    '@vitejs/devtools-rpc':
-      specifier: ^0.0.0-alpha.31
-      version: 0.0.0-alpha.31
   default:
     '@iconify-json/codicon':
       specifier: ^1.2.43
@@ -52,6 +48,9 @@ catalogs:
     '@vitejs/devtools-kit':
       specifier: 0.0.0-alpha.29
       version: 0.0.0-alpha.29
+    '@vitejs/devtools-rpc':
+      specifier: ^0.0.0-alpha.31
+      version: 0.0.0-alpha.31
     '@vueuse/core':
       specifier: ^14.2.0
       version: 14.2.0
@@ -73,6 +72,9 @@ catalogs:
     gunshi:
       specifier: ^0.28.0
       version: 0.28.0
+    h3:
+      specifier: 2.0.1-rc.14
+      version: 2.0.1-rc.14
     lint-staged:
       specifier: ^16.2.7
       version: 16.2.7
@@ -103,6 +105,9 @@ catalogs:
     tailwindcss:
       specifier: ^4.1.18
       version: 4.1.18
+    tinyexec:
+      specifier: ^1.0.2
+      version: 1.0.2
     tsdown:
       specifier: ^0.20.3
       version: 0.20.3
@@ -121,14 +126,6 @@ catalogs:
     vue-router:
       specifier: ^5.0.2
       version: 5.0.2
-  node:
-    tinyexec:
-      specifier: ^1.0.2
-      version: 1.0.2
-  prod:
-    h3:
-      specifier: 2.0.1-rc.14
-      version: 2.0.1-rc.14
 
 importers:
 
@@ -138,7 +135,7 @@ importers:
         specifier: 'catalog:'
         version: 0.0.0-alpha.29(typescript@5.9.3)(vite@8.0.0-beta.13(@types/node@22.19.10)(esbuild@0.27.3)(jiti@2.6.1)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.2))
       '@vitejs/devtools-rpc':
-        specifier: catalog:build
+        specifier: 'catalog:'
         version: 0.0.0-alpha.31(typescript@5.9.3)
       ansis:
         specifier: 'catalog:'
@@ -153,13 +150,13 @@ importers:
         specifier: 'catalog:'
         version: 0.28.0
       h3:
-        specifier: catalog:prod
+        specifier: 'catalog:'
         version: 2.0.1-rc.14
       pathe:
         specifier: 'catalog:'
         version: 2.0.3
       tinyexec:
-        specifier: catalog:node
+        specifier: 'catalog:'
         version: 1.0.2
     devDependencies:
       '@types/node':
@@ -235,7 +232,7 @@ importers:
         specifier: 'catalog:'
         version: 0.0.0-alpha.29(typescript@5.9.3)(vite@7.3.1(@types/node@24.0.3)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.2))(ws@8.19.0)
       '@vitejs/devtools-rpc':
-        specifier: catalog:build
+        specifier: 'catalog:'
         version: 0.0.0-alpha.31(typescript@5.9.3)
       '@vueuse/core':
         specifier: 'catalog:'
