@@ -5,6 +5,9 @@
   "packageManager": "pnpm@10.29.3",
   "description": "Inspect and understand your Oxlint toolchain better.",
   "sideEffects": false,
+  "repository": {
+    "url": "https://github.com/yuyinws/oxc-inspector"
+  },
   "exports": {
     ".": "./dist/index.mjs",
     "./vite": "./dist/vite.mjs"
