@@ -1,15 +1,10 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "skipDefaultLibCheck": true,
-    "skipLibCheck": true
-  }
+  "extends": "./tsconfig.base.json",
+  "references": [
+    { "path": "./client/.nuxt/tsconfig.app.json" },
+    { "path": "./client/.nuxt/tsconfig.server.json" },
+    { "path": "./client/.nuxt/tsconfig.shared.json" },
+    { "path": "./client/.nuxt/tsconfig.node.json" }
+  ],
+  "files": []
 }
