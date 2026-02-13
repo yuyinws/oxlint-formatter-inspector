@@ -1,0 +1,75 @@
+<script setup lang="ts">
+import { useRpc } from '#imports'
+
+const rpc = useRpc()
+
+const { data: sessionMetaList, refresh: reloadSessions } = useAsyncData(
+  'sessionMetaList',
+  async () => {
+    return await rpc.value.call('oxc-inspector:list-lint-session')
+  },
+)
+
+const hidePassed = useLocalStorage('hidePassed', false)
+
+const filteredSessionMetaList = computed(() => {
+  return (
+    sessionMetaList.value?.filter(
+      meta => !hidePassed.value || meta.summary.files_with_issues > 0,
+    ) || []
+  )
+})
+</script>
+
+<template>
+  <div class="items-center justify-center relative flex flex-col gap-4 p-4 max-w-2xl mx-auto">
+    <div class="flex justify-between items-center w-full">
+      <div class="flex items-center gap-2">
+        <UButton
+          size="sm"
+          class="cursor-pointer"
+          icon="lucide:refresh-cw"
+          color="neutral"
+          variant="outline"
+          @click="reloadSessions()"
+        />
+
+        <p class="opacity-50">Select a lint session to get started:</p>
+      </div>
+
+      <UCheckbox v-model="hidePassed" color="success" label="Hide Passed" />
+    </div>
+
+    <template v-if="filteredSessionMetaList?.length > 0">
+      <SessionCard v-for="meta in filteredSessionMetaList" :key="meta.timestamp" :meta="meta" />
+    </template>
+
+    <UEmpty v-else class="w-full mt-4" title="No sessions found" icon="i-ph-folder-simple-duotone">
+      <template #description>
+        <div class="text-sm text-neutral-500 leading-7">
+          <span>Oxlint logs directory</span><code>.oxlint</code> not found.
+          <br />
+          Run <code>npx oxc-inspector</code> to generate it first.
+          <br />
+          Read more:
+          <NuxtLink
+            to="https://github.com/yuyinws/oxc-inspector"
+            external
+            target="_blank"
+            class="text-primary-500"
+          >
+            https://github.com/yuyinws/oxc-inspector
+          </NuxtLink>
+        </div>
+      </template>
+    </UEmpty>
+  </div>
+</template>
+
+<style scoped>
+@reference '~/assets/css/main.css';
+
+code {
+  @apply bg-neutral-100 dark:bg-neutral-800 rounded-sm px-1 py-0.5;
+}
+</style>

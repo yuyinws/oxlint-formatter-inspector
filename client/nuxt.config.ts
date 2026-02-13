@@ -35,9 +35,21 @@ export default defineNuxtConfig({
         globInclude: ['app/**/*'],
       },
     },
+    customCollections: [
+      {
+        prefix: 'custom',
+        dir: './app/assets/icons',
+      },
+    ],
   },
   devServer: {
     port: 4448,
+  },
+  runtimeConfig: {
+    public: {
+      oxlintVersion: '1.43.0',
+      oxfmtVersion: '0.28.0',
+    },
   },
   app: {
     baseURL: BASE,

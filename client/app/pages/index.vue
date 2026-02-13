@@ -1,76 +1,168 @@
 <script setup lang="ts">
-import { useRpc } from '#imports'
+const config = useRuntimeConfig().public as {
+  oxlintVersion: string
+  oxfmtVersion: string
+}
 
 const rpc = useRpc()
 
-const { data: sessionMetaList, refresh: reloadSessions } = useAsyncData(
-  'sessionMetaList',
-  async () => {
-    return await rpc.value.call('oxc-inspector:list-lint-session')
+const { data: overview } = useAsyncData(
+  'overview',
+  () => rpc.value.call('oxc-inspector:overview'),
+  {
+    default: () => ({
+      oxlint: {
+        installed: false,
+        version: undefined,
+        tagUrl: undefined,
+      },
+      oxfmt: {
+        installed: false,
+        version: undefined,
+        tagUrl: undefined,
+      },
+    }),
   },
 )
 
-const hidePassed = useLocalStorage('hidePassed', false)
-
-const filteredSessionMetaList = computed(() => {
-  return (
-    sessionMetaList.value?.filter(
-      meta => !hidePassed.value || meta.summary.files_with_issues > 0,
-    ) || []
-  )
-})
+const cardUi = {
+  body: 'p-4 flex flex-col items-center justify-center',
+}
 </script>
 
 <template>
-  <div class="items-center justify-center relative flex flex-col gap-4 p-4 max-w-2xl mx-auto">
-    <VisualLogoBanner />
-    <div class="flex justify-between items-center w-full">
-      <div class="flex items-center gap-2">
-        <UButton
-          size="sm"
-          class="cursor-pointer"
-          icon="lucide:refresh-cw"
-          color="neutral"
-          variant="outline"
-          @click="reloadSessions()"
-        />
+  <main class="flex flex-col items-center justify-center -mt-20 min-h-screen font-mono">
+    <div class="flex flex-col items-center gap-8">
+      <visual-logo />
 
-        <p class="opacity-50">Select a lint session to get started:</p>
+      <div class="flex items-center gap-4">
+        <UCard
+          class="flex flex-col items-center justify-center gap-3 w-70 h-45 hover:shadow-lg dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300"
+          :ui="cardUi"
+        >
+          <u-icon name="ph:check-circle" class="w-10 h-10 text-neutral-500 dark:text-neutral-400" />
+          <p class="text-xl mt-2 font-medium text-neutral-700 dark:text-neutral-300">oxlint</p>
+
+          <UButton
+            v-if="overview?.oxlint.installed"
+            size="sm"
+            variant="link"
+            trailing-icon
+            :to="overview?.oxlint.tagUrl"
+            target="_blank"
+            class="text-neutral-500 cursor-pointer text-base dark:text-neutral-400"
+          >
+            v{{ overview?.oxlint.version }}
+          </UButton>
+          <span v-else class="text-neutral-500 text-base dark:text-neutral-400">
+            Not installed
+          </span>
+
+          <div class="flex items-center">
+            <UButton
+              to="/lint/report"
+              icon="carbon:report"
+              size="sm"
+              variant="link"
+              trailing-icon
+              class="text-neutral-500 dark:text-neutral-400"
+            >
+              Reports
+            </UButton>
+
+            <UButton
+              to="/lint/config"
+              icon="carbon:settings"
+              size="sm"
+              variant="link"
+              trailing-icon
+              class="text-neutral-500 dark:text-neutral-400"
+            >
+              Config
+            </UButton>
+
+            <UButton
+              to="https://oxc.rs/docs/guide/usage/linter.html"
+              target="_blank"
+              icon="carbon:document"
+              size="sm"
+              variant="link"
+              trailing-icon
+              class="text-neutral-500 dark:text-neutral-400"
+            >
+              Docs
+            </UButton>
+          </div>
+        </UCard>
+
+        <UCard
+          class="flex flex-col items-center justify-center gap-3 w-70 h-45 hover:shadow-lg dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300"
+          :ui="cardUi"
+        >
+          <u-icon name="ph:code" class="w-10 h-10 text-neutral-500 dark:text-neutral-400" />
+          <p class="text-xl font-medium mt-2 text-neutral-700 dark:text-neutral-300">oxfmt</p>
+
+          <UButton
+            v-if="overview?.oxfmt.installed"
+            size="sm"
+            variant="link"
+            trailing-icon
+            :to="overview?.oxfmt.tagUrl"
+            target="_blank"
+            class="text-neutral-500 cursor-pointer dark:text-neutral-400 text-base"
+          >
+            v{{ overview?.oxfmt.version }}
+          </UButton>
+          <span v-else class="text-neutral-500 text-base dark:text-neutral-400">
+            Not installed
+          </span>
+
+          <div class="flex items-center">
+            <UButton
+              icon="carbon:settings"
+              size="sm"
+              variant="link"
+              trailing-icon
+              class="text-neutral-500 dark:text-neutral-400 cursor-pointer"
+            >
+              Config
+            </UButton>
+
+            <UButton
+              to="https://oxc.rs/docs/guide/usage/linter.html"
+              target="_blank"
+              icon="carbon:document"
+              size="sm"
+              variant="link"
+              trailing-icon
+              class="text-neutral-500 dark:text-neutral-400"
+            >
+              Docs
+            </UButton>
+          </div>
+        </UCard>
       </div>
 
-      <UCheckbox v-model="hidePassed" color="success" label="Hide Passed" />
+      <div class="flex items-center gap-6">
+        <UButton
+          to="https://github.com/yuyinws/oxc-inspector"
+          target="_blank"
+          icon="lucide:star"
+          variant="link"
+          class="text-neutral-500 dark:text-neutral-400"
+        >
+          Star on GitHub
+        </UButton>
+        <UButton
+          to="https://github.com/yuyinws/oxc-inspector/discussions"
+          target="_blank"
+          icon="lucide:lightbulb"
+          variant="link"
+          class="text-neutral-500 dark:text-neutral-400"
+        >
+          Ideas & Suggestions
+        </UButton>
+      </div>
     </div>
-
-    <template v-if="filteredSessionMetaList?.length > 0">
-      <SessionCard v-for="meta in filteredSessionMetaList" :key="meta.timestamp" :meta="meta" />
-    </template>
-
-    <UEmpty v-else class="w-full mt-4" title="No sessions found" icon="i-ph-folder-simple-duotone">
-      <template #description>
-        <div class="text-sm text-neutral-500 leading-7">
-          <span>Oxlint logs directory</span><code>.oxlint</code> not found.
-          <br />
-          Run <code>npx oxc-inspector</code> to generate it first.
-          <br />
-          Read more:
-          <NuxtLink
-            to="https://github.com/yuyinws/oxc-inspector"
-            external
-            target="_blank"
-            class="text-primary-500"
-          >
-            https://github.com/yuyinws/oxc-inspector
-          </NuxtLink>
-        </div>
-      </template>
-    </UEmpty>
-  </div>
+  </main>
 </template>
-
-<style scoped>
-@reference '~/assets/css/main.css';
-
-code {
-  @apply bg-neutral-100 dark:bg-neutral-800 rounded-sm px-1 py-0.5;
-}
-</style>

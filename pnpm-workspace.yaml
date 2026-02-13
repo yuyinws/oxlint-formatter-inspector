@@ -50,3 +50,5 @@ catalogs:
     h3: 2.0.1-rc.14
   build:
     '@vitejs/devtools-rpc': ^0.0.0-alpha.31
+  node:
+    tinyexec: ^1.0.2

@@ -2,27 +2,6 @@
 @import '@nuxt/ui';
 @custom-variant dark (&:where(.dark, .dark *));
 
-@font-face {
-  font-family: 'Maple Mono';
-  src: url('/fonts/MapleMono-NF-Bold.ttf') format('truetype');
-  font-stretch: normal;
-  font-style: normal;
-  font-weight: 700;
-}
-
-@font-face {
-  font-family: 'Maple Mono';
-  src: url('/fonts/MapleMono-NF-Regular.ttf') format('truetype');
-  font-stretch: normal;
-  font-style: normal;
-  font-weight: 400;
-}
-
-@theme {
-  --font-sans: 'Inter', sans-serif;
-  --font-mono: 'Maple Mono', 'JetBrains Mono', monospace;
-}
-
 body {
   background-color: unset;
   @apply text-neutral-800 dark:text-neutral-300;

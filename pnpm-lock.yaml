@@ -121,6 +121,10 @@ catalogs:
     vue-router:
       specifier: ^5.0.2
       version: 5.0.2
+  node:
+    tinyexec:
+      specifier: ^1.0.2
+      version: 1.0.2
   prod:
     h3:
       specifier: 2.0.1-rc.14
@@ -154,6 +158,9 @@ importers:
       pathe:
         specifier: 'catalog:'
         version: 2.0.3
+      tinyexec:
+        specifier: catalog:node
+        version: 1.0.2
     devDependencies:
       '@types/node':
         specifier: 'catalog:'

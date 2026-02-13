@@ -11,7 +11,7 @@ const failed = computed(() => {
 </script>
 
 <template>
-  <NuxtLink class="w-full" :to="`/session/${meta.timestamp}`">
+  <NuxtLink class="w-full" :to="`/lint/report/${meta.timestamp}`">
     <UCard class="w-full p-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer">
       <div class="flex justify-between gap-2 font-mono opacity-50">
         <div class="flex items-center gap-1">

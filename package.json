@@ -37,7 +37,8 @@
     "pathe": "catalog:",
     "h3": "catalog:prod",
     "@vitejs/devtools-rpc": "catalog:build",
-    "@vitejs/devtools-kit": "catalog:"
+    "@vitejs/devtools-kit": "catalog:",
+    "tinyexec": "catalog:node"
   },
   "devDependencies": {
     "@types/node": "catalog:",
