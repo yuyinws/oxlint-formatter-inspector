@@ -1,25 +1,31 @@
-import consola from 'consola'
+import { intro, outro, spinner } from '@clack/prompts'
 import { define } from 'gunshi'
-import { execOxlintCommand, getOxlintConfig, getOxlintVersion, groupByFilename } from '../utils'
+import {
+  execOxlintCommand,
+  getOxcInspectorVersion,
+  getOxlintConfig,
+  getOxlintVersion,
+  groupByFilename,
+} from '../utils'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { cwd } from 'node:process'
 import c from 'ansis'
-import { version } from '../../package.json'
 import { relative, resolve } from 'pathe'
 
 export const lint = define({
   name: 'lint',
   description: 'Generate oxlint logs',
   run: async ({ _ }) => {
-    consola.info(`Using Oxlint Inspector v${version}`)
-    consola.start('Analyzing project...')
+    const spin = spinner()
+
+    intro(`Using Oxc Inspector v${getOxcInspectorVersion()}`)
+    spin.start('Running Oxlint...')
     const oxLintVersion = await getOxlintVersion()
     const config = await getOxlintConfig()
     const rawOutput = execOxlintCommand(_, false)
     const groupedOutput = await groupByFilename(rawOutput)
 
-    // 生成会话（session）到 .oxlint 目录
-    const logsRootDir = resolve(cwd(), '.oxlint')
+    const logsRootDir = resolve(cwd(), '.oxc-inspector', 'lint')
     await mkdir(logsRootDir, { recursive: true })
     const sessionId = Date.now()
     const sessionDir = resolve(logsRootDir, String(sessionId))
@@ -49,6 +55,9 @@ export const lint = define({
       ),
       'utf-8',
     )
-    consola.success(`Session created: ${c.cyan(relative(cwd(), sessionDir))}`)
+    spin.stop()
+
+    outro(`Session created: ${c.cyan(relative(cwd(), sessionDir))}`)
+    process.exit(0)
   },
 })

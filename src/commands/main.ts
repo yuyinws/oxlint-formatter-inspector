@@ -6,10 +6,17 @@ import { createRpcServer } from '@vitejs/devtools-rpc/server'
 import { createWsRpcPreset } from '@vitejs/devtools-rpc/presets/ws/server'
 import { clientRpc } from '../node/collector'
 import { clientPublicDir } from '../dirs'
+import { getPort } from 'get-port-please'
+import c from 'ansis'
+import { log } from '@clack/prompts'
+
+const rpcPort = await getPort({
+  random: true,
+})
 
 createRpcServer(clientRpc.functions, {
   preset: createWsRpcPreset({
-    port: 5556,
+    port: rpcPort,
   }),
 })
 
@@ -28,7 +35,7 @@ export const mainCommand = define({
       if (event.url.pathname.includes('.devtools.vdt-connection.json')) {
         return {
           backend: 'h3',
-          port: 5556,
+          port: rpcPort,
         }
       }
 
@@ -43,6 +50,13 @@ export const mainCommand = define({
       })
     })
 
-    serve(app, { port: 5555 })
+    const appPort = await getPort({
+      ports: [5555, 6000],
+      random: true,
+    })
+    serve(app, { port: appPort, silent: true })
+    log.info(
+      `Oxc Inspector UI is running on ${c.cyan(`http://localhost:${appPort}/.oxc-inspector`)}`,
+    )
   },
 })

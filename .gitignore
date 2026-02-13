@@ -12,5 +12,5 @@ temp
 cache
 .eslintcache
 .rolldown
-.oxlint
+.oxc-inspector
 .nuxt

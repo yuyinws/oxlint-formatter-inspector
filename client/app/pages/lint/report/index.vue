@@ -47,9 +47,9 @@ const filteredSessionMetaList = computed(() => {
     <UEmpty v-else class="w-full mt-4" title="No sessions found" icon="i-ph-folder-simple-duotone">
       <template #description>
         <div class="text-sm text-neutral-500 leading-7">
-          <span>Oxlint logs directory</span><code>.oxlint</code> not found.
+          <span>Oxc Inspector logs directory</span><code>.oxc-inspector</code> not found.
           <br />
-          Run <code>npx oxc-inspector</code> to generate it first.
+          Run <code>npx oxc-inspector lint</code> to generate it first.
           <br />
           Read more:
           <NuxtLink

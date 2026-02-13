@@ -2,12 +2,8 @@ packages:
   - playground
   - client
 
-shamefullyHoist: true
-strictPeerDependencies: false
-shellEmulator: true
-ignoreWorkspaceRootCheck: true
-
 catalog:
+  "@clack/prompts": ^1.0.1
   "@iconify-json/codicon": ^1.2.43
   "@iconify-json/lucide": ^1.2.89
   "@iconify-json/ph": ^1.2.2
@@ -22,29 +18,38 @@ catalog:
   "@types/picomatch": ^4.0.2
   "@vitejs/devtools": 0.0.0-alpha.29
   "@vitejs/devtools-kit": 0.0.0-alpha.29
+  "@vitejs/devtools-rpc": ^0.0.0-alpha.31
   "@vueuse/core": ^14.2.0
   "@vueuse/nuxt": ^14.2.0
-  pncat: ^0.9.1
-  oxfmt: ^0.28.0
   ansis: ^4.2.0
   bumpp: ^10.4.1
   consola: ^3.4.2
   get-port-please: ^3.2.0
   gunshi: ^0.28.0
+  h3: 2.0.1-rc.14
   lint-staged: ^16.2.7
   nuxt: ^4.3.1
+  oxfmt: ^0.28.0
   oxlint: ^1.43.0
   pathe: ^2.0.3
   picomatch: ^4.0.3
   shiki: ^3.22.0
   simple-git-hooks: ^2.13.1
   tailwindcss: ^4.1.18
+  tinyexec: ^1.0.2
   tsdown: ^0.20.3
   tsx: ^4.21.0
   typescript: ^5.9.3
   vite: ^8.0.0-beta.13
   vue: ^3.5.28
   vue-router: ^5.0.2
-  h3: 2.0.1-rc.14
-  "@vitejs/devtools-rpc": ^0.0.0-alpha.31
-  tinyexec: ^1.0.2
+
+catalogMode: prefer
+
+ignoreWorkspaceRootCheck: true
+
+shamefullyHoist: true
+
+shellEmulator: true
+
+strictPeerDependencies: false

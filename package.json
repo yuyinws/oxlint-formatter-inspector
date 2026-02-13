@@ -30,27 +30,27 @@
     "prepare": "npx simple-git-hooks"
   },
   "dependencies": {
+    "@clack/prompts": "catalog:",
+    "@vitejs/devtools-kit": "catalog:",
+    "@vitejs/devtools-rpc": "catalog:",
     "ansis": "catalog:",
     "consola": "catalog:",
     "get-port-please": "catalog:",
     "gunshi": "catalog:",
-    "pathe": "catalog:",
     "h3": "catalog:",
-    "@vitejs/devtools-rpc": "catalog:",
-    "@vitejs/devtools-kit": "catalog:",
+    "pathe": "catalog:",
     "tinyexec": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",
     "bumpp": "catalog:",
     "lint-staged": "catalog:",
+    "oxfmt": "catalog:",
     "oxlint": "catalog:",
-    "pncat": "catalog:",
     "simple-git-hooks": "catalog:",
     "tsdown": "catalog:",
     "tsx": "catalog:",
-    "typescript": "catalog:",
-    "oxfmt": "catalog:"
+    "typescript": "catalog:"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
